@@ -1,4 +1,4 @@
-name,description,domain,gender,aliases,level2,level3,level4,level5,Title,Father,Mother
+name,description,domain,gender,aliases,level1,level2,level3,level4,Title,Father,Mother
 Abas,"mythical character, son of Lynceus",[],male,"['Abas', 'son of Lynceus', 'son of lynceus', 'son of Lynceos', 'Abantias']",,,,,King (of Argos),Lynceus,Hypermnestra
 Abderus,son of Hermes in Greek mythology,[],male,['Abderos'],,,,,,Hermes,
 Absyrtus,mythical brother of Medea,[],male,"['Apsyrtus', 'Aegialeus']",,,,,,Aeëtes,
