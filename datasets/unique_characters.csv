@@ -9,10 +9,10 @@ Acastus,"mythical character, son of Pelias",[],male,[],,,,,,Pelias,
 Acerbas,priest from Roman mythology,[],male,['Sychaeus'],,,,,,,
 Acestes,mythical character,[],male,['Agestas'],,,,,King (of Western Sicily),,
 Achates,"character of Roman mythology, close friend of Aeneas",[],male,[],,,,,,,
-Achelous,river god in Greek mythology,['Achelous River'],male,"['Achilaos', 'Acheloüs', 'Acheloos']",Greek deity,Greek water deities,Potamoi,,,Oceanus,Tethys
+Achelous,river god in Greek mythology,['river'],male,"['Achilaos', 'Acheloüs', 'Acheloos']",Greek deity,Greek water deities,Potamoi,,,Oceanus,Tethys
 Acheron,"god of river of underworld, Greek mythology",['Acheron'],male,['Acheron'],Greek deity,Greek water deities,Potamoi,,,,Gaia
 Achilles,Greek mythological hero,[],male,"['Pelides', 'Peleiades', 'Achilleus']",,,,,,Peleus,Thetis
-Acis,person from Greek mythology,['Jaci'],male,[],,,,,,Pan,
+Acis,river god in Greek mythology,['river'],male,[],Greek deity,Greek water deities,Potamoi,,,Pan,
 Acontius,character in Greek mythology,[],male,[],,,,,,,
 Acrisius,Greek mythical king of Argos,[],male,['Akrisios'],,,,,,Abas,
 Actaeon,son of Aristaeus in Greek mythology,[],male,"['Aktaion', 'Actæon']",,,,,,Aristaeus,Autonoë
@@ -21,15 +21,15 @@ Admetus,"king of Pherae in Thessaly, in Greek mythology",[],male,[],,,,,,Pheres,
 Adrastus,mythological king of Argos,[],male,[],,,,,King (of Argos),,
 Aeacus,son of Zeus in Greek mythology,[],male,"['Eacus', 'Æacus']",,,,,,Zeus,Aegina
 Aegiale,"in Greek mythology, daughter of Adrastus married to Diomedes",[],female,"['Euryaleia', 'Aigialea']",,,,,,,
-Aegina,"nymph, eponym of the island Aegina",[],female,[],Greek deity,Greek nymph,,,,,
+Aegina,"nymph, eponym of the island Aegina",['island'],female,[],Greek deity,Greek nymph,,,,,
 Aegisthus,son of Thyestes in Greek mythology,[],male,"['Ægisthus', 'Aegisthos']",,,,,,Thyestes,Pelopeia
 Aegyptus,son of Belus in Greek mythology,[],male,[],,,,,,Belus,
 Aeneas,Trojan hero in Greco-Roman mythology,[],male,"['Eneas Ysgwyddwyn', 'Æneas']",,,,,,Anchises,Aphrodite
-Aeolus,"god of winds, son of Hippotes in Greek mythology",[],male,"['Æolus', 'Eolus', 'Aeolus']",Greek deity,,,,,,
+Aeolus,"god of winds, son of Hippotes in Greek mythology",['wind'],male,"['Æolus', 'Eolus', 'Aeolus']",Greek deity,,,,,,
 Aerope,"daughter of Catreus, the king of Crete",[],female,[],,,,,,Catreus,
 Aesacus,son of Priam in Greek mythology,[],male,['Aisakos'],,,,,,Priam,
 Aeson,father of Jason in Greek mythology,[],male,[],,,,,King (of Iolcus in Thessaly),Cretheus,Tyro
-Aether,"primordial Greek deity, personification of the upper air",[],male,[],Greek deity,Greek primordial deity,,,,Erebos,Nyx
+Aether,"primordial Greek deity, personification of the upper air",['air'],male,[],Greek deity,Greek primordial deity,,,,Erebos,Nyx
 Aethra,mother of Theseus,[],female,[],,,,,,Pittheus,
 Aeëtes,son of Helios in Greek mythology,[],male,"['Æetis', 'Aeetis', 'Æetes', 'Aeetes']",,,,,King (of Colchis),Helios,Perse
 Agamemnon,son of Atreus in Greek mythology,[],male,[],,,,,,Atreus,Aerope
@@ -41,11 +41,11 @@ Alcestis,daughter of Pelias in Greek mythology,[],female,[],,,,,,Pelias,
 Alcidice,daughter of Aleus in Greek mythology,[],female,[],,,,,,,
 Alcinous,"mythical character, King of the Phaeacians, son of Nausithous and brother of Rhexenor",[],male,[],,,,,King (of the Phaeacians),Nausithous,
 Alcmaeon,mythical son of Amphiaraus,[],male,[],,,,,,,
-Alcyone,"Greek mythological figure; one of the Pleiades, daughters of Atlas",[],female,[],Greek deity,Greek nymph,,,,Atlas,Pleione
+Alcyone,"Greek mythological figure; one of the Pleiades, daughters of Atlas",[],female,[],Greek deity,Greek nymph,Pleiades,,,Atlas,Pleione
 Alcyoneus,giant in Greek mythology,[],male,"['Ἀλκυονεύς', 'Alkyoneus', 'Alcyoneus']",Greek deity,Giants,,,,Tartarus,Gaia
 Alkmene,mother of Heracles,[],female,"['Alcmena', 'Alcmene']",,,,,,Electryon,Anaxo
 Aloeus,"Greek mythical character, son of Poseidon",[],male,[],,,,,,,
-Ampelos,deity,[],male,[],satyr,,,,,Oxylus,
+Ampelos,satyr,[grapevine],male,[],satyr,,,,,Oxylus,
 Amphiaraus,mythical seer and king,[],male,[],,,,,,,
 Amphictyon,son of Deucalion in Greek mythology,[],male,['Amphictyon'],,,,,,Deucalion,Pyrrha
 Amphilochus,mythical son of Amphiaraus,[],male,[],,,,,,Amphiaraus,Eriphyle
@@ -55,7 +55,7 @@ Amphitryon,"figure in Greek mythology, husband of Alcmene",[],male,[],,,,,,,
 Amphoterus,son of Alcmaeon in Greek mythology,[],male,[],,,,,,Alcmaeon,
 Amyntor,son of Ormenos and father of Phoenix,[],male,[],,,,,,,
 Amythaon,son of Cretheus in Greek mythology,[],male,[],,,,,,Cretheus,Tyro
-Ananke,"personification of inevitability, compulsion and necessity in Greek mythology","['destiny', 'need']",female,"['Ἀνάγκη', 'Anangke', 'Anance', 'Anagke', 'Necessitas']",Greek deity,Greek primordial deity,,,,,
+Ananke,"personification of inevitability, compulsion and necessity in Greek mythology","['destiny', 'need','inevitability']",female,"['Ἀνάγκη', 'Anangke', 'Anance', 'Anagke', 'Necessitas']",Greek deity,Greek primordial deity,,,,,
 Anaxo,daughter of Alcaeus in Greek mythology,[],female,[],,,,,,,
 Anchises,son of Capys in Greek mythology,[],male,[],,,,,,Capys,Themis
 Androgeus,mythical son of Minos,[],male,[],,,,,,Minos,
@@ -68,67 +68,66 @@ Anticlea,mother of Odysseus,[],female,['Anticleia'],,,,,,Autolycus,
 Antigone,mythical daughter of Oedipus and Jocasta,[],female,[],,,,,,Oedipus,Jocasta
 Antilochus,"mythological prince, son of Nestor",[],male,[],,,,,,Nestor,Eurydice
 Antiphates,mythical king of the Laestrygones,[],male,[],,,,,King (of Laestrygones in Sicily),Melampus,
-Aoide,one of the three original Boeotian muses in Greek mythology,[],female,[],,,,,,Uranus,Gaia
-Apate,"Minor goddess in Greek mythology, personification of deceit",['lie'],female,['Deceit'],Greek deity,allegorical Greek deity,,,,,Nyx
-Aphrodite,"Greek goddess of love, beauty, pleasure, and procreation","['beauty', 'love']",female,"['Erycina', 'Cytherea', 'Venus']",Greek deity,Olympian god,,,,Zeus,Dione
-Apollo,god in Greek and later Roman mythology,[],male,"['Apollōn', 'Aploun', 'Apellōn', 'Apeilōn', 'Phoebus', 'Apollon', 'Mogounos', 'Mogons']",Greek deity,Olympian god,,,,Zeus,Leto
-Ares,Greek god of war,['war'],male,"['Roman god Mars', 'Mars (mythology)', 'god Mars', 'Mars']",Greek deity,Olympian god,,,,Zeus,Hera
-Arete,"concept in Greek philosophy meaning ""excellence of any kind"" or ""moral virtue"", ultimately bound up, in its earliest appearance in Greek, with the notion of the fulfillment of purpose or function (the act of living up to one's full potential)",[],,[],Greek deity,,,,,,
-Arethusa,nymph in Greek mythology who fled from the river god Alpheus,[],female,['Arethusa'],Greek deity,Greek nymph,,,,Atlas,Aethra
-Ariadne,the daughter of Minos in Greek mythology,[],female,['Ariane'],,,,,,Minos,
-Aristaeus,minor god in Greek mythology,[],male,"['Aristæus', 'Aristaios', 'Veteris']",Greek deity,,,,,,
-Artemis,goddess of the hunt and the wild in ancient Greek religion and mythology,[],female,['Diana'],Greek deity,Olympian god,,,,Zeus,Leto
+Aoide,one of the three original Boeotian muses in Greek mythology,['music'],female,[],Greek deity,Muse,,,,Uranus,Gaia
+Apate,"Minor goddess in Greek mythology, personification of deceit","['lie','deceit']",female,['Deceit'],Greek deity,allegorical Greek deity,,,,,Nyx
+Aphrodite,"Greek goddess of love, beauty, pleasure, and procreation","['beauty', 'love','pleasure','fertility', 'lust']",female,"['Erycina', 'Cytherea', 'Venus']",Greek deity,Olympian god,,,,Zeus,Dione
+Apollo,god in Greek and later Roman mythology,"['archery','sun', 'music', 'prophecy','healing','poetry','light']",male,"['Apollōn', 'Aploun', 'Apellōn', 'Apeilōn', 'Phoebus', 'Apollon', 'Mogounos', 'Mogons']",Greek deity,Olympian god,,,,Zeus,Leto
+Ares,Greek god of war,"['war','courage','brutality','bloodlust']",male,"['Roman god Mars', 'Mars (mythology)', 'god Mars', 'Mars']",Greek deity,Olympian god,,,,Zeus,Hera
+Arete,"concept in Greek philosophy meaning ""excellence of any kind"" or ""moral virtue"", ultimately bound up, in its earliest appearance in Greek, with the notion of the fulfillment of purpose or function (the act of living up to one's full potential)","['excellence','virtue']",,[],Greek deity,allegorical Greek deity,,,,,
+Arethusa,nymph in Greek mythology who fled from the river god Alpheus,['water'],female,['Arethusa'],Greek deity,Greek nymph,,,,Atlas,Aethra
+Ariadne,the daughter of Minos in Greek mythology,['labyrinth'],female,['Ariane'],,,,,,Minos,
+Aristaeus,minor god in Greek mythology,"['beekeeping','grapevine']",male,"['Aristæus', 'Aristaios', 'Veteris']",Greek deity,,,,,,
+Artemis,goddess of the hunt and the wild in ancient Greek religion and mythology,"['hunting','wild animals','nature','childbirth','chastity','moon']",female,['Diana'],Greek deity,Olympian god,,,,Zeus,Leto
 Ascalaphus,son of Ares in Greek mythology,[],male,[],,,,,,Ares,
-Asclepius,Greek god of medicine,[],male,"['Ἀσκληπιός', 'Asklēpiós', 'Æsculapius', 'Aesculapius']",Greek deity,,,,,Apollo,Coronis
-Asopus,river god of Greek mythology,['Asopos'],male,[],Greek deity,Greek water deities,Potamoi,,,,
+Asclepius,Greek god of medicine,['medicine'],male,"['Ἀσκληπιός', 'Asklēpiós', 'Æsculapius', 'Aesculapius']",Greek deity,,,,,Apollo,Coronis
+Asopus,river god of Greek mythology,['river'],male,[],Greek deity,Greek water deities,Potamoi,,,,
 Assaracus,son of Tros in Greek mythology,[],male,[],,,,,,Tros,
-Asteria,daughter of the Titans Coeus and Phoebe and sister of Leto,[],female,[],Greek deity,titan,,,,Coeus,Phoebe
+Asteria,daughter of the Titans Coeus and Phoebe and sister of Leto,['stars'],female,[],Greek deity,titan,,,,Coeus,Phoebe
 Asteropaios,son of Pelegon in Greek mythology,[],male,['Asteropaeus'],,,,,,,
-Astraeus,Greek astrological god associated with winds,[],male,['Astraios'],Greek deity,titan,,,,,
+Astraeus,Greek astrological god associated with winds,['wind'],male,['Astraios'],Greek deity,titan,,,,,
 Athamas,son of Minyas or Aeolus in Greek mythology,[],male,[],,,,,,,
-Athena,goddess of wisdom and war in ancient Greek religion and mythology,"['pottery', 'weaving', 'war', 'agriculture', 'wisdom']",female,"['Pallas Athena', 'Athene', 'Menrva', 'Minerva']",Greek deity,Olympian god,,,,Zeus,
+Athena,goddess of wisdom and war in ancient Greek religion and mythology,"['weaving', 'war', 'handicraft', 'wisdom','strategy']",female,"['Pallas Athena', 'Athene', 'Menrva', 'Minerva']",Greek deity,Olympian god,,,,Zeus,
 Atlas,deity in Greek mythology,[],male,[],Greek deity,titan,,,,Iapetos,Klymene
 Atreus,"king of Mycenae, father of Agamemnon",[],male,[],,,,,,Pelops,Hippodamia
-Atropos,one of the Fates of Greek Mythology,[],female,[],Greek deity,,,,,Zeus,Themis
+Atropos,one of the Fates of Greek Mythology,"['life','death','destiny']",female,[],Greek deity,,,,,Zeus,Themis
 Attis,Phrygian and Greek mythological figure,[],male,['Atys'],,,,,King (of Alba Longa),,
-Atë,Ancient Greek goddess of mischief,['recklessness'],female,"['Até', 'Disaster', 'Ate', 'Ruin']",Greek deity,allegorical Greek deity,,,,,Eris
+Atë,Ancient Greek goddess of mischief,"['recklessness','delusion','mischief']",female,"['Até', 'Disaster', 'Ate', 'Ruin']",Greek deity,allegorical Greek deity,,,,,Eris
 Augeias of Elis,son of Phorbas in Greek mythology,[],male,"['Augeas', 'Aegeus']",,,,,,,
 Autolycus,son of Daedalion in Greek mythology,[],male,[],,,,,,Hermes,
 Autonoë,mythical daughter of Cadmus,[],female,['Autonoe'],,,,,,,
-Auxo,"one of the Graces, worshipped in Athens; and/or one of the Horae",[],female,"['Avxo', 'Auco']",Greek deity,,,,,Zeus,Themis
+Auxo,"one of the Graces, worshipped in Athens; and/or one of the Horae","['seasons','natural order']",female,"['Avxo', 'Auco']",Greek deity,Horae,,,,Zeus,Themis
 Batea,mythical spouse of Dardanus,[],female,['Bateia'],,,,,,,
 Bellerophon,hero of Greek mythology,[],male,[],,,,,,Glaucus,
 Belus,son of Poseidon in Greek mythology,[],male,[],,,,,King (of Tyre),Poseidon,
-Bia,"ancient Greek goddess, personification of force",['violence'],female,[],Greek deity,,,,,Pallas,Styx
+Bia,"ancient Greek goddess, personification of force","['force','compulsion']",female,[],Greek deity,allegorical Greek deity,,,,Pallas,Styx
 Bias,mythical son of Amythaon,[],male,[],,,,,,Amythaon,
 Briareus,one of the Hundred-Handers,[],male,"['Aegeaon', 'Aegaeon']",Greek deity,Giants,Hecatoncheires,,,Uranus,Gaia
 Cadmus,"mythological founder of Thebes, son of Agenor",[],male,"['Cadmos', 'Kadmos']",,,,,,Agenor,Telephassa
 Calchas,mythical seer,[],male,[],,,,,,Thestor,
-Calliope,muse of epic poetry,[],female,['Kalliope'],,,,,,Zeus,
+Calliope,muse of epic poetry,['poetry'],female,['Kalliope'],Greek deity,Muse,,,,Zeus,
 Calydon,son of Aetolus in Greek mythology,[],male,[],,,,,,Thestius,
 Capys,son of Assaracus in Greek mythology,[],male,[],,,,,,Assaracus,
-Carpo,Greek deity,['season'],female,[],Greek deity,,,,,Zeus,Themis
+Carpo,Greek deity,['seasons'],female,[],Greek deity,Horae,,,,Zeus,Themis
 Cassandra,mythological prophetess and princess of Troy,[],female,[],,,,,,Priam,Hecuba
 Cassiopeia,figure in Greek mythology; queen of Aethiopia and wife of king Cepheus,[],female,['Cassiopea'],,,,,,,
 Catreus,king of Crete and a son of Minos and Pasiphaë,[],male,[],,,,,,Minos,
-Celaeno,one of the Pleiades in Greek mythology,[],female,[],Greek deity,Greek nymph,,,,Atlas,Pleione
+Celaeno,one of the Pleiades in Greek mythology,[],female,[],Greek deity,Greek nymph,Pleiades,,,Atlas,Pleione
 Celeus,mythical king at Eleusis,[],male,['Keleos'],,,,,King (of Eleusis),,
 Cephalus,son of Deioneus and beloved of Eos in Greek mythology,[],male,"['Kephalos', 'Cephalus of Athens', 'Cephalus']",,,,,,,
 Cerberus,three-headed dog that guards the underworld in Greek mythology,[],male organism,"['Hound of Hades', 'Cerberos', 'Garm', 'Garmr']",,,,,,Typhon,Echidna
-Ceto,Greek sea goddess,[],female,"['Cratais', 'Crataeis', 'Krataeis']",Greek deity,Greek water deities,,,,Pontus,Gaia
-Chaos,Greek primordial deity,[],male,[],Greek deity,Greek primordial deity,,,,,
-Charon,ferryman of Hades in Greek-Roman mythology,[],male,"['Kharon', 'Charon (mythology)']",Greek deity,,,,,Erebos,Styx
+Ceto,Greek sea goddess,['sea'],female,"['Cratais', 'Crataeis', 'Krataeis']",Greek deity,Greek water deities,,,,Pontus,Gaia
+Chaos,Greek primordial deity,['primordial void'],male,[],Greek deity,Greek primordial deity,,,,,
+Charon,ferryman of Hades in Greek-Roman mythology,['underworld'],male,"['Kharon', 'Charon (mythology)']",Greek deity,,,,,Erebos,Styx
 Charybdis,figure in Greek mythology transformed in a sea monster by Zeus,[],female,['Kharybdis'],Greek deity,Greek water deities,,,,Poseidon,Gaia
-Chloris,Greek nymph,[],female,['Flora'],Greek deity,Greek nymph,,,,,
-Chloris,Greek nymph,[],female,['Flora'],Greek deity,Greek nymph,,,,,
+Chloris,Greek nymph,"['flowers','spring']",female,['Flora'],Greek deity,Greek nymph,,,,,
 Chrysaor,mythical character,[],male,[],,,,,,Poseidon,Medusa
 Chrysippus,son of Pelops,[],male,[],,,,,,Pelops,
 Cilix,"mythical character, son of Agenor",[],male,[],,,,,,Agenor,Telephassa
-Circe,enchantress-goddess in Greek mythology,[],female,"['Κίρκη', 'Kírkê', 'Circé', 'Kirke']",Greek deity,,,,,Helios,Perse
+Circe,enchantress-goddess in Greek mythology,['witchcraft'],female,"['Κίρκη', 'Kírkê', 'Circé', 'Kirke']",Greek deity,,,,,Helios,Perse
 Cisseus,"Greek mythological character, Thracian king and father of Theano",[],male,[],,,,,King (of Thrace),,
 Cleopatra,"Greek mythological figure, daughter of Boreas",[],female,[],,,,,,Tros,
 Clio,"Greek mythological person, muse of history or of lyre playing, daughter of Zeus and the Titaness Mnemosyne","['history', 'study of history']",female,[],,,,,,Zeus,
-Clotho,one of the Fates of Greek mythology,[],female,['Klotho'],Greek deity,,,,,Zeus,Themis
+Clotho,one of the Fates of Greek mythology,"['fate', 'destiny','life','death']",female,['Klotho'],Greek deity,,,,,Zeus,Themis
 Clytemnestra,daughter of Tyndareus in Greek mythology,[],female,"['Klytemnestra', 'Clytaemnestra', 'Clytaemestra']",,,,,,Tyndareus,Leda
 Clytius,giant in Greek mythology,[],male,['Klytios'],Greek deity,Giants,,,,Tartarus,Gaia
 Coeus,Titan in Greek mythology,[],male,"['Polos', 'Polus']",Greek deity,titan,,,,Uranus,Gaia
@@ -137,7 +136,7 @@ Cottus,one of the Hundred-Handers,[],male,['Kottus'],Greek deity,Giants,Hecatonc
 Creon,king of Thebes in Greek mythology,[],male,[],,,,,King (of Corinth),,
 Cretheus,"in Greek mythology, king and founder of Iolcus",[],male,[],,,,,,,
 Creusa,Greek mythology character; daughter of Priam and Hecuba,[],female,['Creusa of Troy'],,,,,,Priam,Hecuba
-Cronus,ruler of the Titans in Greek mythology,[],male,"['Kronos', 'Cronos', 'Saturn']",Greek deity,titan,,,,Uranus,Gaia
+Cronus,ruler of the Titans in Greek mythology,"['time', 'harvest']",male,"['Kronos', 'Cronos', 'Saturn']",Greek deity,titan,,,,Uranus,Gaia
 Crotus,mythical son of Pan and Eupheme,[],male,['Krotos'],Greek deity,,,,,Pan,Eupheme
 Cyrene,"nymph, mother of Aristaeus by Apollo",[],female,['Cyrene'],,,,,,,
 Danaus,Greek mythological king,[],male,[],,,,,King (of Apulia),Belus,
@@ -146,20 +145,20 @@ Deianira,daughter of Dexamenus in Greek mythology,[],female,"['Deianeira', 'Deja
 Deidamia,"Greek mythological figure, daughter of Lycomedes",[],female,['Deidameia'],,,,,,Lycomedes,
 Deiphobus,"mythical character, son of Priam of Troy",[],male,['Deiphobos'],,,,,,Priam,Hecuba
 Deipyle,daughter of Adrastus in Greek mythology,[],female,[],,,,,,Adrastus,
-Demeter,"Greek goddess of the harvest, grains, and agriculture","['agriculture', 'soil', 'fertility']",female,"['Dêmêtêr', 'Deo', 'Ceres']",Greek deity,Olympian god,,,,Cronus,Rhea
+Demeter,"Greek goddess of the harvest, grains, and agriculture","['agriculture', 'soil', 'fertility','harvest']",female,"['Dêmêtêr', 'Deo', 'Ceres']",Greek deity,Olympian god,,,,Cronus,Rhea
 Deucalion,son of Prometheus in Greek mythology,[],male,[],,,,,,Prometheus,
 Dido,legendary founder and first queen of Carthage,[],female,"['Elissa', 'Alyssa', 'Elisa']",,,,,Queen (of Carthage),Belus,
 Diocles,mythical son of Orsilochus,[],male,[],,,,,,,
 Diomedes,"hero son of Tydeus in Greek mythology, king of Argos",[],male,"['Tydeides', 'Tydeiades']",,,,,King (of Argos),Tydeus,Deipyle
-Dione,"Greek goddess, mother of Aphrodite",[],female,[],Greek deity,titan,,,,Uranus,Gaia
-Dionysus,Ancient Greek god of winemaking and wine,"['winemaking', 'wine']",male,"['Dionysos', 'Girish', 'Girindra', 'Girik', 'Gaurinath', 'Gaganesh', 'Ekaling', 'Eeshan', 'Çiva', 'chandra sekharudu', 'Bhola', 'Bhairav', 'Akul', 'Achintya', 'Mahadeva', 'Kedar', 'Jayant', 'Rudra', 'Kashinath', 'niranjan', 'Mahesh', 'Nagesh', 'Siva', 'Śiva', 'Purajit', 'Purahan', 'Pinaki', 'parameshwara', 'Panshul', 'Panchal', 'Omkarnath', 'Nabhya', 'Mukesh', 'Mrigasya', 'Mangesh', 'Mahamani', 'Mahâdêva', 'Mahadev', 'Madhavan', 'Madesh', 'Jwalia', 'Jograj', 'Joginder', 'Jogesh', 'Jatin', 'Hemakesh', 'Hariaksa', 'Harendra', 'Shiva']",Greek deity,,,,,Zeus,Semele
-Doris,Oceanid of Greek mythology,[],female,[],Greek deity,Greek water deities,Oceanids,Okeanid,,Oceanus,Tethys
+Dione,"Greek goddess, mother of Aphrodite in some traditions",[],female,[],Greek deity,titan,,,,Uranus,Gaia
+Dionysus,Ancient Greek god of winemaking and wine,"['winemaking', 'wine','fertility','festivity','religious ecstasy','theater']",male,"['Dionysos', 'Girish', 'Girindra', 'Girik', 'Gaurinath', 'Gaganesh', 'Ekaling', 'Eeshan', 'Çiva', 'chandra sekharudu', 'Bhola', 'Bhairav', 'Akul', 'Achintya', 'Mahadeva', 'Kedar', 'Jayant', 'Rudra', 'Kashinath', 'niranjan', 'Mahesh', 'Nagesh', 'Siva', 'Śiva', 'Purajit', 'Purahan', 'Pinaki', 'parameshwara', 'Panshul', 'Panchal', 'Omkarnath', 'Nabhya', 'Mukesh', 'Mrigasya', 'Mangesh', 'Mahamani', 'Mahâdêva', 'Mahadev', 'Madhavan', 'Madesh', 'Jwalia', 'Jograj', 'Joginder', 'Jogesh', 'Jatin', 'Hemakesh', 'Hariaksa', 'Harendra', 'Shiva']",Greek deity,Olympian,,,,Zeus,Semele
+Doris,Oceanid of Greek mythology,['sea'],female,[],Greek deity,Greek water deities,Oceanids,Okeanid,,Oceanus,Tethys
 Dryope,"daughter of Dryops or of Eurytus, mother of Amphissus",[],female,['Dryope'],Greek deity,Greek nymph,dryad,,,,
-Dynamene,Nereid of Greek mythology,[],female,[],,,,,,Nereus,Doris
-Dysnomia,ancient Greek deity,[],female,[],Greek deity,allegorical Greek deity,,,,,Eris
+Dynamene,Nereid of Greek mythology,['sea'],female,[],Greek deity,Nereid,,,,Nereus,Doris
+Dysnomia,ancient Greek deity,['lawlessness'],female,[],Greek deity,allegorical Greek deity,,,,,Eris
 Echidna,ancient Greek mythological monster,[],female,[],Greek deity,,,,,Chrysaor,
 Echo,mountain nymph of Greek mythology,['echo'],female,[],Greek deity,Greek nymph,Oread,,,,
-Eirene,ancient Greek goddess of peace,[],female,"['Irene', 'Pax']",Greek deity,,,,,Zeus,Themis
+Eirene,ancient Greek goddess of peace,['peace'],female,"['Irene', 'Pax']",Greek deity,allegorical Greek deity,,,,Zeus,Themis
 Elara,daughter of Orchomenos and lover of Zeus,[],female,[],,,,,,,
 Electryon,son of Perseus in Greek mythology,[],male,[],,,,,,Perseus,Andromeda
 Elektra,daughter of Agamemnon,[],female,"['Electra', 'Laodice']",,,,,,Agamemnon,Clytemnestra
@@ -167,21 +166,21 @@ Enarete,daughter of Deimachus in Greek mythology,[],female,['Aenarete'],,,,,,,
 Enceladus,mythological giant,[],male,[],Greek deity,Giants,,,,Tartarus,Gaia
 Endeïs,daughter of Sciron in Greek mythology,[],female,['Endeis'],,,,,,,
 Enyo,Greek goddess of war and destruction,"['war', 'destruction', 'conquest']",female,['Bellona'],Greek deity,,,,,Phorcys,Ceto
-Eos,Greek goddess of the dawn,['dawn'],female,"['Erigeneia', 'Rhododactylos', 'Goddess Aurora', 'Dawn', 'Aurora']",Greek deity,,,,,Hyperion,
+Eos,Greek goddess of the dawn,['dawn'],female,"['Erigeneia', 'Rhododactylos', 'Goddess Aurora', 'Dawn', 'Aurora']",Greek deity,titan,,,,Hyperion,
 Epaphus,"mythical character, son of Zeus and Io",[],male,[],,,,,,Zeus,Io
 Epimetheus,mythological figure,[],male,[],Greek deity,titan,,,,Iapetos,Klymene
 Epione,wife of Asclepius in Greek mythology,[],female,[],,,,,,,
-Erato,Greek muse of lyrical poetry,[],female,[],,,,,,Zeus,
-Erebos,primordial deity in Greek mythology,[],male,['Erebus'],Greek deity,Greek primordial deity,,,,,Chaos
+Erato,Greek muse of lyrical poetry,['poetry'],female,[],Greek deity,Muse,,,,Zeus,
+Erebos,primordial deity in Greek mythology,['darkness'],male,['Erebus'],Greek deity,Greek primordial deity,,,,,Chaos
 Erechtheus,legendary king of Athens,[],male,['Erechtheus II'],,,,,King (of Athens),Hephaestus,Gaia
 Erichthonius,legendary king of Athens,[],male,['Erichthonius of Athens'],,,,,,Hephaestus,Gaia
 Eriphyle,daughter of Talaus in Greek mythology,[],female,[],,,,,,,
 Eris,Greek goddess of discord,"['competitiveness', 'discord', 'strife']",female,"['Goddess of Discord', 'Strife', 'Discordia']",Greek deity,,,,,,Nyx
-Eros,Greek god of love and sex,[],male,"['Cupid', 'Amore', 'Cupido', 'Amor']",Greek deity,Greek primordial deity,,,,,Aphrodite
+Eros,Greek god of love and sex,"['love', 'desire','pleasure']",male,"['Cupid', 'Amore', 'Cupido', 'Amor']",Greek deity,Greek primordial deity,,,,,Aphrodite
 Eteocles,mythological king of Thebes,[],male,[],,,,,,Oedipus,Jocasta
 Eumelus,"mythical king of Pherae, son of Admetus",[],male,['Eumelos'],,,,,,Admetus,Alcestis
-Eunomia,Greek goddess of good order,[],female,[],Greek deity,,,,,Zeus,Themis
-Eupheme,"Greek female spirit of words of good omen, praise, acclaims, shouts of triumph, and applause",[],female,[],,,,,,,
+Eunomia,Greek goddess of good order,['law'],female,[],Greek deity,allegorical Greek deity,,,,,Zeus,Themis
+Eupheme,"Greek female spirit of words of good omen, praise, acclaims, shouts of triumph, and applause",['praise'],female,[],Greek deity,allegorical Greek deity,,,,,
 Europa,"Phoenician character in Greek mythology, daughter of Agenor",['Europe'],female,"['Evropa', 'Europe', 'Europa']",,,,,,Agenor,Telephassa
 Euryale,mythical character; second eldest of the Gorgons,[],female,[],,,,,,Phorcys,Ceto
 Euryalus,son of Mecisteus in Greek Mythology,[],male,[],,,,,,Odysseus,
@@ -189,54 +188,54 @@ Eurybia,Greek sea goddess,['sea'],female,[],Greek deity,Greek water deities,,,,P
 Eurydice,"oak nymph, or daughter of Apollo and wife of Orpheus",[],female,[],Greek deity,Greek nymph,dryad,,,,
 Eurypylus,mythical son of Telephus,[],male,[],,,,,,Poseidon,Celaeno
 Eurysaces,son of Ajax the Great in Greek mythology,[],male,[],,,,,,Ajax the Great,Tecmessa
-Euterpe,muse of music in Greek mythology,[],female,[],,,,,,Zeus,
-Gaia,"Greek primordial deity, the personification of the Earth",['fertility'],female,"['Gaea', 'Ge', 'Tellus Mater', 'Terra Mater', 'Tellus', 'Mother Earth', 'Terra']",Greek deity,Greek primordial deity,,,,,Chaos
-Galatea,nereid from Greek mythology,[],female,"['Galathea', 'Galatea']",,,,,,Nereus,Doris
+Euterpe,muse of music in Greek mythology,['music'],female,[],Greek deity,Muse,,,,Zeus,
+Gaia,"Greek primordial deity, the personification of the Earth","['fertility','nature','earth']",female,"['Gaea', 'Ge', 'Tellus Mater', 'Terra Mater', 'Tellus', 'Mother Earth', 'Terra']",Greek deity,Greek primordial deity,,,,,Chaos
+Galatea,nereid from Greek mythology,['sea'],female,"['Galathea', 'Galatea']",Greek deity,Greek water deities,Nereid,,,Nereus,Doris
 Ganymede,son of Tros in Greek mythology,[],male,['Ganymedes'],,,,,,Tros,
 Geryon,mythical king of far western Mediterranean,[],male,['Geryones'],,,,,King (of Erythia),Chrysaor,
-Glaucus,semi-divine sea-dweller in Greek mythology,[],male,"['Marine Glaucus', 'Glaukos']",Greek deity,Greek water deities,,,,,
+Glaucus,semi-divine sea-dweller in Greek mythology,['sea'],male,"['Marine Glaucus', 'Glaukos']",Greek deity,Greek water deities,,,,,
 Gordias,"in Greek mythology, the king of Phrygia",[],male,['Gordius'],,,,,,,
 Gorgythion,mythical son of Priam,[],male,[],,,,,,Priam,
 Gyges,"one of the Hundred-Handers, or hekatonkheires",[],male,['Gyes'],Greek deity,Giants,Hecatoncheires,,,Uranus,Gaia
-Hades,god of the underworld in Greek mythology,[],male,"['Plouton', 'Pluton', 'Pluto']",Greek deity,,,,,Cronus,Rhea
-Harmonia,"ancient Greek goddess of harmony and concord, spouse of Cadmus; her opposite is Eris",['harmony'],female,"['Harmony', 'Concordia']",Greek deity,,,,,Ares,Aphrodite
-Hebe,ancient Greek goddess of youth,[],female,"['Juventas', 'Iuventas']",Greek deity,Olympian god,,,,Zeus,Hera
+Hades,god of the underworld in Greek mythology,"['underworld', 'death','riches']",male,"['Plouton', 'Pluton', 'Pluto']",Greek deity,,,,,Cronus,Rhea
+Harmonia,"ancient Greek goddess of harmony and concord, spouse of Cadmus; her opposite is Eris",['harmony'],female,"['Harmony', 'Concordia']",Greek deity,allegorical Greek deity,,,,Ares,Aphrodite
+Hebe,ancient Greek goddess of youth,['youth'],female,"['Juventas', 'Iuventas']",Greek deity,Olympian god,,,,Zeus,Hera
 Hector,prince of Troy in Greek mythology,[],male,"['Sigfrido', 'Siegfried', 'Sigurd']",,,,,,Priam,Hecuba
 Hecuba,spouse of king Priam,[],female,['Hekuba'],,,,,,Cisseus,
 Helen of Troy,daughter of Zeus in Greek mythology,[],female,"['Helen of Sparta', 'Helen of Argos', 'Helen']",,,,,,Zeus,Leda
 Helenus,mythical son of Priam,[],male,[],,,,,,Priam,Hecuba
-Helios,sun god in Greek mythology,['Sun'],male,"['Helius', 'Baal-hamon']",Greek deity,,,,,Hyperion,
+Helios,sun god in Greek mythology,['Sun'],male,"['Helius', 'Baal-hamon']",Greek deity,titan,,,,Hyperion,
 Helle,Greek mythology character,[],female,"['Athamantis', 'Ellie']",Greek deity,Greek water deities,,,,Athamas,Nephele
 Hellen,mythological progenitor of the Hellenes,[],male,[],,,,,,Deucalion,Pyrrha
 Hemera,Ancient Greek goddess of the day,"['daylight', 'daytime']",female,['Dies'],Greek deity,,,,,Erebos,Nyx
-Hephaestus,Greek god of blacksmiths,"['fire', 'volcano', 'forging']",male,"['Hephaestos', 'Vulcānus', 'Vulcan (mythology)', 'Molsiber', 'Junonigena', 'Iūnōnigena', 'Iunonigena', 'Mulciber', 'Volcanus', 'Hephaestus', 'Vulcan']",Greek deity,,,,,Zeus,Hera
-Hera,"Greek goddess, wife and sister of Zeus","['parturition', 'fertility', 'marriage', 'mother']",female,"['Iuno', 'Regina', 'Juno']",Greek deity,Olympian god,,,,Cronus,Rhea
+Hephaestus,Greek god of blacksmiths,"['fire', 'volcano', 'forging','artisans']",male,"['Hephaestos', 'Vulcānus', 'Vulcan (mythology)', 'Molsiber', 'Junonigena', 'Iūnōnigena', 'Iunonigena', 'Mulciber', 'Volcanus', 'Hephaestus', 'Vulcan']",Greek deity,Olympian god,,,,Zeus,Hera
+Hera,"Greek goddess, wife and sister of Zeus","['parturition', 'fertility', 'marriage', 'motherhood','women','childbirth']",female,"['Iuno', 'Regina', 'Juno']",Greek deity,Olympian god,,,,Cronus,Rhea
 Heracles,"divine hero in Greek mythology, son of Zeus and Alcmene",[],male,"['Herakles', 'Alcides', 'Alcaeus', 'Hercules']",Greek deity,demigod of Greek mythology,,,,Zeus,Alkmene
-Hermes,"Olympian god in Greek religion and mythology; the emissary and messenger of the gods; the god of trade, heraldry, merchants, commerce, roads, thieves, trickery, sports, travelers, and athletes; the son of Zeus and the Pleiad Maia","['thief', 'traveler', 'trade']",male,"['Mercury (mythology)', 'Mercurius', 'Mercury']",Greek deity,Olympian god,,,,Zeus,Maia
+Hermes,"Olympian god in Greek religion and mythology; the emissary and messenger of the gods; the god of trade, heraldry, merchants, commerce, roads, thieves, trickery, sports, travelers, and athletes; the son of Zeus and the Pleiad Maia","['thief', 'travelers', 'trade','roads']",male,"['Mercury (mythology)', 'Mercurius', 'Mercury']",Greek deity,Olympian god,,,,Zeus,Maia
 Hermione,daughter of Menelaus and Helen of Troy,[],female,[],,,,,,Menelaus,Helen of Troy
 Hesione,daughter of Laomedon,[],female,[],,,,,,Laomedon,
-Hestia,Greek goddess,"['hearth', 'dwelling', 'baking', 'cooking', 'fire']",female,"['Εστία', 'ΕΣΤΙΑ', 'Histia', 'Vesta', 'Veſta']",Greek deity,Olympian god,,,,Cronus,Rhea
+Hestia,Greek goddess,"['hearth', 'home', 'hospitality', 'fire']",female,"['Εστία', 'ΕΣΤΙΑ', 'Histia', 'Vesta', 'Veſta']",Greek deity,Olympian god,,,,Cronus,Rhea
 Hippocoon,"king of Sparta, son of Oebalus",[],male,[],,,,,,Oebalus,Batea
 Hippodamia,"Greek mythical character, daughter of Oenomaus and wife of Pelops",[],female,[],,,,,,Oenomaus,
 Hippolyta,queen of the Amazons in Greek mythology,[],female,"['Hippolytë', 'Antiope']",,,,,Queen (of the Amazons),,
 Hippolytus,son of Theseus in Greek mythology,[],male,['Hippolytos'],,,,,,Theseus,Hippolyta
-Hippothoe,Greek sea nymph,[],female,[],Greek deity,Greek water deities,,,,Nereus,Doris
-Horkos,personifies the curse that will be inflicted on any person who swears a false oath in Greek mythology,[],male organism,"['Jusjurandum', 'Horcus', 'Horkos']",,,,,,,Eris
+Hippothoe,Greek sea nymph,['sea'],female,[],Greek deity,Greek water deities,,,,Nereus,Doris
+Horkos,personifies the curse that will be inflicted on any person who swears a false oath in Greek mythology,['punishment'],male,"['Jusjurandum', 'Horcus', 'Horkos']",Greek deity,allegorical Greek deity,,,,Eris
 Hyas,son of Atlas in Greek mythology,[],male,[],,,,,,Atlas,Aethra
 Hyllus,son of Heracles and Deianira in Greek mythology,[],male,"['Hyllas', 'Hyllos', 'Hyllus']",,,,,,Heracles,Deianira
-Hyperion,Titan in Greek mythology,[],male,[],Greek deity,titan,,,,Uranus,Gaia
+Hyperion,Titan in Greek mythology,['light'],male,[],Greek deity,titan,,,,Uranus,Gaia
 Hypermnestra,daughter of Danaus in Greek mythology,[],female,[],,,,,,Danaus,
-Hypnos,personification of sleep in Greek mythology,['sleep'],male,['Somnus'],Greek deity,,,,,Erebos,Nyx
-Hypsipyle,"queen of Lemnos, granddaughter of Ariadne and Dionysos in Greek mythology",[],female,[],,,,,Queen (of Lemnos),Thoas,
+Hypnos,personification of sleep in Greek mythology,['sleep'],male,['Somnus'],Greek deity,allegorical Greek deity,,,,Erebos,Nyx
+Hypsipyle,"queen of Lemnos, granddaughter of Ariadne and Dionysus in Greek mythology",[],female,[],,,,,Queen (of Lemnos),Thoas,
 Hyrieus,king in Greek mythology,[],male,['Ephoceus'],,,,,,Poseidon,Alcyone
 Iambe,Thracian mythological character who entertained Demeter,[],female,[],,,,,,Pan,Echo
 Iapetos,Titan in Greek mythology,[],male,['Iapetus'],Greek deity,titan,,,,Uranus,Gaia
 Iasion,mythical lover of Demeter,[],male,['Eetion'],,,,,,,Elektra
 Iasus,mythical king of Argos,[],male,['Iasos'],,,,,,,
-Idaea,Greek nymph,[],female,"['Ide', 'Ida']",Greek deity,Greek nymph,,,,,
+Idaea,Greek nymph,['mountains'],female,"['Ide', 'Ida']",Greek deity,Greek nymph,,,,,
 Idomeneus,"Greek mythical character, King of Crete",[],male,[],,,,,,Deucalion,
 Ilus,"son of Tros in Greek mythology, mythological founder of Troy",[],male,[],,,,,,Tros,
-Inachus,river deity and king of the Argolid,['Inachos'],male,['Inachos'],Greek deity,Greek water deities,Potamoi,,,,
+Inachus,river deity and king of the Argolid,['river'],male,['Inachos'],Greek deity,Greek water deities,Potamoi,,,,
 Ino,queen in Greek mythology,[],female,"['Leucothea', 'Leucothoe']",,,,,,,
 Io,nymph seduced by Zeus in Greek mythology,[],female,['Phoronis'],Greek deity,Greek nymph,,,,Inachus,
 Iobates,"character in Greek mythology, Lycian king",[],male,['Amphianax'],,,,,King (of Lycia),,
@@ -244,16 +243,16 @@ Iolaos,nephew of Heracles in Greek mythology,[],male,"['Iolaus', 'Sapphire']",,,
 Iole,mythical daughter of Eurytus,[],female,[],,,,,,,
 Iphicles,son of Amphitryon in Greek mythology,[],male,[],,,,,,Amphitryon,Alkmene
 Iphigenia,daughter of Agamemnon in Greek mythology,[],female,['Iphianassa'],,,,,,Agamemnon,Clytemnestra
-Iris,the personification of the rainbow in ancient Greek religion and mythology,[],female,[],Greek deity,,,,,Thaumas,Elektra
+Iris,the personification of the rainbow in ancient Greek religion and mythology,['rainbow'],female,[],Greek deity,,,,,Thaumas,Elektra
 Ismene,mythological princess of Thebes,[],female,"['Ισμήνη', 'Ismenë']",,,,,,Oedipus,Jocasta
 Ixion,king of the Lapiths in Greek mythology,[],male,[],,,,,King (of the Lapiths),Phlegyas,
-Iynx,arcadian nymph – daughter of Pan and Echo,[],female,[],,,,,,Pan,Echo
+Iynx,arcadian nymph – daughter of Pan and Echo,['nature'],female,[],,,,,,Pan,Echo
 Jason,"Greek mythological hero, son of Aeson",[],male,['Iason'],,,,,,Aeson,
 Jocasta,mythological queen of Thebes,[],female,"['Iokaste', 'Iokasta', 'Iocaste', 'Jocaste', 'Epicaste']",,,,,,Menoetius,
-Klymene,Oceanid in Greek mythology,[],female,['Clymene'],Greek deity,Greek nymph,,,,Oceanus,Tethys
-Kratos,God from Greek mythology,['power'],male,"['Cratus', 'Cratos', 'Potestas']",Greek deity,,,,,Pallas,Styx
+Klymene,Oceanid in Greek mythology,['sea'],female,['Clymene'],Greek deity,Greek nymph,Oceanids,,,Oceanus,Tethys
+Kratos,God from Greek mythology,"['power','strength']",male,"['Cratus', 'Cratos', 'Potestas']",Greek deity,,,,,Pallas,Styx
 Labdacus,mythological king of Thebes,[],male,[],,,,,,Polydorus,
-Lachesis,one of the Fates of Greek Mythology,[],female,['Lakhesis'],Greek deity,,,,,Zeus,Themis
+Lachesis,one of the Fates of Greek Mythology,"['destiny', 'fate', 'life','death']",female,['Lakhesis'],Greek deity,,,,,Zeus,Themis
 Ladon,Greek mythological serpent,[],male organism,"['Hesperian Dragon', 'Drakôn Hesperios']",,,,,,Phorcys,Ceto
 Laertes,legendary king of Ithaca,[],male,[],,,,,King (of Ithaca),,
 Laius,mythological king of Thebes,[],male,[],,,,,,Labdacus,
@@ -263,9 +262,9 @@ Laodamia,"Greek mythology character, wife of Protesilaus",[],female,['Laodameia'
 Laomedon,"Trojan king, son of Ilus",[],male,[],,,,,,Ilus,Eurydice
 Latinus,king in Greek and Roman mythology,[],male,[],,,,,,Odysseus,Circe
 Leda,daughter of Thestius in Greek mythology,[],female,['Lada'],,,,,,Thestius,
-Lethe,river of forgetfulness in the Greek underworld,[],female,['Lemosyne'],Greek deity,Greek water deities,Potamoi,,,,Eris
-Leto,Greek mythological figure and mother of Apollo and Artemis,[],female,['Latona'],Greek deity,titan,,,,Coeus,Phoebe
-Limos,personification of famine in Greek mythology,[],female,['Fames'],Greek deity,,,,,,Eris
+Lethe,river of forgetfulness in the Greek underworld,"['river','oblivion']",female,['Lemosyne'],Greek deity,Greek water deities,Potamoi,,,,Eris
+Leto,Greek mythological figure and mother of Apollo and Artemis,['motherhood'],female,['Latona'],Greek deity,titan,,,,Coeus,Phoebe
+Limos,personification of famine in Greek mythology,['hunger'],female,['Fames'],Greek deity,allegorical Greek deity,,,,Eris
 Lycaon,"Greek mythical character, king of Arcadia, son of Pelasgus and Meliboea",[],male,['Lykaon'],autochthonos,,,,,Priam,
 Lycomedes,king of Scyros in Greek mythology,[],male,[],,,,,King (of Scyros),,
 Lycurgus of Sparta,legislator of Sparta,[],male,['Lycurgus'],,,,,,Pheres,
@@ -282,11 +281,10 @@ Medusa,"in Greek mythology, one of the three Gorgons, described as a woman with 
 Megapenthes,"figure in Greek mythology, son of Proetus, king of Argos",[],male,[],,,,,,Menelaus,
 Megara,mythical wife of Heracles and daughter of Creon,[],female,[],,,,,,Creon,
 Melampus,mythical king of Argos,[],male,[],,,,,,Amythaon,
-Melete,one of the three original Boeotian Muses in Greek mythology,[],female,[],,,,,,Uranus,Gaia
+Melete,one of the three original Boeotian Muses in Greek mythology,['contemplation'],female,[],Greek deity,Muse,,,,Uranus,Gaia
 Melicertes,Greek mythological figure,[],male,"['Palaemon', 'Palaimon']",Greek deity,Greek water deities,,,,Athamas,Ino
-Melite,naiad of Greek mythology,[],female,[],Greek deity,Greek nymph,naiad,,,Nereus,Doris
-Melpomene,Greek muse of tragedy,[],female,[],,,,,,Uranus,Gaia
-Melpomene,Greek muse of tragedy,[],female,[],,,,,,Zeus,
+Melite,naiad of Greek mythology,['water'],female,[],Greek deity,Greek nymph,naiad,,,Nereus,Doris
+Melpomene,Greek muse of tragedy,['tragedy'],female,[],Greek deity,Muse,,,,Zeus,
 Memnon,mythical Ethiopian king,[],male,['Ismandes'],,,,,,Tithonus,Eos
 Menelaus,"mythical king of Sparta, husband of Helen of Troy",[],male,[],,,,,,Atreus,Aerope
 Menoeceus,"mythical character, father of Creon",[],male,[],,,,,,Creon,
@@ -297,33 +295,33 @@ Metis,Oceanid of Greek mythology,['wisdom'],female,[],Greek deity,Greek water de
 Midas,king with the power to turn whatever he touches to gold,[],male,"['Midacritus', 'Mita']",,,,,King (of Pessinus),Gordias,Rhea
 Miletus,mythical founder of Miletus,[],male,['Miletos'],,,,,,,Acacallis
 Minos,"Greek mythology character, son of Zeus and Europa, king of Crete",[],male,['Minos II'],,,,,King (of Crete),Zeus,Europa
-Mneme,one of the three original Boeotian Muses in Greek mythology,[],female,[],,,,,,Uranus,Gaia
+Mneme,one of the three original Boeotian Muses in Greek mythology,['memory'],female,[],Greek deity,Muse,,,,Uranus,Gaia
 Molossus,mythical son of Pyrrus,[],male,[],,,,,,Neoptolemus,Andromache
-Momus,the personification of satire and mockery in Greek mythology,[],male,[],Greek deity,,,,,Erebos,Nyx
-Moros,Greek spirit of doom,[],male,['Morus'],Greek deity,,,,,Erebos,Nyx
+Momus,the personification of satire and mockery in Greek mythology,['mockery'],male,[],Greek deity,allegorical Greek deity,,,,Erebos,Nyx
+Moros,Greek spirit of doom,['doom'],male,['Morus'],Greek deity,allegorical Greek deity,,,,Erebos,Nyx
 Morpheus,Greek deity associated with sleep and dreams,['dream'],male,[],Greek deity,,,,,Hypnos,
 Myrmidon,"Greek mythical character, eponymous ancestor of the Myrmidons",[],male,[],,,,,,,
 Myrtilus,son of Hermes in Greek mythology,[],male,[],,,,,,Hermes,
 Nausicaa,daughter of Alcinous in Greek mythology,[],female,"['Nausicaä', 'Nausikaa']",,,,,,Alcinous,Arete
 Nausithous,son of Poseidon in Greek mythology,[],male,[],,,,,King (of the Phaeacians),Poseidon,
-Neikea,personifications of querrels in Greek mythology,[],female,[],Greek deity,,,,,,Eris
+Neikea,personifications of querrels in Greek mythology,['querrels'],female,[],Greek deity,,,,,,Eris
 Neleus,mythical son of Poseidon or Cretheus and father of Nestor,[],male,[],,,,,,Poseidon,Tyro
-Nemesis,goddess of Greek mythology,['punishment'],female,"['Astræa', 'Astrea', 'Astraea']",Greek deity,Greek water deities,Oceanids,Okeanid,,Erebos,Nyx
+Nemesis,goddess of Greek mythology,"['punishment','retribution','justice']",female,"['Astræa', 'Astrea', 'Astraea']",Greek deity,allegorical Greek deity,,,,Erebos,Nyx
 Neoptolemus,son of Achilles,[],male,"['Pyrrus', 'Pyrros', 'Pyrrhus']",,,,,,Achilles,Deidamia
-Nephele,"cloud goddess, wife of Athamas and mother of Phrixus and Helle",[],female,"['Nebula', 'Nephele']",Greek deity,Greek nymph,,,,,
-Nereus,sea god of Greek mythology,[],male,['Old Man of the Sea'],Greek deity,Greek water deities,,,,Pontus,Gaia
+Nephele,"cloud goddess, wife of Athamas and mother of Phrixus and Helle",['clouds'],female,"['Nebula', 'Nephele']",Greek deity,Greek nymph,,,,,
+Nereus,sea god of Greek mythology,['sea'],male,['Old Man of the Sea'],Greek deity,Greek water deities,,,,Pontus,Gaia
 Nestor,"wise ruler of Pylos in Greek mythology, son of Neleus",[],male,[],,,,,,Neleus,Chloris
-Nike,goddess of victory in Greek mythology,[],female,"['Winged Nike', 'Diva Victoria', 'Winged Victory', 'Victory', 'Victoria']",Greek deity,allegorical Greek deity,,,,Pallas,Styx
+Nike,goddess of victory in Greek mythology,['victory'],female,"['Winged Nike', 'Diva Victoria', 'Winged Victory', 'Victory', 'Victoria']",Greek deity,allegorical Greek deity,,,,Pallas,Styx
 Nycteus,king of Thebes,[],male,[],,,,,,,
 Nyx,Greek goddess of the night,['night'],female,"['Nott', 'Nótt']",Greek deity,Greek primordial deity,,,,,Chaos
-Oceanus,"Ancient Greek god of the earth-encircling river, Oceanos",['Oceanus'],male,['Okeanos'],Greek deity,titan,,,,Uranus,Gaia
+Oceanus,"Ancient Greek god of the earth-encircling river, Oceanos",['oceans'],male,['Okeanos'],Greek deity,titan,,,,Uranus,Gaia
 Odysseus,legendary Greek king of Ithaca,[],male,['Ulysses'],,,,,,Laertes,Anticlea
 Oeagrus,"mythical character, father of Orpheus",[],male,[],,,,,,,
 Oebalus,son of Cynortas in Greek mythology,[],male,[],,,,,King (of Sparta),,
 Oedipus,mythical Greek king of Thebes,[],male,[],,,,,,Laius,Jocasta
 Oeneus,mythical king of Calydon,[],male,[],,,,,,,
 Oenomaus,father of Hippodamia; son of Ares,[],male,[],,,,,,Ares,Sterope
-Oenone,"nymph of Greek mythology, wife of Paris",[],female,"['Oenonë', 'Oinone', 'Enone']",Greek deity,Greek nymph,naiad,,,,
+Oenone,"nymph of Greek mythology, wife of Paris",['nature'],female,"['Oenonë', 'Oinone', 'Enone']",Greek deity,Greek nymph,naiad,,,,
 Oenopion,"mythical character, son of Ariadne with Dionysus or Theseus",[],male,[],,,,,,Dionysus,Ariadne
 Oizys,goddess of misery in Greek mythology,"['sorrow', 'suffering', 'mental depression', 'misery', 'anxiety', 'mourning']",female,['Oezys'],Greek deity,allegorical Greek deity,,,,Erebos,Nyx
 Omphale,"daughter of Iardanus, in Greek mythology",[],female,['Omphalë'],,,,,Queen (of Lydia),,
@@ -331,8 +329,8 @@ Orestes,son of Agamemnon in Greek mythology,[],male,['Agamemnonides'],,,,,,Agame
 Orion,giant huntsman in Greek mythology,[],male,[],Greek deity,,,,,,
 Orpheus,"legendary musician, poet, and prophet in ancient Greek religion and myth",[],male,[],,,,,,Oeagrus,Calliope
 Oxylus,"son of Haemon, mythical king of Elis",[],male,['Oxylos'],,,,,,,
-Pallas,Titan in Greek mythology,[],male,[],Greek deity,titan,,,,,Eurybia
-Pan,"Greek god of the mountain wilds, shepherds, flocks, rustic music, fertility, spring, and theatrical criticism, with the hindquarters, legs, and horns of a goat",[],male,['Faunus'],Greek deity,,,,,Hermes,Dryope
+Pallas,Titan in Greek mythology,['warcraft'],male,[],Greek deity,titan,,,,,Eurybia
+Pan,"Greek god of the mountain wilds, shepherds, flocks, rustic music, fertility, spring, and theatrical criticism, with the hindquarters, legs, and horns of a goat","['nature', 'wildlife']",male,['Faunus'],Greek deity,,,,,Hermes,Dryope
 Pandarus,"mythological Trojan, son of Lycaon",[],male,[],,,,,,Lycaon,
 Pandora,mythological figure,[],female,['Anesidora'],,,,,,,
 Paris,"mythological son of Priam, king of Troy",[],male,"['Alexandros', 'Alexander']",,,,,,Priam,Hecuba
@@ -345,9 +343,9 @@ Penelope,wife of Odysseus in Greek mythology,[],female,[],,,,,,,
 Pergamus,legendary son of Neoptolemus,[],male,['Pergamos'],,,,,,Neoptolemus,Andromache
 Periclymenus,son of Neleus in Greek mythology,[],male,[],,,,,,Neleus,Chloris
 Pero,Greek mythical figure,[],female,[],,,,,,Neleus,Chloris
-Perse,"Oceanid (one of the three thousand daughters of the Titans Oceanus and Tethys), and the wife of the Sun god, Helios",[],female,"['Perseis', 'Persa']",Greek deity,Greek water deities,Oceanids,Okeanid,,,
-Persephone,Greek goddess of spring and the queen of the underworld,[],female,"['Kore', 'Libera']",Greek deity,,,,,Zeus,Demeter
-Perses,Ancient Greek mythological Titan,[],male,"['Persaeus', 'Persaios', 'Perses']",Greek deity,titan,,,,,Eurybia
+Perse,"Oceanid (one of the three thousand daughters of the Titans Oceanus and Tethys), and the wife of the Sun god, Helios",['sea'],female,"['Perseis', 'Persa']",Greek deity,Greek water deities,Oceanids,Okeanid,,,
+Persephone,Greek goddess of spring and the queen of the underworld,"['spring', 'nature','seasons','cycle of life']",female,"['Kore', 'Libera']",Greek deity,,,,,Zeus,Demeter
+Perses,Ancient Greek mythological Titan,['destruction'],male,"['Persaeus', 'Persaios', 'Perses']",Greek deity,titan,,,,,Eurybia
 Perseus,legendary Greek hero and founder of Mycenae,[],male,[],Greek deity,demigod of Greek mythology,,,,Zeus,
 Phaedra,wife of Theseus in Greek mythology,[],female,[],,,,,,Minos,
 Phegeus,mythical son of Alpheius,[],male,[],,,,,,,
@@ -357,45 +355,45 @@ Philomela,legendary princess of Athens transformed into a nightingale,[],female,
 Phineus,son of Agenor in Greek mythology,[],male,"['Phineus', 'son of Agenor']",,,,,,Belus,
 Phlegyas,king of the Lapiths in Greek mythology,[],male,[],,,,,King (of the Phlegyae),Ares,
 Phocus,"mythical character, son of Aeacus",[],male,['Phokos son of Aiakos'],,,,,,Aeacus,
-Phoebe,titan in Greek mythology,[],female,"['Phoibe', 'Phœbe']",Greek deity,titan,,,,Uranus,Gaia
+Phoebe,titan in Greek mythology,"['prophecy','intellect']",female,"['Phoibe', 'Phœbe']",Greek deity,titan,,,,Uranus,Gaia
 Phoenix,"Greek mythology character, son of Agenor and Telephassa, eponym of Phoenicia",[],male,['Phoinix'],,,,,,Agenor,Telephassa
-Phorcys,Greek sea god,[],male,['Phorcus'],Greek deity,chthonic deities,,,,Pontus,Gaia
-Phoroneus,son of Inachus in Greek mythology,[],male,[],Greek deity,Greek water deities,Potamoi,,,Inachus,
-Phosphorus,personification of the Morning Star in Greek and Roman mythology,[],male,"['Heosphoros', 'Eosphorus', 'Lucifer', 'Hesperus']",Greek deity,,,,,,
+Phorcys,Greek sea god,['sea'],male,['Phorcus'],Greek deity,chthonic deities,,,,Pontus,Gaia
+Phoroneus,son of Inachus in Greek mythology,['river'],male,[],Greek deity,Greek water deities,Potamoi,,,Inachus,
+Phosphorus,personification of the Morning Star (planet Venus) in Greek and Roman mythology,['dawn'],male,"['Heosphoros', 'Eosphorus', 'Lucifer', 'Hesperus']",Greek deity,,,,,,
 Phrixus,son of Athamas in Greek mythology,[],male,['Phryxus'],,,,,,Athamas,Nephele
 Pirithous,son of Ixion in Greek mythology,[],male,['Perithous'],,,,,King (of the Lapiths),Ixion,
 Pittheus,son of Pelops in Greek mythology,[],male,[],,,,,King (of Troezen),,
-Pleione,Oceanid of Greek mythology,[],female,[],Greek deity,Greek water deities,Oceanids,Okeanid,,Oceanus,Tethys
+Pleione,Oceanid of Greek mythology,['sea'],female,[],Greek deity,Greek water deities,Oceanids,Okeanid,,Oceanus,Tethys
 Podalirius,mythical son of Asclepius,[],male,[],,,,,,Asclepius,Epione
 Poeas,Argonaut and friend of Heracles in Greek mythology,[],male,['Poias'],,,,,,,
 Polites,"mythological Greek character, Trojan prince, son of Priam",[],male,['Polites of Troy'],,,,,,Priam,Hecuba
 Polybus of Corinth,mythological king of Corinth,[],male,['Polybus'],,,,,King (of Corinth),,
 Polycaste,daughter of Nestor in Greek mythology,[],female,[],,,,,,Nestor,Eurydice
 Polydorus,"mythological trojan prince, son of Priam",[],male,"['Polydorus of Troy', 'Polydorus']",,,,,,Priam,
-Polyhymnia,muse of rhetoric in Greek mythology,['hymn'],female,['Polymnia'],,,,,,Zeus,
+Polyhymnia,muse of rhetoric in Greek mythology,"['hymnos','poetry']",female,['Polymnia'],Greek deity,Muse,,,,Zeus,
 Polynices,mythological prince of Thebes,[],male,"['Polyneices', 'Polyneikes']",,,,,,Oedipus,Jocasta
 Polyphemus,giant son of Poseidon and Thoosa in Greek mythology,[],male,[],cyclops,,,,,Poseidon,Thoosa
 Polyxena,mythical daughter of Priam,[],female,[],,,,,,Priam,Hecuba
-Ponos,personification of pain/toil in ancient Greece,[],male,[],Greek deity,allegorical Greek deity,,,,,Eris
-Pontus,sea god of Greek mythology,['Mediterranean Sea'],male,['Pontos'],Greek deity,Greek primordial deity,,,,,Gaia
+Ponos,personification of pain toil and labor in ancient Greece,['hardship'],male,[],Greek deity,allegorical Greek deity,,,,,Eris
+Pontus,sea god of Greek mythology,['sea'],male,['Pontos'],Greek deity,Greek primordial deity,,,,,Gaia
 Porphyrion,giant in Greek mythology,[],male,[],Greek deity,Giants,,,,Tartarus,Gaia
-Poseidon,God of the seas in Greek mythology,"['earthquake', 'sea', 'horse breeding']",male,"['Posidon', 'Poseidon', 'Neptunus', 'Neptune']",Greek deity,Olympian god,,,,Cronus,Rhea
+Poseidon,God of the seas in Greek mythology,"['earthquake', 'sea', 'horses','storms']",male,"['Posidon', 'Poseidon', 'Neptunus', 'Neptune']",Greek deity,Olympian god,,,,Cronus,Rhea
 Praxithea,"daughter of Phrasimus or the river-god Cephissus, married to king Erechtheus of Athens",[],female,['Praxithea II'],,,,,,,
 Priam,mythological king of Troy,[],male,[],,,,,,Laomedon,
 Procris,legendary princess of Athens,[],female,[],,,,,,Erechtheus,Praxithea
 Proetus,mythical Greek king at Tiryns,[],male,['Proetus son of Abas'],,,,,King (of Tiryns),,
-Prometheus,"Titan, culture hero, and trickster figure in Greek mythology",[],male,[],Greek deity,titan,,,,Iapetos,Klymene
-Psyche,mythical lover of Eros/Cupid,[],female,[],Greek deity,,,,,,
+Prometheus,"Titan, culture hero, and trickster figure in Greek mythology",['humanity'],male,[],Greek deity,titan,,,,Iapetos,Klymene
+Psyche,mythical lover of Eros/Cupid,['soul'],female,[],Greek deity,,,,,,
 Pygmalion,"legendary figure of Cyprus, sculptor",[],male,[],,,,,King (of Cyprus),Poseidon,
 Pylades,mythical friend of Orestes,[],male,['Pylade'],,,,,,Strophius,
 Pyrrha,daughter of Epimetheus and Pandora in Greek mythology,[],female,[],,,,,,Epimetheus,Pandora
 Rhadamanthus,"Greek mythology character, son of Zeus and Europa",[],male,"['Rhadamanthys', 'Aleus']",,,,,,Zeus,Europa
-Rhea,"female Titan in Greek mythology, mother of Zeus and mother of Hera",[],female,"['Rheia', 'Turrigera', 'Matar Kubileya', 'Kybebe', 'Kuvava', 'Cybebe', 'Cibeles', 'Kybele', 'Kibele', 'Cybele']",Greek deity,titan,,,,Uranus,Gaia
+Rhea,"female Titan in Greek mythology, mother of Zeus and mother of Hera","['motherhood','childbirth']",female,"['Rheia', 'Turrigera', 'Matar Kubileya', 'Kybebe', 'Kuvava', 'Cybebe', 'Cibeles', 'Kybele', 'Kibele', 'Cybele']",Greek deity,titan,,,,Uranus,Gaia
 Rhoeo,mythical mother of Anius by Apollo,[],female,[],,,,,,Staphylus,
 Salmoneus,son of Aiolos in Greek mythology,[],male,[],,,,,King (of Elis),Aeolus,Enarete
 Sarpedon,"Greek mythology character, son of Laodamia",[],male,[],,,,,,Zeus,Europa
-Scamander,water deity,['Scamander'],male,"['Skamandros', 'Scamandrus', 'Karamenderes', 'Xanthos', 'Xanthus']",Greek deity,Greek water deities,Potamoi,,,Oceanus,Tethys
-Scylla,nymph transformed into a sea monster by Circe in Greek mythology,[],female organism,[],Greek deity,Greek water deities,,,,Phorcys,Ceto
+Scamander,water deity,['river'],male,"['Skamandros', 'Scamandrus', 'Karamenderes', 'Xanthos', 'Xanthus']",Greek deity,Greek water deities,Potamoi,,,Oceanus,Tethys
+Scylla,nymph transformed into a sea monster by Circe in Greek mythology,['sea'],female organism,[],Greek deity,Greek water deities,,,,Phorcys,Ceto
 Semele,mother of Dionysus in Greek mythology,[],female,['Stimula'],,,,,,Cadmus,Harmonia
 Sidero,character of Greek mythology,[],female,[],,,,,,,
 Sisyphus,king of Ephyra in Greek mythology,[],male,"['Sisyphos', 'Wu Gang']",,,,,King (of Corinth),Aeolus,
@@ -403,10 +401,10 @@ Staphylus,son of Dionysus in Greek mythology,[],male,[],,,,,King (of Peparethos)
 Sterope,one of the Pleiades in Greek mythology,[],female,[],Greek deity,Greek nymph,Pleiades,,,Atlas,Pleione
 Stheno,"monster from Greek mythology, eldest of the Gorgons",[],female,[],,,,,,Phorcys,Ceto
 Strophius,mythical son of Crisus,[],male,[],,,,,,,
-Styx,Greek divinity of the river Styx,['Styx'],female,[],Greek deity,Greek water deities,Oceanids,Okeanid,,Oceanus,Tethys
+Styx,Greek divinity of the river Styx,"['river','sacred oaths']",female,[],Greek deity,Greek water deities,Oceanids,Okeanid,,Oceanus,Tethys
 Talos,mythological bronze automaton guarding Crete,[],male,['Talus'],,,,,,Oenopion,
 Tantalus,son of Zeus in Greek mythology,[],male,[],,,,,,Zeus,Hades
-Tartarus,"deep abyss, place of punishment, in ancient Greek mythology",[],male,"['Tartaros', 'Tartarus']",Greek deity,Greek primordial deity,,,,,Chaos
+Tartarus,"deep abyss, place of punishment, in ancient Greek mythology",['abyss'],male,"['Tartaros', 'Tartarus']",Greek deity,Greek primordial deity,,,,,Chaos
 Taygete,one of the Pleiades in Greek mythology,[],female,[],Greek deity,Greek nymph,Pleiades,,,Atlas,Pleione
 Tecmessa,daughter of Teuthras in Greek mythology,[],female,[],,,,,,,
 Telamon,"one of the Argonauts of Jason, in Greek mythology",[],male,[],,,,,,,
@@ -414,36 +412,36 @@ Telegonus,mythical son of Circe and Odysseus,[],male,[],,,,,,Odysseus,Circe
 Telemachus,mythological son of Odysseus,[],male,[],,,,,,Odysseus,Penelope
 Telemus,son of Eurymus in Greek mythology,[],male,[],,,,,,,
 Telephassa,figure from Greek mythology,[],female,[],,,,,,,
-Terpsichore,muse of dance in Greek mythology,[],female,['Terpsichorë'],,,,,,Zeus,
-Tethys,ancient Greek mythological figure,[],female,['Parthenope'],Greek deity,titan,,,,Uranus,Gaia
+Terpsichore,muse of dance in Greek mythology,['dance'],female,['Terpsichorë'],Greek deity,Muse,,,,Zeus,
+Tethys,ancient Greek mythological figure,['oceans'],female,['Parthenope'],Greek deity,titan,,,,Uranus,Gaia
 Teucer,character in the Iliad,[],male,[],,,,,,Telamon,Hesione
-Thalia,Muse of comedy in Greek mythology,[],female,['Thaleia'],,,,,,Zeus,
-Thallo,mythical character,['season'],female,[],Greek deity,,,,,Zeus,Themis
-Thanatos,personification of Death in Greek mythology,['death'],male,"['Grim Reaper', 'Reaper', 'the Grim Reaper', 'Death']",Greek deity,,,,,Erebos,Nyx
-Thaumas,sea god of Greek mythology,[],male,[],Greek deity,Greek water deities,,,,Pontus,Gaia
+Thalia,Muse of comedy in Greek mythology,['comedy'],female,['Thaleia'],Greek deity,Muse,,,,Zeus,
+Thallo,mythical character,"['seasons','spring']",female,[],Greek deity,,,,,Zeus,Themis
+Thanatos,personification of Death in Greek mythology,['death'],male,"['Grim Reaper', 'Reaper', 'the Grim Reaper', 'Death']",Greek deity,allegorical Greek deity,,,,Erebos,Nyx
+Thaumas,sea god of Greek mythology,['sea'],male,[],Greek deity,Greek water deities,,,,Pontus,Gaia
 Theano,priestess of Athena in Troy in Greek mythology,[],female,['Theano of Troy'],,,,,,Cisseus,
-Themis,"in ancient Greek mythology, a titaness, the personification of divine order, fairness, law, natural law, and custom, whose symbols are the scales of justice",['justice'],female,"['Justitia', 'Lady Justice']",Greek deity,titan,,,,Uranus,Gaia
+Themis,"in ancient Greek mythology, a titaness, the personification of divine order, fairness, law, natural law, and custom, whose symbols are the scales of justice","['justice', 'law']",female,"['Justitia', 'Lady Justice']",Greek deity,titan,,,,Uranus,Gaia
 Thersites,"son of Agrius, Achean warrior in the Trojan War",[],male,[],,,,,,,
 Theseus,legendary king of Athens,[],male,[],,,,,King (of Athens),Poseidon,Aethra
 Thestius,son of Agenor in Greek mythology,[],male,[],,,,,,,
 Thestor,Argonaut,[],male,[],,,,,,Apollo,
-Thetis,Nereid of Greek mythology,[],female,[],,,,,,Nereus,Doris
+Thetis,Nereid of Greek mythology,['sea'],female,[],Greek deity,Nereid,,,,Nereus,Doris
 Thoas,"a character in ancient Greek mythology, son of Dionysus",[],male,[],,,,,King (of Lemnos),Dionysus,Ariadne
-Thoosa,water deity,[],female,[],Greek deity,Greek nymph,,,,Phorcys,
+Thoosa,water deity,['currents'],female,[],Greek deity,Greek nymph,,,,Phorcys,
 Thyestes,King of Mycenae and brother of Atreus in Greek mythologie,[],male,[],,,,,,Pelops,Hippodamia
 Tisamenus,mythical son of Orestes,[],male,[],,,,,,Orestes,Hermione
 Tithonus,prince of Troy loved by Eos in Greek mythology,[],male,['Tithonos'],,,,,,Laomedon,
 Tityos,Greek mythological giant,[],male,['Tityus'],,,,,,Zeus,Elara
-Triton,"Greek god, messenger of the sea",[],male,[],Greek deity,Greek water deities,,,,Poseidon,Amphitrite
+Triton,"Greek god, messenger of the sea",['sea'],male,[],Greek deity,Greek water deities,,,,Poseidon,Amphitrite
 Troilus,mythical prince of Troy in Greek mythology,[],male,[],,,,,,Priam,Hecuba
 Tros,ruler of Troy in Greek mythology,[],male,[],,,,,,Erichthonius,
 Tydeus,son of Oeneus in Greek mythology,[],male,['Oenides'],,,,,,Oeneus,
 Tyndareus,King of Sparta,[],male,[],,,,,,Oebalus,Batea
-Typhon,deadly monster of Greek mythology,[],male,"['Typhoeus', 'Sutekh', 'Suty', 'Set', 'Typhon', 'Setesh', 'Setekh', 'Seth']",Greek deity,Giants,,,,Tartarus,Gaia
+Typhon,deadly monster of Greek mythology,['destruction'],male,"['Typhoeus', 'Sutekh', 'Suty', 'Set', 'Typhon', 'Setesh', 'Setekh', 'Seth']",Greek deity,Giants,,,,Tartarus,Gaia
 Tyro,daughter of Salmoneus in Greek mythology,[],female,[],,,,,,Salmoneus,Alcidice
-Urania,Muse of astronomy and astrology in Greek mythology,[],female,[],,,,,,Zeus,
+Urania,Muse of astronomy and astrology in Greek mythology,['astronomy'],female,[],Greek deity,Muse,,,,Zeus,
 Uranus,"primordial Greek deity, god of the Sky",['sky'],male,"['Uranos', 'Ouranos', 'Coelus', 'Caelum', 'Caelus']",Greek deity,Greek primordial deity,,,,,Gaia
-Zelus,ancient Greek personification of emulation/envy,[],male,[],Greek deity,,,,,Pallas,Styx
-Zephyrus,"Greek god of the wind from the west, spring, fertility, procreation, luck, rebirth, vegetation, flowers, bees and honey",[],male,['Zephyr'],Greek deity,Anemoi,,,,Astraeus,Eos
+Zelus,ancient Greek personification of emulation/envy,"['emulation', 'envy','jealousy']",male,[],Greek deity,allegorical Greek deity,,,,Pallas,Styx
+Zephyrus,"Greek god of the wind from the west, spring, fertility, procreation, luck, rebirth, vegetation, flowers, bees and honey",['wind'],male,['Zephyr'],Greek deity,Anemoi,,,,Astraeus,Eos
 Zethos,king in Greek mythology,[],male,['Zethus'],,,,,,Zeus,Hippolyta
-Zeus,Greek god of the sky and king of the gods,"['lightning', 'thunder']",male,"['Dias', 'Jupiter', 'Dju Pater', 'Juppiter', 'Jupiter (mythology)', 'Ioue', 'Diespiter', 'Jove']",Greek deity,Olympian god,,,,Cronus,Rhea
+Zeus,Greek god of the sky and king of the gods,"['lightning', 'thunder','sky','justice']",male,"['Dias', 'Jupiter', 'Dju Pater', 'Juppiter', 'Jupiter (mythology)', 'Ioue', 'Diespiter', 'Jove']",Greek deity,Olympian god,,,,Cronus,Rhea
