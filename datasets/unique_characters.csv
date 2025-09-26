@@ -114,7 +114,7 @@ Catreus,king of Crete and a son of Minos and Pasiphaë,[],male,[],,,,,,Minos,
 Celaeno,one of the Pleiades in Greek mythology,[],female,[],Greek deity,Greek nymph,Pleiades,,,Atlas,Pleione
 Celeus,mythical king at Eleusis,[],male,['Keleos'],,,,,King (of Eleusis),,
 Cephalus,son of Deioneus and beloved of Eos in Greek mythology,[],male,"['Kephalos', 'Cephalus of Athens', 'Cephalus']",,,,,,,
-Cerberus,three-headed dog that guards the underworld in Greek mythology,[],male organism,"['Hound of Hades', 'Cerberos', 'Garm', 'Garmr']",,,,,,Typhon,Echidna
+Cerberus,three-headed dog that guards the underworld in Greek mythology,[],male,"['Hound of Hades', 'Cerberos', 'Garm', 'Garmr']",,,,,,Typhon,Echidna
 Ceto,Greek sea goddess,['sea'],female,"['Cratais', 'Crataeis', 'Krataeis']",Greek deity,Greek water deities,,,,Pontus,Gaia
 Chaos,Greek primordial deity,['primordial void'],male,[],Greek deity,Greek primordial deity,,,,,
 Charon,ferryman of Hades in Greek-Roman mythology,['underworld'],male,"['Kharon', 'Charon (mythology)']",Greek deity,,,,,Erebos,Styx
@@ -179,7 +179,7 @@ Eris,Greek goddess of discord,"['competitiveness', 'discord', 'strife']",female,
 Eros,Greek god of love and sex,"['love', 'desire','pleasure']",male,"['Cupid', 'Amore', 'Cupido', 'Amor']",Greek deity,Greek primordial deity,,,,,Aphrodite
 Eteocles,mythological king of Thebes,[],male,[],,,,,,Oedipus,Jocasta
 Eumelus,"mythical king of Pherae, son of Admetus",[],male,['Eumelos'],,,,,,Admetus,Alcestis
-Eunomia,Greek goddess of good order,['law'],female,[],Greek deity,allegorical Greek deity,,,,,Zeus,Themis
+Eunomia,Greek goddess of good order,['law'],female,[],Greek deity,allegorical Greek deity,,,,Zeus,Themis
 Eupheme,"Greek female spirit of words of good omen, praise, acclaims, shouts of triumph, and applause",['praise'],female,[],Greek deity,allegorical Greek deity,,,,,
 Europa,"Phoenician character in Greek mythology, daughter of Agenor",['Europe'],female,"['Evropa', 'Europe', 'Europa']",,,,,,Agenor,Telephassa
 Euryale,mythical character; second eldest of the Gorgons,[],female,[],,,,,,Phorcys,Ceto
@@ -220,7 +220,7 @@ Hippodamia,"Greek mythical character, daughter of Oenomaus and wife of Pelops",[
 Hippolyta,queen of the Amazons in Greek mythology,[],female,"['Hippolytë', 'Antiope']",,,,,Queen (of the Amazons),,
 Hippolytus,son of Theseus in Greek mythology,[],male,['Hippolytos'],,,,,,Theseus,Hippolyta
 Hippothoe,Greek sea nymph,['sea'],female,[],Greek deity,Greek water deities,,,,Nereus,Doris
-Horkos,personifies the curse that will be inflicted on any person who swears a false oath in Greek mythology,['punishment'],male,"['Jusjurandum', 'Horcus', 'Horkos']",Greek deity,allegorical Greek deity,,,,Eris
+Horkos,personifies the curse that will be inflicted on any person who swears a false oath in Greek mythology,['punishment'],male,"['Jusjurandum', 'Horcus', 'Horkos']",Greek deity,allegorical Greek deity,,,,,Eris
 Hyas,son of Atlas in Greek mythology,[],male,[],,,,,,Atlas,Aethra
 Hyllus,son of Heracles and Deianira in Greek mythology,[],male,"['Hyllas', 'Hyllos', 'Hyllus']",,,,,,Heracles,Deianira
 Hyperion,Titan in Greek mythology,['light'],male,[],Greek deity,titan,,,,Uranus,Gaia
@@ -253,7 +253,7 @@ Klymene,Oceanid in Greek mythology,['sea'],female,['Clymene'],Greek deity,Greek 
 Kratos,God from Greek mythology,"['power','strength']",male,"['Cratus', 'Cratos', 'Potestas']",Greek deity,,,,,Pallas,Styx
 Labdacus,mythological king of Thebes,[],male,[],,,,,,Polydorus,
 Lachesis,one of the Fates of Greek Mythology,"['destiny', 'fate', 'life','death']",female,['Lakhesis'],Greek deity,,,,,Zeus,Themis
-Ladon,Greek mythological serpent,[],male organism,"['Hesperian Dragon', 'Drakôn Hesperios']",,,,,,Phorcys,Ceto
+Ladon,Greek mythological serpent,[],male,"['Hesperian Dragon', 'Drakôn Hesperios']",,,,,,Phorcys,Ceto
 Laertes,legendary king of Ithaca,[],male,[],,,,,King (of Ithaca),,
 Laius,mythological king of Thebes,[],male,[],,,,,,Labdacus,
 Lamia,daughter of Poseidon in Greek mythology,[],female,"['Lamiae', 'Lilith']",,,,,,Belus,
@@ -264,14 +264,14 @@ Latinus,king in Greek and Roman mythology,[],male,[],,,,,,Odysseus,Circe
 Leda,daughter of Thestius in Greek mythology,[],female,['Lada'],,,,,,Thestius,
 Lethe,river of forgetfulness in the Greek underworld,"['river','oblivion']",female,['Lemosyne'],Greek deity,Greek water deities,Potamoi,,,,Eris
 Leto,Greek mythological figure and mother of Apollo and Artemis,['motherhood'],female,['Latona'],Greek deity,titan,,,,Coeus,Phoebe
-Limos,personification of famine in Greek mythology,['hunger'],female,['Fames'],Greek deity,allegorical Greek deity,,,,Eris
+Limos,personification of famine in Greek mythology,['hunger'],female,['Fames'],Greek deity,allegorical Greek deity,,,,,Eris
 Lycaon,"Greek mythical character, king of Arcadia, son of Pelasgus and Meliboea",[],male,['Lykaon'],autochthonos,,,,,Priam,
 Lycomedes,king of Scyros in Greek mythology,[],male,[],,,,,King (of Scyros),,
 Lycurgus of Sparta,legislator of Sparta,[],male,['Lycurgus'],,,,,,Pheres,
 Lycus,"Greek mythical character, brother of Nycteus and king of Thebes",[],male,[],,,,,,Poseidon,Celaeno
 Lynceus,"mythical brother of Ida, son of Aphareus",[],male,[],,,,,,,
 Machaon,mythical Greek healer hero,[],male,[],,,,,,Asclepius,Epione
-Maera,mythical dog of Icarius of Attica,[],female organism,[],,,,,,Nereus,Doris
+Maera,mythical dog of Icarius of Attica,[],female,[],,,,,,Nereus,Doris
 Maia,Pleiad and mother of Hermes,[],female,[],Greek deity,Greek nymph,Pleiades,,,Atlas,Pleione
 Mantius,son of Melampus in Greek mythology,[],male,[],,,,,,Melampus,
 Medea,daughter of King Aeëtes of Colchis in Greek mythology,[],female,[],,,,,,Aeëtes,
@@ -393,7 +393,7 @@ Rhoeo,mythical mother of Anius by Apollo,[],female,[],,,,,,Staphylus,
 Salmoneus,son of Aiolos in Greek mythology,[],male,[],,,,,King (of Elis),Aeolus,Enarete
 Sarpedon,"Greek mythology character, son of Laodamia",[],male,[],,,,,,Zeus,Europa
 Scamander,water deity,['river'],male,"['Skamandros', 'Scamandrus', 'Karamenderes', 'Xanthos', 'Xanthus']",Greek deity,Greek water deities,Potamoi,,,Oceanus,Tethys
-Scylla,nymph transformed into a sea monster by Circe in Greek mythology,['sea'],female organism,[],Greek deity,Greek water deities,,,,Phorcys,Ceto
+Scylla,nymph transformed into a sea monster by Circe in Greek mythology,['sea'],female,[],Greek deity,Greek water deities,,,,Phorcys,Ceto
 Semele,mother of Dionysus in Greek mythology,[],female,['Stimula'],,,,,,Cadmus,Harmonia
 Sidero,character of Greek mythology,[],female,[],,,,,,,
 Sisyphus,king of Ephyra in Greek mythology,[],male,"['Sisyphos', 'Wu Gang']",,,,,King (of Corinth),Aeolus,
