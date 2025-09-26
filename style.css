@@ -1,0 +1,22 @@
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "ForceDirectedGraph"
+    "LineChart BarChart";
+}
+.ForceDirectedGraph {
+  grid-area: ForceDirectedGraph;
+}
+.LineChart {
+  grid-area: LineChart;
+}
+.BarChart {
+  grid-area: BarChart;
+}
