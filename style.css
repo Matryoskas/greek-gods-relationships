@@ -1,27 +1,30 @@
-body {
-  font-family: sans-serif;
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* prevent scrolling */
 }
 
 .container {
   display: grid;
+  height: 100%;
   grid-auto-columns: 1fr;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 2fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
     "ForceDirectedGraph ForceDirectedGraph"
-    "LineChart BarChart";
+    "TimelineChart ButterflyChart";
 }
 .ForceDirectedGraph {
   grid-area: ForceDirectedGraph;
   width: 100%;
-  height: 800px;  
+  height: 100%;  
 }
-.LineChart {
-  grid-area: LineChart;
+.TimelineChart {
+  grid-area: TimelineChart;
 }
-.BarChart {
-  grid-area: BarChart;
+.ButterflyChart {
+  grid-area: ButterflyChart;
 }
 .node-tooltip {
   position: absolute;
