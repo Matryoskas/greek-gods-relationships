@@ -66,6 +66,11 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .append('svg')
         .attr('width', width)
         .attr('height', height)
+        .attr('viewBox', [0, 0, width, height])
+        .attr('preserveAspectRatio', 'xMidYMid meet')
+
+    // a single group that we will zoom/pan
+    const g = svg.append('g')
 
     // Initialize simulation
     const simulation = d3
@@ -87,7 +92,7 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .range([1, 5]) // output: stroke-width in pixels
 
     // Draw edges (links)
-    const link = svg
+    const link = g
         .append('g')
         .attr('stroke', '#999')
         .attr('stroke-opacity', 0.6)
@@ -97,7 +102,7 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .attr('stroke-width', (d) => linkWidth(d.normalized_weight))
 
     // Draw nodes
-    const node = svg
+    const node = g
         .append('g')
         .attr('stroke', '#fff')
         .attr('stroke-width', 1.5)
@@ -109,7 +114,7 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .call(drag(simulation))
 
     // Add labels
-    const label = svg
+    const label = g
         .append('g')
         .selectAll('text')
         .data(nodes)
@@ -118,6 +123,16 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .attr('font-size', 12)
         .attr('dy', -12)
         .attr('text-anchor', 'middle')
+
+    // Zoom behavior
+    svg.call(
+        d3
+            .zoom()
+            .scaleExtent([0.2, 4])
+            .on('zoom', (event) => {
+                g.attr('transform', event.transform)
+            })
+    )
 
     // Simulation tick update
     simulation.on('tick', () => {
