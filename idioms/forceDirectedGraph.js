@@ -14,7 +14,7 @@ function filterTopNEdges(edges, n = 5) {
         topEdges.push(...edgeList.slice(0, n))
     })
 
-    return topEdges
+    return topEdges;
 }
 
 async function createForceDirectedGraph(nodes, edges, containerId) {
@@ -27,10 +27,17 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         ...nodes.map(n => n.level4).filter(Boolean),
         'Unknown'
     ]));
-    const color = d3.scaleOrdinal()
-        .domain(levels)
-        .range(d3.schemeCategory10);
-
+        // Combine two palettes for more unique colors
+        const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3);
+        // Get all unique categories actually used for coloring
+        const usedCategories = Array.from(new Set(nodes.map(n => n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown')));
+        // Assign each category a unique color
+        const categoryColorMap = {};
+        usedCategories.forEach((cat, i) => {
+            categoryColorMap[cat] = combinedColors[i % combinedColors.length];
+        });
+        // Color scale function
+        const color = d => categoryColorMap[d];
     edges = edges.filter((d) => d.normalized_weight > 0.3)
     edges = filterTopNEdges(edges, 2)
 
@@ -213,6 +220,43 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
             <p><strong>Level 4:</strong> ${d.level4 || '-'}</p>
         `);
     }
+    // Create a permanent tooltip inside the ForceDirectedGraph container
+    const permanentTooltip = d3
+        .select(containerId)
+        .append('div')
+        .attr('class', 'node-tooltip permanent-tooltip')
+        .style('opacity', 1);
+
+    // Determine the deepest level used for coloring
+    let deepestLevel = 'Unknown';
+    for (const levelName of ['level4', 'level3', 'level2', 'level1']) {
+        if (nodes.some(n => n[levelName])) {
+            deepestLevel = levelName;
+            break;
+        }
+    }
+
+    // Get all unique values for that level
+    // Build legend for all colors actually used for node coloring
+    // For each node, determine which level property was used for its color
+    const usedColorLabels = [];
+    nodes.forEach(n => {
+        let usedLevel = n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown';
+        if (!usedColorLabels.some(e => e.label === usedLevel)) {
+            usedColorLabels.push({ label: usedLevel, color: color(usedLevel) });
+        }
+    });
+
+    let legendHtml = `<h3>Color Legend</h3><ul style="list-style:none;padding:0;margin:0;">`;
+    usedColorLabels.forEach(entry => {
+        legendHtml += `<li style="margin-bottom:6px;display:flex;align-items:center;">
+            <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${entry.color};margin-right:8px;border:1px solid #888;"></span>
+            <span>${entry.label}</span>
+        </li>`;
+    });
+    legendHtml += `</ul>`;
+    permanentTooltip.html(legendHtml);
+    
 
     // Helper to update label font weight
     function updateLabelBold(selected) {
@@ -275,10 +319,11 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
             d.fy = null
         }
 
-        return d3
-            .drag()
-            .on('start', dragstarted)
-            .on('drag', dragged)
-            .on('end', dragended)
+            return d3
+                .drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended)
+        }
+    
     }
-}

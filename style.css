@@ -41,3 +41,11 @@ html, body {
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
+.permanent-tooltip {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    transform: none;
+    z-index: 10;
+}
