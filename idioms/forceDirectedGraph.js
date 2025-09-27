@@ -18,7 +18,18 @@ function filterTopNEdges(edges, n = 5) {
 }
 
 async function createForceDirectedGraph(nodes, edges, containerId) {
-    const color = d3.scaleOrdinal(d3.schemeCategory10)
+    const div = document.querySelector(containerId);
+    // Gather all possible levels
+    const levels = Array.from(new Set([
+        ...nodes.map(n => n.level1).filter(Boolean),
+        ...nodes.map(n => n.level2).filter(Boolean),
+        ...nodes.map(n => n.level3).filter(Boolean),
+        ...nodes.map(n => n.level4).filter(Boolean),
+        'Unknown'
+    ]));
+    const color = d3.scaleOrdinal()
+        .domain(levels)
+        .range(d3.schemeCategory10);
 
     edges = edges.filter((d) => d.normalized_weight > 0.3)
     edges = filterTopNEdges(edges, 2)
@@ -58,7 +69,7 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .domain([0, d3.max(nodes, (d) => d.weight)]) // input: min→max degree
         .range([4, 40]) // output: radius in pixels
 
-    const div = document.querySelector(containerId)
+    // Use the div variable already declared above
     const width = div.clientWidth
     const height = div.clientHeight
     const svg = d3
@@ -116,8 +127,12 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .data(nodes)
         .join('circle')
         .attr('r', (d) => sizeScale(d.weight))
-        .attr('fill', (d) => color(d.gender))
-        .call(drag(simulation))
+        .attr('fill', (d) => {
+            // Use the furthest level available
+            const level = d.level4 || d.level3 || d.level2 || d.level1 || 'Unknown';
+            return color(level);
+        })
+        .call(drag(simulation));
 
     // Add labels
     const label = g
@@ -158,52 +173,88 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .append('div')
         .attr('class', 'node-tooltip')
 
-    // Show tooltip on hover
-    node.on('mouseover', (event, d) => {
+    let fixedNode = null;
+    function showTooltip(d) {
         tooltip.style('opacity', 1).html(`
-        <h3>${d.name}</h3>
-        <p>${d.description || 'No description available.'}</p>
-        <p><strong>Gender:</strong> ${d.gender || 'Unknown'}</p>
-        <p><strong>Father:</strong> ${d.father || 'Unknown'}</p>
-        <p><strong>Mother:</strong> ${d.mother || 'Unknown'}</p>
-        <p><strong>Aliases:</strong> ${(() => {
-            if (Array.isArray(d.aliases)) {
-                return d.aliases.map(a => a.trim()).join(', ')
-            }
-            if (typeof d.aliases === 'string') {
-                // Remove brackets and quotes if present, so we dont show as an actual list
-                let str = d.aliases.trim();
-                if (str.startsWith('[') && str.endsWith(']')) {
-                    str = str.slice(1, -1);
-                }
-                // Remove quotes and extra spaces
-                str = str.replace(/['"]/g, '').split(',').map(s => s.trim()).filter(Boolean).join(', ');
-                return str || 'None';
-            }
-            return 'None';
-        })()}</p>
-        <p><strong>Domains:</strong> ${(() => {
-            if (Array.isArray(d.domain)) {
-                return d.domain.map(a => a.trim()).join(', ')
-            }
-            if (typeof d.domain === 'string') {
-                let str = d.domain.trim();
-                if (str.startsWith('[') && str.endsWith(']')) {
-                    str = str.slice(1, -1);
-                }
-                str = str.replace(/['"]/g, '').split(',').map(s => s.trim()).filter(Boolean).join(', ');
-                return str || 'None';
-            }
-            return 'None';
-        })()}</p>
-        <p><strong>Level 1:</strong> ${d.level1 || '-'}</p>
-        <p><strong>Level 2:</strong> ${d.level2 || '-'}</p>
-        <p><strong>Level 3:</strong> ${d.level3 || '-'}</p>
-        <p><strong>Level 4:</strong> ${d.level4 || '-'}</p>
-      `)
+            <h3>${d.name}</h3>
+            <p>${d.description || 'No description available.'}</p>
+            <p><strong>Gender:</strong> ${d.gender || 'Unknown'}</p>
+            <p><strong>Father:</strong> ${d.father || 'Unknown'}</p>
+            <p><strong>Mother:</strong> ${d.mother || 'Unknown'}</p>
+            <p><strong>Aliases:</strong> ${Array.isArray(d.aliases)
+                ? d.aliases.map(a => a.trim()).join(', ')
+                : (typeof d.aliases === 'string'
+                    ? (() => {
+                        let str = d.aliases.trim();
+                        if (str.startsWith('[') && str.endsWith(']')) {
+                            str = str.slice(1, -1);
+                        }
+                        str = str.replace(/['"]/g, '').split(',').map(s => s.trim()).filter(Boolean).join(', ');
+                        return str || 'None';
+                    })()
+                    : 'None')}
+            </p>
+            <p><strong>Domains:</strong> ${Array.isArray(d.domain)
+                ? d.domain.map(a => a.trim()).join(', ')
+                : (typeof d.domain === 'string'
+                    ? (() => {
+                        let str = d.domain.trim();
+                        if (str.startsWith('[') && str.endsWith(']')) {
+                            str = str.slice(1, -1);
+                        }
+                        str = str.replace(/['"]/g, '').split(',').map(s => s.trim()).filter(Boolean).join(', ');
+                        return str || 'None';
+                    })()
+                    : 'None')}
+            </p>
+            <p><strong>Level 1:</strong> ${d.level1 || '-'}</p>
+            <p><strong>Level 2:</strong> ${d.level2 || '-'}</p>
+            <p><strong>Level 3:</strong> ${d.level3 || '-'}</p>
+            <p><strong>Level 4:</strong> ${d.level4 || '-'}</p>
+        `);
+    }
+
+    // Helper to update label font weight
+    function updateLabelBold(selected) {
+        label.attr('font-weight', n => n === selected ? 'bold' : 'normal');
+    }
+    // (Removed duplicate/broken code after showTooltip)
+
+    node.on('mouseover', (event, d) => {
+        if (!fixedNode) {
+            showTooltip(d);
+            updateLabelBold(null);
+        }
     }).on('mouseout', () => {
-        tooltip.style('opacity', 0)
-    })
+        if (!fixedNode) {
+            tooltip.style('opacity', 0);
+            updateLabelBold(null);
+        }
+    }).on('click', (event, d) => {
+        fixedNode = d;
+        showTooltip(d);
+        // Highlight selected node
+        node.attr('stroke', n => n === d ? '#ff0' : '#fff')
+            .attr('stroke-width', n => n === d ? 4 : 1.5);
+        updateLabelBold(d);
+        // Center simulation on selected node (maybe not yet)
+        // simulation.alphaTarget(0.3).restart();
+        // simulation.force('center', d3.forceCenter(width / 2, height / 2));
+        // d.fx = width / 2;
+        // d.fy = height / 2;
+    });
+
+    // Unfix tooltip and node highlight on background click
+    svg.on('click', function(event) {
+        if (event.target.tagName === 'svg') {
+            fixedNode = null;
+            tooltip.style('opacity', 0);
+            node.attr('stroke', '#fff').attr('stroke-width', 1.5);
+            updateLabelBold(null);
+            nodes.forEach(n => { n.fx = null; n.fy = null; });
+            simulation.alphaTarget(0);
+        }
+    });
 
     // Drag behavior
     function drag(simulation) {
