@@ -28,12 +28,43 @@ html, body {
   max-height: 100%;       /* never taller than cell */
   object-fit: contain;    /* or 'cover' if you prefer */
 }
+
 .ForceDirectedGraph {
   grid-area: ForceDirectedGraph;
   width: 100%;
   height: 100%;  
   display: cover;
 }
+.graph-title {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.25em 0.5em;
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  border-radius: 4px;
+  z-index: 5;
+}
+.graph-subtitle {
+  position: absolute;
+  top: 50px; /* slightly below the main title */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.1em 0.3em;
+  font-size: 1.5em;       /* slightly smaller than title */
+  font-weight: normal;
+  color: #444;          /* softer than the title */
+  border-radius: 4px;
+  z-index: 5;
+  text-align: center;   /* good for longer lines */
+  max-width: 80%;       /* prevents it from overflowing */
+}
+
+
 .node-tooltip {
   position: absolute;
   top: 10px;       /* distance from top of graph */
