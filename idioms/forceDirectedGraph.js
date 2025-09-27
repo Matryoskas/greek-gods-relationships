@@ -27,17 +27,32 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         ...nodes.map(n => n.level4).filter(Boolean),
         'Unknown'
     ]));
-        // Combine two palettes for more unique colors
-        const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3);
-        // Get all unique categories actually used for coloring
-        const usedCategories = Array.from(new Set(nodes.map(n => n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown')));
-        // Assign each category a unique color
-        const categoryColorMap = {};
-        usedCategories.forEach((cat, i) => {
-            categoryColorMap[cat] = combinedColors[i % combinedColors.length];
-        });
-        // Color scale function
-        const color = d => categoryColorMap[d];
+    // Combine two palettes as a base
+    const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3);
+
+    // Get all unique categories for coloring
+    const usedCategories = Array.from(
+        new Set(nodes.map(n => n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown'))
+    );
+
+    // If we have more categories than colors, generate extra ones
+    function getColor(i) {
+        if (i < combinedColors.length) {
+            return combinedColors[i];
+        }
+        // Generate extra colors using interpolateRainbow
+        return d3.interpolateRainbow(i / usedCategories.length);
+    }
+
+    // Assign each category a unique color
+    const categoryColorMap = {};
+    usedCategories.forEach((cat, i) => {
+        categoryColorMap[cat] = getColor(i);
+    });
+
+    // Color scale function
+    const color = d => categoryColorMap[d];
+
     edges = edges.filter((d) => d.normalized_weight > 0.3)
     edges = filterTopNEdges(edges, 2)
 
