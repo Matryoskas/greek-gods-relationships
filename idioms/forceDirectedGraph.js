@@ -279,6 +279,20 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
     }
     // (Removed duplicate/broken code after showTooltip)
 
+    // Helper: get direct neighbors of a node
+    function getDirectConnections(node) {
+        const neighbors = new Set();
+        edges.forEach(e => {
+            if ((e.source.name || e.source) === node.name) {
+                neighbors.add(e.target.name || e.target);
+            }
+            if ((e.target.name || e.target) === node.name) {
+                neighbors.add(e.source.name || e.source);
+            }
+        });
+        return neighbors;
+    }
+
     node.on('mouseover', (event, d) => {
         if (!fixedNode) {
             showTooltip(d);
@@ -292,15 +306,28 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
     }).on('click', (event, d) => {
         fixedNode = d;
         showTooltip(d);
-        // Highlight selected node
-        node.attr('stroke', n => n === d ? '#ff0' : '#fff')
-            .attr('stroke-width', n => n === d ? 4 : 1.5);
-        updateLabelBold(d);
-        // Center simulation on selected node (maybe not yet)
-        // simulation.alphaTarget(0.3).restart();
-        // simulation.force('center', d3.forceCenter(width / 2, height / 2));
-        // d.fx = width / 2;
-        // d.fy = height / 2;
+        // Highlight selected node and direct connections
+        const neighbors = getDirectConnections(d);
+        node.attr('stroke', n => n === d ? '#ff0' : neighbors.has(n.name) ? '#ffa500' : '#fff')
+            .attr('stroke-width', n => n === d || neighbors.has(n.name) ? 4 : 1.5)
+            .attr('opacity', n => n === d || neighbors.has(n.name) ? 1 : 0.2);
+        label.attr('font-weight', n => n === d ? 'bold' : neighbors.has(n.name) ? 'bold' : 'normal')
+            .attr('opacity', n => n === d || neighbors.has(n.name) ? 1 : 0.2);
+        link.attr('stroke', l => {
+            const src = l.source.name || l.source;
+            const tgt = l.target.name || l.target;
+            return (src === d.name || tgt === d.name) ? '#ff0' : '#999';
+        })
+        .attr('stroke-width', l => {
+            const src = l.source.name || l.source;
+            const tgt = l.target.name || l.target;
+            return (src === d.name || tgt === d.name) ? 5 : 1.5;
+        })
+        .attr('opacity', l => {
+            const src = l.source.name || l.source;
+            const tgt = l.target.name || l.target;
+            return (src === d.name || tgt === d.name) ? 1 : 0.15;
+        });
     });
 
     // Unfix tooltip and node highlight on background click
@@ -308,8 +335,13 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         if (event.target.tagName === 'svg') {
             fixedNode = null;
             tooltip.style('opacity', 0);
-            node.attr('stroke', '#fff').attr('stroke-width', 1.5);
-            updateLabelBold(null);
+            node.attr('stroke', '#fff')
+                .attr('stroke-width', 1.5)
+                .attr('opacity', 1);
+            label.attr('font-weight', 'normal').attr('opacity', 1);
+            link.attr('stroke', '#999')
+                .attr('stroke-width', l => linkWidth(l.normalized_weight))
+                .attr('opacity', 0.6);
             nodes.forEach(n => { n.fx = null; n.fy = null; });
             simulation.alphaTarget(0);
         }
