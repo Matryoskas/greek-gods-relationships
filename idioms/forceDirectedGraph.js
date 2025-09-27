@@ -20,8 +20,8 @@ function filterTopNEdges(edges, n = 5) {
 async function createForceDirectedGraph(nodes, edges, containerId) {
     const color = d3.scaleOrdinal(d3.schemeCategory10)
 
-    edges = edges.filter((d) => d.normalized_weight > 0.2)
-    edges = filterTopNEdges(edges, 5)
+    edges = edges.filter((d) => d.normalized_weight > 0.3)
+    edges = filterTopNEdges(edges, 2)
 
     const connected = new Set()
     edges.forEach((e) => {
@@ -85,6 +85,12 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         )
         .force('charge', d3.forceManyBody().strength(-500))
         .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('x', d3.forceX(width / 2).strength(0.1))
+        .force('y', d3.forceY(height / 2).strength(0.1))
+        .force(
+            'collide',
+            d3.forceCollide((d) => sizeScale(d.weight) + 3)
+        )
 
     const linkWidth = d3
         .scaleLinear()
@@ -110,7 +116,7 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         .data(nodes)
         .join('circle')
         .attr('r', (d) => sizeScale(d.weight))
-        .attr('fill', (d) => color(d.name))
+        .attr('fill', (d) => color(d.gender))
         .call(drag(simulation))
 
     // Add labels
