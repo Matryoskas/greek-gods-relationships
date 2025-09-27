@@ -160,18 +160,40 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
         <p><strong>Gender:</strong> ${d.gender || 'Unknown'}</p>
         <p><strong>Father:</strong> ${d.father || 'Unknown'}</p>
         <p><strong>Mother:</strong> ${d.mother || 'Unknown'}</p>
-        <p><strong>Aliases:</strong> ${
-            Array.isArray(d.aliases)
-                ? d.aliases.join(', ')
-                : d.aliases || 'None'
-        }</p>
-        <p><strong>Domains:</strong> ${
-            Array.isArray(d.domain) ? d.domain.join(', ') : d.domain || 'None'
-        }</p>
-        <p><strong>Level 1:</strong> ${d.level1 || ''}</p>
-        <p><strong>Level 2:</strong> ${d.level2 || ''}</p>
-        <p><strong>Level 3:</strong> ${d.level3 || ''}</p>
-        <p><strong>Level 4:</strong> ${d.level4 || ''}</p>
+        <p><strong>Aliases:</strong> ${(() => {
+            if (Array.isArray(d.aliases)) {
+                return d.aliases.map(a => a.trim()).join(', ')
+            }
+            if (typeof d.aliases === 'string') {
+                // Remove brackets and quotes if present, so we dont show as an actual list
+                let str = d.aliases.trim();
+                if (str.startsWith('[') && str.endsWith(']')) {
+                    str = str.slice(1, -1);
+                }
+                // Remove quotes and extra spaces
+                str = str.replace(/['"]/g, '').split(',').map(s => s.trim()).filter(Boolean).join(', ');
+                return str || 'None';
+            }
+            return 'None';
+        })()}</p>
+        <p><strong>Domains:</strong> ${(() => {
+            if (Array.isArray(d.domain)) {
+                return d.domain.map(a => a.trim()).join(', ')
+            }
+            if (typeof d.domain === 'string') {
+                let str = d.domain.trim();
+                if (str.startsWith('[') && str.endsWith(']')) {
+                    str = str.slice(1, -1);
+                }
+                str = str.replace(/['"]/g, '').split(',').map(s => s.trim()).filter(Boolean).join(', ');
+                return str || 'None';
+            }
+            return 'None';
+        })()}</p>
+        <p><strong>Level 1:</strong> ${d.level1 || '-'}</p>
+        <p><strong>Level 2:</strong> ${d.level2 || '-'}</p>
+        <p><strong>Level 3:</strong> ${d.level3 || '-'}</p>
+        <p><strong>Level 4:</strong> ${d.level4 || '-'}</p>
       `)
     }).on('mouseout', () => {
         tooltip.style('opacity', 0)
