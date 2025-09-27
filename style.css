@@ -1,57 +1,30 @@
-
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f6f7fb;
+html, body {
+  height: 100%;
   margin: 0;
-  color: #222;
+  overflow: hidden; /* prevent scrolling */
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 0 60px 0;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.dashboard-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  padding: 32px 24px 24px 24px;
-  margin: 0;
-  flex: 1 1 350px;
-  min-width: 320px;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  height: 100%;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "ForceDirectedGraph ForceDirectedGraph"
+    "TimelineChart ButterflyChart";
 }
 
 .ForceDirectedGraph {
   width: 100%;
-  height: 800px;
-  min-height: 400px;
+  height: 100%;  
 }
-.LineChart, .BarChart {
-  width: 100%;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.TimelineChart {
+  grid-area: TimelineChart;
 }
-
-.level-legend {
-  margin-bottom: 18px;
-  background: #f3f3f7;
-  border-radius: 8px;
-  padding: 10px 18px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  font-size: 1em;
+.ButterflyChart {
+  grid-area: ButterflyChart;
 }
 
 .node-tooltip {
