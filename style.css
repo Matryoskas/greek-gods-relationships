@@ -15,8 +15,8 @@ html, body {
     "ForceDirectedGraph ForceDirectedGraph"
     "TimelineChart ButterflyChart";
 }
-
 .ForceDirectedGraph {
+  grid-area: ForceDirectedGraph;
   width: 100%;
   height: 100%;  
 }
@@ -26,32 +26,18 @@ html, body {
 .ButterflyChart {
   grid-area: ButterflyChart;
 }
-
 .node-tooltip {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 260px;
+  top: 10px;       /* distance from top of graph */
+  right: 10px;     /* distance from right of graph */
+  width: 250px;
   background: #fff;
   border: 1px solid #ccc;
-  padding: 1em;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-  font-size: 1em;
-  pointer-events: none;
+  padding: 0.75em;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-size: 0.9em;
+  pointer-events: none;  /* so it doesn’t block mouse interactions */
   opacity: 0;
   transition: opacity 0.2s ease;
-  z-index: 20;
-}
-
-.dashboard-card img {
-  border-radius: 8px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-}
-
-.dashboard-card .coming-soon {
-  text-align: center;
-  color: #888;
-  font-size: 1.1em;
-  margin-top: 12px;
 }
