@@ -23,3 +23,18 @@ body {
 .BarChart {
   grid-area: BarChart;
 }
+.node-tooltip {
+  position: absolute;
+  top: 10px;       /* distance from top of graph */
+  right: 10px;     /* distance from right of graph */
+  width: 250px;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 0.75em;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-size: 0.9em;
+  pointer-events: none;  /* so it doesn’t block mouse interactions */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
