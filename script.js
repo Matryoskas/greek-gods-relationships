@@ -1,4 +1,16 @@
 function init() {
+    // Global event dispatcher for selection (is it working?)
+    window.globalSelection = {
+        selectedGroup: null,
+        listeners: [],
+        set(group) {
+            this.selectedGroup = group;
+            this.listeners.forEach(fn => fn(group));
+        },
+        onChange(fn) {
+            this.listeners.push(fn);
+        }
+    };
     Promise.all([
         d3.csv('datasets/unique_characters.csv', (d) => ({
             name: d.name,
@@ -49,6 +61,15 @@ function init() {
         usedCategories.forEach((cat, i) => {
             categoryColorMap[cat] = getColor(i)
         })
+
+    
+        // Global handler for tooltip clicks
+        window.handleTooltipClick = function(group) {
+            if (window.globalSelection) {
+                window.globalSelection.set(group);
+            }
+            //  can add more custom actions here
+        }
 
 
         createForceDirectedGraph(characters, edges, '.ForceDirectedGraph', categoryColorMap);

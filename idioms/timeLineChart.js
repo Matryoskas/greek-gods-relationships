@@ -58,13 +58,27 @@ function createTimeLineChart(characters, edges, containerSelector, colorMap) {
 	const width = fullWidth - margin.left - margin.right;
 	const height = fullHeight - margin.top - margin.bottom;
 
-	const svg = d3.select(containerSelector)
+	const svgRoot = d3.select(containerSelector)
 		.append('svg')
 		.attr('width', '100%')
 		.attr('height', '100%')
 		.attr('viewBox', `0 0 ${fullWidth} ${fullHeight}`)
-		.attr('preserveAspectRatio', 'xMidYMid meet')
-		.append('g')
+		.attr('preserveAspectRatio', 'xMidYMid meet');
+
+	// Add background rect for click-to-reset
+	svgRoot.append('rect')
+		.attr('width', fullWidth)
+		.attr('height', fullHeight)
+		.attr('fill', 'transparent')
+		.style('cursor', 'pointer')
+		.on('click', function(event) {
+			// Only reset if clicking on the background, not a line
+			if (window.globalSelection) {
+				window.globalSelection.set(null);
+			}
+		});
+
+	const svg = svgRoot.append('g')
 		.attr('transform', `translate(${margin.left},${margin.top})`);
 
 	// X axis
@@ -85,18 +99,57 @@ function createTimeLineChart(characters, edges, containerSelector, colorMap) {
 	// Color scale from shared mapping
     //	const color = d3.scaleOrdinal(d3.schemeTableau10).domain(groups);
 
-	// Draw lines
+	// Draw lines with click event for global selection
+	const linePaths = [];
 	groups.forEach(group => {
 		const line = d3.line()
 			.x(d => x(d.period))
 			.y(d => y(d[group]));
-		svg.append('path')
+		// Visible line
+		const path = svg.append('path')
 			.datum(data)
 			.attr('fill', 'none')
 			.attr('stroke', color(group))
 			.attr('stroke-width', 2.5)
-			.attr('d', line);
+			.attr('d', line)
+			.attr('class', 'timeline-line');
+		// Invisible hit area
+		svg.append('path')
+			.datum(data)
+			.attr('fill', 'none')
+			.attr('stroke', 'transparent')
+			.attr('stroke-width', 12)
+			.attr('d', line)
+			.attr('class', 'timeline-hitarea')
+			.style('cursor', 'pointer')
+			.on('click', function() {
+				if (window.globalSelection) {
+					window.globalSelection.set(group);
+				}
+			});
+		linePaths.push({ group, path });
 	});
+
+	// Listen for global selection changes to highlight lines
+	if (window.globalSelection) {
+		window.globalSelection.onChange(function(selectedGroup) {
+			linePaths.forEach(({ group, path }) => {
+				if (selectedGroup === group) {
+					path.attr('stroke-width', 5)
+						.attr('opacity', 1)
+						.attr('stroke', color(group));
+				} else if (selectedGroup) {
+					path.attr('stroke-width', 2.5)
+						.attr('opacity', 0.2)
+						.attr('stroke', color(group));
+				} else {
+					path.attr('stroke-width', 2.5)
+						.attr('opacity', 1)
+						.attr('stroke', color(group));
+				}
+			});
+		});
+	}
 
 	// Draw legend
 	svg.selectAll('.legend')
