@@ -17,7 +17,7 @@ function filterTopNEdges(edges, n = 5) {
     return topEdges
 }
 
-async function createForceDirectedGraph(nodes, edges, containerId) {
+async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     const div = document.querySelector(containerId)
     // Gather all possible levels
     const levels = Array.from(
@@ -29,36 +29,37 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
             'Unknown',
         ])
     )
+    // Accept shared color mapping as parameter
+    const color = (d) => colorMap[d] || '#888';
     // Combine two palettes as a base
-    const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3)
+    // const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3)
 
     // Get all unique categories for coloring
-    const usedCategories = Array.from(
-        new Set(
-            nodes.map(
-                (n) => n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown'
-            )
-        )
-    )
+    // const usedCategories = Array.from(
+    //     new Set(
+    //         nodes.map(
+    //             (n) => n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown'
+    //         )
+    //     )
+    // )
 
     // If we have more categories than colors, generate extra ones
-    function getColor(i) {
-        if (i < combinedColors.length) {
-            return combinedColors[i]
-        }
-        // Generate extra colors using interpolateRainbow
-        return d3.interpolateRainbow(i / usedCategories.length)
-    }
+    // function getColor(i) {
+    //     if (i < combinedColors.length) {
+    //         return combinedColors[i]
+    //     }
+    //     Generate extra colors using interpolateRainbow
+    //     return d3.interpolateRainbow(i / usedCategories.length)
+    // }
 
     // Assign each category a unique color
-    const categoryColorMap = {}
-    usedCategories.forEach((cat, i) => {
-        categoryColorMap[cat] = getColor(i)
-    })
+    // const categoryColorMap = {}
+    // usedCategories.forEach((cat, i) => {
+    //     categoryColorMap[cat] = getColor(i)
+    // })
 
     // Color scale function
-    const color = (d) => categoryColorMap[d]
-
+    // const color = (d) => categoryColorMap[d]
     edges = edges.filter((d) => d.normalized_weight > 0.3)
     edges = filterTopNEdges(edges, 2)
 
@@ -425,3 +426,4 @@ async function createForceDirectedGraph(nodes, edges, containerId) {
             .on('end', dragended)
     }
 }
+

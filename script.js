@@ -12,7 +12,6 @@ function init() {
             level3: d.level3,
             level4: d.level4,
             domain: d.domain,
-            // add other fields if needed
         })),
         d3.csv('datasets/edges_filtered.csv', (d) => ({
             source: d.source,
@@ -23,6 +22,38 @@ function init() {
             period: d.period,
         })),
     ]).then(([characters, edges]) => {
-        createForceDirectedGraph(characters, edges, '.ForceDirectedGraph')
+        //createForceDirectedGraph(characters, edges, '.ForceDirectedGraph');
+
+        // Get all unique categories for coloring
+        const usedCategories = Array.from(
+            new Set(
+                characters.map(
+                    (n) => n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown'
+                )
+            )
+        );
+
+        const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3);
+
+        // If we have more categories than colors, generate extra ones
+        function getColor(i) {
+            if (i < combinedColors.length) {
+                return combinedColors[i]
+            }
+            //Generate extra colors using interpolateRainbow
+            return d3.interpolateRainbow(i / usedCategories.length)
+        }
+
+        //Assign each category a unique color
+        const categoryColorMap = {}
+        usedCategories.forEach((cat, i) => {
+            categoryColorMap[cat] = getColor(i)
+        })
+
+
+        createForceDirectedGraph(characters, edges, '.ForceDirectedGraph', categoryColorMap);
+        createTimeLineChart(characters, edges, '.TimelineChart', categoryColorMap);
+        //createTimeLineChart(characters, edges, '.TimelineChart');
+
     })
 }
