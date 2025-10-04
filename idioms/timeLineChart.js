@@ -293,7 +293,7 @@ function createTimeLineChart(
                 // Ensure dots stay within chart bounds
                 return Math.max(0, Math.min(height, offsetY))
             })
-            .attr('r', 3)
+            .attr('r', 8)
             .attr('fill', color(group))
             .attr('stroke', '#fff')
             .attr('stroke-width', 1)
@@ -318,7 +318,7 @@ function createTimeLineChart(
                     `)
 
                 // Highlight the dot
-                d3.select(this).attr('r', 5).attr('stroke-width', 2)
+                d3.select(this).attr('r', 8).attr('stroke-width', 1)
             })
             .on('mousemove', function (event) {
                 tooltip
@@ -329,7 +329,7 @@ function createTimeLineChart(
                 tooltip.style('visibility', 'hidden')
 
                 // Reset dot appearance
-                d3.select(this).attr('r', 3).attr('stroke-width', 1)
+                d3.select(this).attr('r', 8).attr('stroke-width', 1)
             })
             .on('click', function () {
                 if (window.globalSelection) {
@@ -449,7 +449,7 @@ function createTimeLineChart(
             g.append('circle')
                 .attr('cx', 12.5)
                 .attr('cy', 9)
-                .attr('r', 3)
+                .attr('r', 8)
                 .attr('fill', (d) => color(d))
                 .attr('stroke', '#fff')
                 .attr('stroke-width', 1)
