@@ -87,6 +87,7 @@ function init() {
             if (n.level2) n.level2 = normalize(n.level2)
             if (n.level3) n.level3 = normalize(n.level3)
             if (n.level4) n.level4 = normalize(n.level4)
+            n.description = normalize(n.description)
         })
 
         // Define global grouping logic (same as force-directed graph)

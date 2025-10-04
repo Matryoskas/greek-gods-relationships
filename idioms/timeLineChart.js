@@ -448,5 +448,5 @@ function createTimeLineChart(
         .attr('text-anchor', 'middle')
         .style('font-size', '1vw')
         .style('font-weight', 'bold')
-        .text('Timeline of Character Mentions by Period')
+        .text('Timeline of Mythological Group Mentions by Period')
 }
