@@ -427,6 +427,11 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                 n.fy = null
             })
             simulation.alphaTarget(0)
+
+            // Reset global selection (this will propagate to timeline chart)
+            if (window.globalSelection) {
+                window.globalSelection.set(null)
+            }
         }
     })
 
@@ -454,5 +459,88 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             .on('start', dragstarted)
             .on('drag', dragged)
             .on('end', dragended)
+    }
+
+    // Listen for global selection changes from timeline chart
+    if (window.globalSelection) {
+        window.globalSelection.onChange(function (selectedGroup) {
+            console.log(
+                'Force-directed graph received selection:',
+                selectedGroup
+            )
+
+            if (selectedGroup) {
+                // Filter nodes to show only characters from selected category
+                const relevantNodes = nodes.filter((n) => {
+                    const parentGroup = parentKey(n)
+                    return parentGroup === selectedGroup
+                })
+
+                const relevantNodeNames = new Set(
+                    relevantNodes.map((n) => n.name)
+                )
+
+                // Update node visibility and styling
+                node.attr('opacity', (n) =>
+                    relevantNodeNames.has(n.name) ? 1 : 0.1
+                )
+                    .attr('stroke-width', (n) =>
+                        relevantNodeNames.has(n.name) ? 3 : 1.5
+                    )
+                    .attr('stroke', (n) =>
+                        relevantNodeNames.has(n.name) ? '#ff6b35' : '#fff'
+                    )
+
+                // Update label visibility
+                label
+                    .attr('opacity', (n) =>
+                        relevantNodeNames.has(n.name) ? 1 : 0.1
+                    )
+                    .attr('font-weight', (n) =>
+                        relevantNodeNames.has(n.name) ? 'bold' : 'normal'
+                    )
+
+                // Update edge visibility (show only edges between relevant nodes)
+                link.attr('opacity', (l) => {
+                    const srcName = l.source.name || l.source
+                    const tgtName = l.target.name || l.target
+                    return relevantNodeNames.has(srcName) &&
+                        relevantNodeNames.has(tgtName)
+                        ? 0.8
+                        : 0.05
+                }).attr('stroke', (l) => {
+                    const srcName = l.source.name || l.source
+                    const tgtName = l.target.name || l.target
+                    return relevantNodeNames.has(srcName) &&
+                        relevantNodeNames.has(tgtName)
+                        ? '#ff6b35'
+                        : '#999'
+                })
+
+                // Update permanent tooltip to show category info
+                permanentTooltip.html(`
+                    <h3>Selected Category: ${selectedGroup}</h3>
+                    <p><strong>Characters shown:</strong> ${relevantNodes.length}</p>
+                    <p><strong>Category:</strong> ${selectedGroup}</p>
+                    <div style="margin-top: 10px;">
+                        <small>Click background to reset view</small>
+                    </div>
+                    <hr style="margin: 10px 0;">
+                    ${legendHtml}
+                `)
+            } else {
+                // Reset to normal view
+                node.attr('opacity', 1)
+                    .attr('stroke-width', 1.5)
+                    .attr('stroke', '#fff')
+
+                label.attr('opacity', 1).attr('font-weight', 'normal')
+
+                link.attr('opacity', 0.6).attr('stroke', '#999')
+
+                // Restore original legend
+                permanentTooltip.html(legendHtml)
+            }
+        })
     }
 }
