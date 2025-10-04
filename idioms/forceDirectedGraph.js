@@ -43,6 +43,21 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
     nodes = nodes.filter((n) => connected.has(n.name))
 
+// Normalize levels (capitalize first letter, rest lowercase)
+function normalize(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+// Apply normalization to all nodes
+nodes.forEach(n => {
+  if (n.level1) n.level1 = normalize(n.level1);
+  if (n.level2) n.level2 = normalize(n.level2);
+  if (n.level3) n.level3 = normalize(n.level3);
+  if (n.level4) n.level4 = normalize(n.level4);
+});
+
+
     // First, initialize all nodes with weight 0
     nodes.forEach((n) => (n.weight = 0))
 
@@ -135,21 +150,24 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         })
 
     // Draw nodes
-    const node = g
-        .append('g')
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 1.5)
-        .selectAll('circle')
-        .data(nodes)
-        .join('circle')
-        .attr('r', (d) => sizeScale(d.weight))
-        .attr('fill', (d) => {
-            // Use the furthest level available
-            const level =
-                d.level4 || d.level3 || d.level2 || d.level1 || 'Unknown'
-            return color(level)
-        })
-        .call(drag(simulation))
+// Draw nodes
+const node = g
+  .append('g')
+  .attr('stroke', '#fff')
+  .attr('stroke-width', 1.5)
+  .selectAll('circle')
+  .data(nodes)
+  .join('circle')
+  .attr('r', (d) => sizeScale(d.weight))
+// OLD:
+// .attr('fill', (d) => {
+//   const level = d.level4 || d.level3 || d.level2 || d.level1 || 'Unknown'
+//   return color(level)
+// })
+// NEW:
+.attr('fill', '#ccc')
+  .call(drag(simulation));
+
 
     // Add labels
     const label = g
@@ -251,36 +269,101 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         .attr('class', 'node-tooltip permanent-tooltip')
         .style('opacity', 1)
 
-    // Determine the deepest level used for coloring
-    let deepestLevel = 'Unknown'
-    for (const levelName of ['level4', 'level3', 'level2', 'level1']) {
-        if (nodes.some((n) => n[levelName])) {
-            deepestLevel = levelName
-            break
-        }
-    }
+// ---------- GROUPED COLORS + COLLAPSIBLE LEGEND ----------
 
-    // Get all unique values for that level
-    // Build legend for all colors actually used for node coloring
-    // For each node, determine which level property was used for its color
-    const usedColorLabels = []
-    nodes.forEach((n) => {
-        let usedLevel =
-            n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown'
-        if (!usedColorLabels.some((e) => e.label === usedLevel)) {
-            usedColorLabels.push({ label: usedLevel, color: color(usedLevel) })
-        }
-    })
+// Decide parent/subgroup keys from your hierarchy columns
+const parentKey = (n) => n.level2 || n.level1 || 'Unknown';
+const childKey  = (n) => n.level3 || n.level4 || null;
+const compositeKey = (p, c) => `${p}::${c}`; // avoid child-name clashes across parents
 
-    let legendHtml = `<h3>Color Legend</h3><ul style="list-style:none;padding:0;margin:0;">`
-    usedColorLabels.forEach((entry) => {
-        legendHtml += `<li style="margin-bottom:6px;display:flex;align-items:center;">
-            <span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${entry.color};margin-right:8px;border:1px solid #888;"></span>
-            <span>${entry.label}</span>
-        </li>`
-    })
-    legendHtml += `</ul>`
-    permanentTooltip.html(legendHtml)
+// Build parent → children map from the nodes currently in view
+const groupMap = new Map();
+nodes.forEach(n => {
+  const p = parentKey(n);
+  const c = childKey(n);
+  if (!groupMap.has(p)) groupMap.set(p, new Set());
+  if (c) groupMap.get(p).add(c);
+});
+
+// Stable parent list
+const parents = Array.from(groupMap.keys()).sort();
+
+// Base palette for parents (distinct hues)
+const basePalette = (d3.schemeTableau10 || []).concat(d3.schemeSet3 || []);
+const parentColor = new Map();
+parents.forEach((p, i) => {
+  parentColor.set(p, basePalette[i % basePalette.length] || '#888');
+});
+
+// Derive child tints from the parent hue
+function tintFromParent(parentHex, i, n) {
+  // interpolate parent → white for distinct lightness steps
+  const t = (n === 1) ? 0.35 : 0.2 + (i / Math.max(1, n - 1)) * 0.6; // 0.2..0.8
+  return d3.interpolateRgb(parentHex, '#ffffff')(t);
+}
+
+const childColor = new Map();
+groupMap.forEach((childSet, p) => {
+  const children = Array.from(childSet).sort();
+  children.forEach((c, i) => {
+    childColor.set(compositeKey(p, c), tintFromParent(parentColor.get(p), i, children.length));
+  });
+});
+
+// Color accessor for nodes
+function nodeColor(d) {
+  const p = parentKey(d);
+  const c = childKey(d);
+  if (c) {
+    const ck = compositeKey(p, c);
+    if (childColor.has(ck)) return childColor.get(ck);
+  }
+  if (parentColor.has(p)) return parentColor.get(p);
+  return '#888';
+}
+
+// If circles already exist, recolor them now
+if (typeof node !== 'undefined') {
+  node.attr('fill', d => nodeColor(d));
+}
+
+// --- Build a collapsible legend using <details>/<summary> ---
+let legendHtml = `<h3>Classification by Origin</h3>`;
+
+// Render each parent; use <details> only if it actually has children, otherwise a simple row
+parents.forEach(p => {
+  const pColor = parentColor.get(p);
+  const children = Array.from(groupMap.get(p)).sort();
+  if (children.length === 0) {
+    // Flat parent (no subgroups)
+    legendHtml += `
+      <div class="legend-item">
+        <span class="legend-dot" style="background:${pColor};"></span>
+        ${p}
+      </div>`;
+  } else {
+    // Parent with children (collapsible)
+    legendHtml += `
+      <details class="legend-group">
+        <summary>
+          <span class="legend-dot" style="background:${pColor};"></span>
+          ${p}
+        </summary>
+        <ul class="legend-list">
+          ${children.map(c => `
+            <li>
+              <span class="legend-dot" style="background:${childColor.get(compositeKey(p, c))};"></span>
+              ${c}
+            </li>`).join('')}
+        </ul>
+      </details>`;
+  }
+});
+
+permanentTooltip.html(legendHtml);
+// ---------- /GROUPED COLORS + COLLAPSIBLE LEGEND ----------
+
+
     
 
     // Helper to update label font weight

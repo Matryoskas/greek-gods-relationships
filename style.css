@@ -2,6 +2,10 @@ html, body {
   height: 100%;
   margin: 0;
   overflow: hidden; /* prevent scrolling */
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  color: #222;
+
 }
 
 .container {
@@ -36,34 +40,29 @@ html, body {
   height: 100%;  
   display: cover;
 }
-.graph-title {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-  padding: 0.25em 0.5em;
-  font-size: 2em;
-  font-weight: bold;
-  color: #333;
+
+
+.title {
+  grid-area: graph-title;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: .25rem;
+  background: rgba(255,255,255,0.9);
+  padding: .5rem .75rem;
   border-radius: 4px;
-  z-index: 5;
 }
+
+.graph-title,
 .graph-subtitle {
-  position: absolute;
-  top: 50px; /* slightly below the main title */
-  left: 50%;
-  transform: translateX(-50%);
   margin: 0;
-  padding: 0.1em 0.3em;
-  font-size: 1.5em;       /* slightly smaller than title */
-  font-weight: normal;
-  color: #444;          /* softer than the title */
-  border-radius: 4px;
-  z-index: 5;
-  text-align: center;   /* good for longer lines */
-  max-width: 80%;       /* prevents it from overflowing */
 }
+
+.graph-title { font-size: 2em; font-weight: 700; color:#333; }
+.graph-subtitle { font-size: 1.5em; font-weight: 400; color:#444; }
+
 
 
 .node-tooltip {
@@ -88,4 +87,94 @@ html, body {
     top: 10px;
     transform: none;
     z-index: 10;
+}
+
+/* Ensure <details>/<summary> arrows display */
+details summary::-webkit-details-marker {
+  display: block !important;
+}
+
+.permanent-tooltip h3 { margin: 0 0 8px 0; }
+.legend-item { display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+.legend-group { margin-bottom: 6px; }
+.permanent-tooltip summary { cursor: pointer; display:flex; align-items:center; gap:6px; }
+.legend-list { list-style: none; padding-left: 20px; margin: 6px 0 0 0; }
+.legend-dot { display:inline-block; width:14px; height:14px; border-radius:50%; border:1px solid #888; }
+
+
+/* Make the fixed legend clickable */
+.permanent-tooltip {
+  pointer-events: auto;
+  max-height: 60vh;       /* optional: scroll if it gets long */
+  overflow: auto;         /* optional */
+}
+
+/* ensure the disclosure triangle shows in WebKit */
+.permanent-tooltip details summary::-webkit-details-marker {
+  display: initial;
+}
+
+
+/* Show a caret before collapsible parents */
+.permanent-tooltip details > summary {
+  position: relative;
+  padding-left: 18px; /* room for caret */
+}
+
+/* Caret (closed) */
+.permanent-tooltip details > summary::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 1;
+  transform: translateY(2px);
+  font-size: 12px;
+  opacity: 0.8;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* Caret (open) */
+.permanent-tooltip details[open] > summary::before {
+  content: "▼";
+  transform: translateY(2px);
+  opacity: 0.9;
+}
+
+/* Keep non-collapsible items aligned (the flat rows) */
+.permanent-tooltip .legend-item {
+  padding-left: 18px; /* aligns with summary rows */
+}
+
+
+/* Space between the three grid cells + page padding */
+.container {
+  gap: 16px;          /* creates spacing between sections */
+  padding: 16px;      /* space to the window edges */
+  background: #f6f7f9;/* subtle app background */
+}
+
+/* Make each section look like a distinct panel */
+.ForceDirectedGraph,
+.TimelineChart,
+.ButterflyChart {
+  padding: 12px;                 /* inner breathing room */
+  box-sizing: border-box;        /* padding included in width/height */
+  background: #fff;              /* card background */
+  border: 1px solid #e6e6e6;     /* thin frame */
+  border-radius: 10px;           /* modern rounded corners */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04); /* soft elevation */
+  overflow: hidden;              /* clip contents nicely */
+}
+
+/* Ensure absolute-positioned legend/tooltips anchor to the graph panel */
+.ForceDirectedGraph { position: relative; }
+
+/* Optional: give the placeholder image panel same comfy padding */
+.TimelineChart img,
+.ButterflyChart img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
 }
