@@ -251,9 +251,9 @@ function createTimeLineChart(
         .style('visibility', 'hidden')
         .style('background', 'rgba(0, 0, 0, 0.8)')
         .style('color', 'white')
-        .style('padding', '10px')
-        .style('border-radius', '5px')
-        .style('font-size', '12px')
+        .style('padding', '0.4vw')
+        .style('border-radius', '0.3vw')
+        .style('font-size', '0.75vw')
         .style('pointer-events', 'none')
         .style('z-index', '1000')
 
@@ -293,7 +293,7 @@ function createTimeLineChart(
                 // Ensure dots stay within chart bounds
                 return Math.max(0, Math.min(height, offsetY))
             })
-            .attr('r', 8)
+            .attr('r', '0.4vw')
             .attr('fill', color(group))
             .attr('stroke', '#fff')
             .attr('stroke-width', 1)
@@ -318,7 +318,7 @@ function createTimeLineChart(
                     `)
 
                 // Highlight the dot
-                d3.select(this).attr('r', 8).attr('stroke-width', 1)
+                d3.select(this).attr('r', '0.4vw').attr('stroke-width', 1)
             })
             .on('mousemove', function (event) {
                 tooltip
@@ -329,7 +329,7 @@ function createTimeLineChart(
                 tooltip.style('visibility', 'hidden')
 
                 // Reset dot appearance
-                d3.select(this).attr('r', 8).attr('stroke-width', 1)
+                d3.select(this).attr('r', '0.4vw').attr('stroke-width', 1)
             })
             .on('click', function () {
                 if (window.globalSelection) {
@@ -439,5 +439,14 @@ function createTimeLineChart(
         .attr('y', -margin.left + 16)
         .attr('text-anchor', 'middle')
         .text('Rank by Mentions')
-        .style('font-size', '12px')
+        .style('font-size', '0.75vw')
+
+    // Title
+    svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', -margin.top / 2) // above the plot area
+        .attr('text-anchor', 'middle')
+        .style('font-size', '1vw')
+        .style('font-weight', 'bold')
+        .text('Timeline of Character Mentions by Period')
 }
