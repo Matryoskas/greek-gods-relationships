@@ -82,6 +82,8 @@ html, body {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
+  max-height: 60vh;
+  overflow: auto;
 }
 
 .permanent-tooltip {

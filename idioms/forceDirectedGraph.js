@@ -115,7 +115,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             `)
         })
         .on('mouseout', () => {
-            tooltip.style('opacity', 0)
+            tooltip.style('opacity', 0).style('pointer-events', 'none')
         })
 
     // Draw nodes
@@ -175,10 +175,26 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         .select(containerId)
         .append('div')
         .attr('class', 'node-tooltip')
+        .style('pointer-events', 'none')
+        .style('opacity', 0)
+
+    // Prevent scroll events from bubbling to the graph when tooltip is visible
+    tooltip.node().addEventListener(
+        'wheel',
+        function (event) {
+            event.stopPropagation()
+        },
+        { passive: false }
+    )
+
+    tooltip.node().addEventListener('scroll', function (event) {
+        event.stopPropagation()
+    })
 
     let fixedNode = null
     function showTooltip(d) {
-        tooltip.style('opacity', 1).html(`
+        tooltip.style('opacity', 1).style('pointer-events', 'auto') // Enable interactions when visible
+            .html(`
             <h3>${d.name}</h3>
             <p>${d.description || 'No description available.'}</p>
             <p><strong>Gender:</strong> ${d.gender || 'Unknown'}</p>
@@ -368,7 +384,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     })
         .on('mouseout', () => {
             if (!fixedNode) {
-                tooltip.style('opacity', 0)
+                tooltip.style('opacity', 0).style('pointer-events', 'none')
                 updateLabelBold(null)
             }
         })
@@ -414,7 +430,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     svg.on('click', function (event) {
         if (event.target.tagName === 'svg') {
             fixedNode = null
-            tooltip.style('opacity', 0)
+            tooltip.style('opacity', 0).style('pointer-events', 'none')
             node.attr('stroke', '#fff')
                 .attr('stroke-width', 1.5)
                 .attr('opacity', 1)
@@ -488,7 +504,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                         relevantNodeNames.has(n.name) ? 3 : 1.5
                     )
                     .attr('stroke', (n) =>
-                        relevantNodeNames.has(n.name) ? '#ff6b35' : '#fff'
+                        relevantNodeNames.has(n.name) ? '#ff0' : '#fff'
                     )
 
                 // Update label visibility
@@ -513,7 +529,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                     const tgtName = l.target.name || l.target
                     return relevantNodeNames.has(srcName) &&
                         relevantNodeNames.has(tgtName)
-                        ? '#ff6b35'
+                        ? '#ff0'
                         : '#999'
                 })
 
