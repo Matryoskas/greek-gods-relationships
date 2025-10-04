@@ -430,6 +430,11 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                     const tgt = l.target.name || l.target
                     return src === d.name || tgt === d.name ? 1 : 0.15
                 })
+
+            // Reset timeline/category selection when clicking on a specific node
+            if (window.globalSelection) {
+                window.globalSelection.set(null)
+            }
         })
 
     // Unfix tooltip and node highlight on background click
@@ -551,16 +556,18 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                     ${legendHtml}
                 `)
             } else {
-                // Reset to normal view
-                node.attr('opacity', 1)
-                    .attr('stroke-width', 1.5)
-                    .attr('stroke', '#fff')
+                // Reset to normal view only if no individual node is selected
+                if (!fixedNode) {
+                    node.attr('opacity', 1)
+                        .attr('stroke-width', 1.5)
+                        .attr('stroke', '#fff')
 
-                label.attr('opacity', 1).attr('font-weight', 'normal')
+                    label.attr('opacity', 1).attr('font-weight', 'normal')
 
-                link.attr('opacity', 0.6).attr('stroke', '#999')
+                    link.attr('opacity', 0.6).attr('stroke', '#999')
+                }
 
-                // Restore original legend
+                // Always restore original legend regardless of node selection
                 permanentTooltip.html(legendHtml)
             }
         })
