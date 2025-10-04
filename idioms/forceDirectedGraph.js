@@ -385,13 +385,25 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     node.on('mouseover', (event, d) => {
         if (!fixedNode) {
             showTooltip(d)
-            updateLabelBold(null)
+            // Only clear bold labels if no global category is selected
+            if (
+                !window.globalSelection ||
+                !window.globalSelection.selectedGroup
+            ) {
+                updateLabelBold(null)
+            }
         }
     })
         .on('mouseout', () => {
             if (!fixedNode) {
                 tooltip.style('opacity', 0).style('pointer-events', 'none')
-                updateLabelBold(null)
+                // Only clear bold labels if no global category is selected
+                if (
+                    !window.globalSelection ||
+                    !window.globalSelection.selectedGroup
+                ) {
+                    updateLabelBold(null)
+                }
             }
         })
         .on('click', (event, d) => {
