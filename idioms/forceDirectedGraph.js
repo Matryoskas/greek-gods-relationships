@@ -30,8 +30,8 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         ])
     )
     // Accept shared color mapping as parameter
-    const color = (d) => colorMap[d] || '#888';
-  
+    const color = (d) => colorMap[d] || '#888'
+
     edges = edges.filter((d) => d.normalized_weight > 0.3)
     edges = filterTopNEdges(edges, 2)
 
@@ -43,20 +43,19 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
     nodes = nodes.filter((n) => connected.has(n.name))
 
-// Normalize levels (capitalize first letter, rest lowercase)
-function normalize(str) {
-  if (!str) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
+    // Normalize levels (capitalize first letter, rest lowercase)
+    function normalize(str) {
+        if (!str) return str
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+    }
 
-// Apply normalization to all nodes
-nodes.forEach(n => {
-  if (n.level1) n.level1 = normalize(n.level1);
-  if (n.level2) n.level2 = normalize(n.level2);
-  if (n.level3) n.level3 = normalize(n.level3);
-  if (n.level4) n.level4 = normalize(n.level4);
-});
-
+    // Apply normalization to all nodes
+    nodes.forEach((n) => {
+        if (n.level1) n.level1 = normalize(n.level1)
+        if (n.level2) n.level2 = normalize(n.level2)
+        if (n.level3) n.level3 = normalize(n.level3)
+        if (n.level4) n.level4 = normalize(n.level4)
+    })
 
     // First, initialize all nodes with weight 0
     nodes.forEach((n) => (n.weight = 0))
@@ -150,24 +149,23 @@ nodes.forEach(n => {
         })
 
     // Draw nodes
-// Draw nodes
-const node = g
-  .append('g')
-  .attr('stroke', '#fff')
-  .attr('stroke-width', 1.5)
-  .selectAll('circle')
-  .data(nodes)
-  .join('circle')
-  .attr('r', (d) => sizeScale(d.weight))
-// OLD:
-// .attr('fill', (d) => {
-//   const level = d.level4 || d.level3 || d.level2 || d.level1 || 'Unknown'
-//   return color(level)
-// })
-// NEW:
-.attr('fill', '#ccc')
-  .call(drag(simulation));
-
+    // Draw nodes
+    const node = g
+        .append('g')
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 1.5)
+        .selectAll('circle')
+        .data(nodes)
+        .join('circle')
+        .attr('r', (d) => sizeScale(d.weight))
+        // OLD:
+        // .attr('fill', (d) => {
+        //   const level = d.level4 || d.level3 || d.level2 || d.level1 || 'Unknown'
+        //   return color(level)
+        // })
+        // NEW:
+        .attr('fill', '#ccc')
+        .call(drag(simulation))
 
     // Add labels
     const label = g
@@ -269,102 +267,108 @@ const node = g
         .attr('class', 'node-tooltip permanent-tooltip')
         .style('opacity', 1)
 
-// ---------- GROUPED COLORS + COLLAPSIBLE LEGEND ----------
+    // ---------- GROUPED COLORS + COLLAPSIBLE LEGEND ----------
 
-// Decide parent/subgroup keys from your hierarchy columns
-const parentKey = (n) => n.level2 || n.level1 || 'Unknown';
-const childKey  = (n) => n.level3 || n.level4 || null;
-const compositeKey = (p, c) => `${p}::${c}`; // avoid child-name clashes across parents
+    // Decide parent/subgroup keys from your hierarchy columns
+    const parentKey = (n) => n.level2 || n.level1 || 'Unknown'
+    const childKey = (n) => n.level3 || n.level4 || null
+    const compositeKey = (p, c) => `${p}::${c}` // avoid child-name clashes across parents
 
-// Build parent → children map from the nodes currently in view
-const groupMap = new Map();
-nodes.forEach(n => {
-  const p = parentKey(n);
-  const c = childKey(n);
-  if (!groupMap.has(p)) groupMap.set(p, new Set());
-  if (c) groupMap.get(p).add(c);
-});
+    // Build parent → children map from the nodes currently in view
+    const groupMap = new Map()
+    nodes.forEach((n) => {
+        const p = parentKey(n)
+        const c = childKey(n)
+        if (!groupMap.has(p)) groupMap.set(p, new Set())
+        if (c) groupMap.get(p).add(c)
+    })
 
-// Stable parent list
-const parents = Array.from(groupMap.keys()).sort();
+    // Stable parent list
+    const parents = Array.from(groupMap.keys()).sort()
 
-// Base palette for parents (distinct hues)
-const basePalette = (d3.schemeTableau10 || []).concat(d3.schemeSet3 || []);
-const parentColor = new Map();
-parents.forEach((p, i) => {
-  parentColor.set(p, basePalette[i % basePalette.length] || '#888');
-});
+    // Base palette for parents (distinct hues)
+    const basePalette = (d3.schemeTableau10 || []).concat(d3.schemeSet3 || [])
+    const parentColor = new Map()
+    parents.forEach((p, i) => {
+        parentColor.set(p, basePalette[i % basePalette.length] || '#888')
+    })
 
-// Derive child tints from the parent hue
-function tintFromParent(parentHex, i, n) {
-  // interpolate parent → white for distinct lightness steps
-  const t = (n === 1) ? 0.35 : 0.2 + (i / Math.max(1, n - 1)) * 0.6; // 0.2..0.8
-  return d3.interpolateRgb(parentHex, '#ffffff')(t);
-}
+    // Derive child tints from the parent hue
+    function tintFromParent(parentHex, i, n) {
+        // interpolate parent → white for distinct lightness steps
+        const t = n === 1 ? 0.35 : 0.2 + (i / Math.max(1, n - 1)) * 0.6 // 0.2..0.8
+        return d3.interpolateRgb(parentHex, '#ffffff')(t)
+    }
 
-const childColor = new Map();
-groupMap.forEach((childSet, p) => {
-  const children = Array.from(childSet).sort();
-  children.forEach((c, i) => {
-    childColor.set(compositeKey(p, c), tintFromParent(parentColor.get(p), i, children.length));
-  });
-});
+    const childColor = new Map()
+    groupMap.forEach((childSet, p) => {
+        const children = Array.from(childSet).sort()
+        children.forEach((c, i) => {
+            childColor.set(
+                compositeKey(p, c),
+                tintFromParent(parentColor.get(p), i, children.length)
+            )
+        })
+    })
 
-// Color accessor for nodes
-function nodeColor(d) {
-  const p = parentKey(d);
-  const c = childKey(d);
-  if (c) {
-    const ck = compositeKey(p, c);
-    if (childColor.has(ck)) return childColor.get(ck);
-  }
-  if (parentColor.has(p)) return parentColor.get(p);
-  return '#888';
-}
+    // Color accessor for nodes
+    function nodeColor(d) {
+        const p = parentKey(d)
+        const c = childKey(d)
+        if (c) {
+            const ck = compositeKey(p, c)
+            if (childColor.has(ck)) return childColor.get(ck)
+        }
+        if (parentColor.has(p)) return parentColor.get(p)
+        return '#888'
+    }
 
-// If circles already exist, recolor them now
-if (typeof node !== 'undefined') {
-  node.attr('fill', d => nodeColor(d));
-}
+    // If circles already exist, recolor them now
+    if (typeof node !== 'undefined') {
+        node.attr('fill', (d) => nodeColor(d))
+    }
 
-// --- Build a collapsible legend using <details>/<summary> ---
-let legendHtml = `<h3>Classification by Origin</h3>`;
+    // --- Build a collapsible legend using <details>/<summary> ---
+    let legendHtml = `<h3>Mythological Categories</h3>`
 
-// Render each parent; use <details> only if it actually has children, otherwise a simple row
-parents.forEach(p => {
-  const pColor = parentColor.get(p);
-  const children = Array.from(groupMap.get(p)).sort();
-  if (children.length === 0) {
-    // Flat parent (no subgroups)
-    legendHtml += `
+    // Render each parent; use <details> only if it actually has children, otherwise a simple row
+    parents.forEach((p) => {
+        const pColor = parentColor.get(p)
+        const children = Array.from(groupMap.get(p)).sort()
+        if (children.length === 0) {
+            // Flat parent (no subgroups)
+            legendHtml += `
       <div class="legend-item">
         <span class="legend-dot" style="background:${pColor};"></span>
         ${p}
-      </div>`;
-  } else {
-    // Parent with children (collapsible)
-    legendHtml += `
+      </div>`
+        } else {
+            // Parent with children (collapsible)
+            legendHtml += `
       <details class="legend-group">
         <summary>
           <span class="legend-dot" style="background:${pColor};"></span>
           ${p}
         </summary>
         <ul class="legend-list">
-          ${children.map(c => `
+          ${children
+              .map(
+                  (c) => `
             <li>
-              <span class="legend-dot" style="background:${childColor.get(compositeKey(p, c))};"></span>
+              <span class="legend-dot" style="background:${childColor.get(
+                  compositeKey(p, c)
+              )};"></span>
               ${c}
-            </li>`).join('')}
+            </li>`
+              )
+              .join('')}
         </ul>
-      </details>`;
-  }
-});
+      </details>`
+        }
+    })
 
-permanentTooltip.html(legendHtml);
-// ---------- /GROUPED COLORS + COLLAPSIBLE LEGEND ----------
-
-
-    
+    permanentTooltip.html(legendHtml)
+    // ---------- /GROUPED COLORS + COLLAPSIBLE LEGEND ----------
 
     // Helper to update label font weight
     function updateLabelBold(selected) {
@@ -482,4 +486,3 @@ permanentTooltip.html(legendHtml);
             .on('end', dragended)
     }
 }
-
