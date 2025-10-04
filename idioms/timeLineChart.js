@@ -17,9 +17,37 @@ function createTimeLineChart(
     const color = (d) => colorMap[d] || '#888'
 
     // Aggregate counts by parent groups (using the global parent groups list)
-    const periods = Array.from(new Set(edges.map((e) => e.period))).filter(
-        Boolean
-    )
+    const periodsUnordered = Array.from(
+        new Set(edges.map((e) => e.period))
+    ).filter(Boolean)
+
+    // Function to determine chronological order of periods
+    function getChronologicalOrder(periods) {
+        // Define period metadata with approximate start dates
+        const periodInfo = {
+            Archaic: { start: -800, priority: 1 },
+            Classical: { start: -480, priority: 2 },
+            Hellenistic: { start: -323, priority: 3 },
+            'Imperial Roman': { start: -27, priority: 4 },
+            'Late Roman': { start: 284, priority: 5 },
+            // Add more periods here as needed
+        }
+
+        return periods.sort((a, b) => {
+            // If both periods are in our metadata, sort by priority
+            if (periodInfo[a] && periodInfo[b]) {
+                return periodInfo[a].priority - periodInfo[b].priority
+            }
+            // If only one is known, put known ones first
+            if (periodInfo[a] && !periodInfo[b]) return -1
+            if (!periodInfo[a] && periodInfo[b]) return 1
+            // If neither is known, sort alphabetically as fallback
+            return a.localeCompare(b)
+        })
+    }
+
+    // Sort periods chronologically
+    const periods = getChronologicalOrder([...periodsUnordered])
 
     const counts = {}
     periods.forEach((p) => {
@@ -214,6 +242,21 @@ function createTimeLineChart(
 
     const offsets = calculateOffsets(data, groups, y, height)
 
+    // Create tooltip
+    const tooltip = d3
+        .select('body')
+        .append('div')
+        .attr('class', 'timeline-tooltip')
+        .style('position', 'absolute')
+        .style('visibility', 'hidden')
+        .style('background', 'rgba(0, 0, 0, 0.8)')
+        .style('color', 'white')
+        .style('padding', '10px')
+        .style('border-radius', '5px')
+        .style('font-size', '12px')
+        .style('pointer-events', 'none')
+        .style('z-index', '1000')
+
     groups.forEach((group, index) => {
         const line = d3
             .line()
@@ -237,7 +280,7 @@ function createTimeLineChart(
             .attr('d', line)
             .attr('class', 'timeline-line')
 
-        // Add dots at data points for better visibility
+        // Add dots at data points for better visibility and tooltips
         svg.selectAll(`.dot-${group}`)
             .data(data)
             .enter()
@@ -254,8 +297,47 @@ function createTimeLineChart(
             .attr('fill', color(group))
             .attr('stroke', '#fff')
             .attr('stroke-width', 1)
+            .style('cursor', 'pointer')
+            .on('mouseover', function (event, d) {
+                const rank = d[group]
+                const mentions = counts[d.period][group]
 
-        // Invisible hit area (wider for easier clicking)
+                tooltip.style('visibility', 'visible').html(`
+                        <strong>${group}</strong><br/>
+                        Period: ${d.period}<br/>
+                        Rank: ${
+                            rank === 1
+                                ? '1st'
+                                : rank === 2
+                                ? '2nd'
+                                : rank === 3
+                                ? '3rd'
+                                : rank + 'th'
+                        }<br/>
+                        Mentions: ${mentions}
+                    `)
+
+                // Highlight the dot
+                d3.select(this).attr('r', 5).attr('stroke-width', 2)
+            })
+            .on('mousemove', function (event) {
+                tooltip
+                    .style('top', event.pageY - 10 + 'px')
+                    .style('left', event.pageX + 10 + 'px')
+            })
+            .on('mouseout', function () {
+                tooltip.style('visibility', 'hidden')
+
+                // Reset dot appearance
+                d3.select(this).attr('r', 3).attr('stroke-width', 1)
+            })
+            .on('click', function () {
+                if (window.globalSelection) {
+                    window.globalSelection.set(group)
+                }
+            })
+
+        // Invisible hit area (wider for easier clicking and hovering)
         svg.append('path')
             .datum(data)
             .attr('fill', 'none')
@@ -264,6 +346,57 @@ function createTimeLineChart(
             .attr('d', line)
             .attr('class', 'timeline-hitarea')
             .style('cursor', 'pointer')
+            .on('mouseover', function (event) {
+                // Find closest data point to mouse position
+                const [mouseX] = d3.pointer(event)
+                const closestPeriod = x
+                    .domain()
+                    .reduce((prev, curr) =>
+                        Math.abs(x(curr) - mouseX) < Math.abs(x(prev) - mouseX)
+                            ? curr
+                            : prev
+                    )
+                const periodData = data.find((d) => d.period === closestPeriod)
+
+                if (periodData) {
+                    const rank = periodData[group]
+                    const mentions = counts[periodData.period][group]
+
+                    tooltip.style('visibility', 'visible').html(`
+                            <strong>${group}</strong><br/>
+                            Period: ${periodData.period}<br/>
+                            Rank: ${
+                                rank === 1
+                                    ? '1st'
+                                    : rank === 2
+                                    ? '2nd'
+                                    : rank === 3
+                                    ? '3rd'
+                                    : rank + 'th'
+                            }<br/>
+                            Mentions: ${mentions}
+                        `)
+                }
+
+                // Highlight the line
+                path.attr('stroke-width', 4)
+            })
+            .on('mousemove', function (event) {
+                tooltip
+                    .style('top', event.pageY - 10 + 'px')
+                    .style('left', event.pageX + 10 + 'px')
+            })
+            .on('mouseout', function () {
+                tooltip.style('visibility', 'hidden')
+
+                // Reset line appearance (unless it's selected)
+                if (
+                    !window.globalSelection?.selectedGroup ||
+                    window.globalSelection.selectedGroup !== group
+                ) {
+                    path.attr('stroke-width', 2.5)
+                }
+            })
             .on('click', function () {
                 if (window.globalSelection) {
                     window.globalSelection.set(group)
