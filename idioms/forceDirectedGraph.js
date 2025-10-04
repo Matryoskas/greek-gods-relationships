@@ -102,25 +102,125 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         .data(edges)
         .join('line')
         .attr('stroke-width', (d) => linkWidth(d.normalized_weight))
+
+    // Add invisible hit areas for easier edge hovering
+    const linkHitArea = g
+        .append('g')
+        .selectAll('line')
+        .data(edges)
+        .join('line')
+        .attr('stroke', 'transparent')
+        .attr('stroke-width', 10) // Much thicker for easier hovering
+        .attr('cursor', 'pointer')
         .on('mouseover', (event, d) => {
             // Only show edge tooltip if no node is currently fixed/selected
-            if (!fixedNode) {
+            if (!fixedNode && !fixedEdge) {
                 tooltip.style('opacity', 1).style('pointer-events', 'auto')
                     .html(`
-                    <h3>Edge Info</h3>
-                    <p><strong>Source:</strong> ${d.source.name || d.source}</p>
-                    <p><strong>Target:</strong> ${d.target.name || d.target}</p>
-                    <p><strong>Weight:</strong> ${d.normalized_weight}</p>
+                    <h3>Relationship Details</h3>
+                    <p><strong>Between:</strong> ${
+                        d.source.name || d.source
+                    } ↔ ${d.target.name || d.target}</p>
+                    <p><strong>Connection Strength:</strong> ${
+                        d.normalized_weight
+                    }</p>
+                    <p><strong>Source Work:</strong> ${d.title || 'Unknown'}</p>
                     <p><strong>Author:</strong> ${d.author || 'Unknown'}</p>
-                    <p><strong>Title:</strong> ${d.title || 'Unknown'}</p>
-                    <p><strong>Period:</strong> ${d.period || 'Unknown'}</p>
+                    <p><strong>Literary Period:</strong> ${
+                        d.period || 'Unknown'
+                    }</p>
+                    <div style="margin-top: 10px; font-size: 0.85em; color: #666;">
+                        <em>Click to pin this information</em>
+                    </div>
                 `)
             }
         })
         .on('mouseout', () => {
-            // Only hide tooltip if no node is currently fixed/selected
-            if (!fixedNode) {
+            // Only hide tooltip if no node or edge is currently fixed/selected
+            if (!fixedNode && !fixedEdge) {
                 tooltip.style('opacity', 0).style('pointer-events', 'none')
+            }
+        })
+        .on('click', (event, d) => {
+            // Clear any node selection first
+            fixedNode = null
+
+            // Set edge as fixed
+            fixedEdge = d
+
+            // Show detailed edge tooltip
+            tooltip.style('opacity', 1).style('pointer-events', 'auto').html(`
+                <h3>Relationship Details</h3>
+                <p><strong>Between:</strong> ${d.source.name || d.source} ↔ ${
+                d.target.name || d.target
+            }</p>
+                <p><strong>Connection Strength:</strong> ${
+                    d.normalized_weight
+                }</p>
+                <p><strong>Source Work:</strong> ${d.title || 'Unknown'}</p>
+                <p><strong>Author:</strong> ${d.author || 'Unknown'}</p>
+                <p><strong>Literary Period:</strong> ${
+                    d.period || 'Unknown'
+                }</p>
+                <div style="margin-top: 10px; font-size: 0.85em; color: #666;">
+                    <em>Click background to deselect</em>
+                </div>
+            `)
+
+            // Highlight the connected nodes
+            const sourceName = d.source.name || d.source
+            const targetName = d.target.name || d.target
+
+            node.attr('stroke', (n) =>
+                n.name === sourceName || n.name === targetName ? '#ff0' : '#fff'
+            )
+                .attr('stroke-width', (n) =>
+                    n.name === sourceName || n.name === targetName ? 4 : 1.5
+                )
+                .attr('opacity', (n) =>
+                    n.name === sourceName || n.name === targetName ? 1 : 0.3
+                )
+
+            // Highlight labels for connected nodes
+            label
+                .attr('font-weight', (n) =>
+                    n.name === sourceName || n.name === targetName
+                        ? 'bold'
+                        : 'normal'
+                )
+                .attr('opacity', (n) =>
+                    n.name === sourceName || n.name === targetName ? 1 : 0.3
+                )
+
+            // Highlight the selected edge and dim others
+            link.attr('stroke', (l) => {
+                const lSrc = l.source.name || l.source
+                const lTgt = l.target.name || l.target
+                return (lSrc === sourceName && lTgt === targetName) ||
+                    (lSrc === targetName && lTgt === sourceName)
+                    ? '#ff0'
+                    : '#999'
+            })
+                .attr('stroke-width', (l) => {
+                    const lSrc = l.source.name || l.source
+                    const lTgt = l.target.name || l.target
+                    return (lSrc === sourceName && lTgt === targetName) ||
+                        (lSrc === targetName && lTgt === sourceName)
+                        ? 6
+                        : linkWidth(l.normalized_weight)
+                })
+                .attr('opacity', (l) => {
+                    const lSrc = l.source.name || l.source
+                    const lTgt = l.target.name || l.target
+                    return (lSrc === sourceName && lTgt === targetName) ||
+                        (lSrc === targetName && lTgt === sourceName)
+                        ? 1
+                        : 0.2
+                })
+
+            // Reset global selection when clicking on an edge
+            if (window.globalSelection) {
+                window.globalSelection.set(null)
             }
         })
 
@@ -171,6 +271,12 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             .attr('x2', (d) => d.target.x)
             .attr('y2', (d) => d.target.y)
 
+        linkHitArea
+            .attr('x1', (d) => d.source.x)
+            .attr('y1', (d) => d.source.y)
+            .attr('x2', (d) => d.target.x)
+            .attr('y2', (d) => d.target.y)
+
         node.attr('cx', (d) => d.x).attr('cy', (d) => d.y)
 
         label.attr('x', (d) => d.x).attr('y', (d) => d.y)
@@ -197,7 +303,9 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         event.stopPropagation()
     })
 
+    // Variables to track fixed nodes and edges
     let fixedNode = null
+    let fixedEdge = null
     function showTooltip(d) {
         tooltip.style('opacity', 1).style('pointer-events', 'auto') // Enable interactions when visible
             .html(`
@@ -408,6 +516,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         })
         .on('click', (event, d) => {
             fixedNode = d
+            fixedEdge = null // Clear any edge selection
             showTooltip(d)
             // Highlight selected node and direct connections
             const neighbors = getDirectConnections(d)
@@ -453,6 +562,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     svg.on('click', function (event) {
         if (event.target.tagName === 'svg') {
             fixedNode = null
+            fixedEdge = null
             tooltip.style('opacity', 0).style('pointer-events', 'none')
             node.attr('stroke', '#fff')
                 .attr('stroke-width', 1.5)
