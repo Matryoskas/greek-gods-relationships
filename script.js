@@ -53,16 +53,19 @@ function init() {
             title: d.title,
             period: d.period,
         })),
-    ]).then(([characters, edges]) => {
+    ]).then(([characters, allEdges]) => {
         // GLOBAL DATA PROCESSING - used by both charts
 
-        // Filter edges by weight (same as force-directed graph)
-        edges = edges.filter((d) => d.normalized_weight > 0.3)
-        edges = filterTopNEdges(edges, 2)
+        // Keep original edges for timeline period analysis
+        const timelineEdges = allEdges
+
+        // Filter edges by weight for force-directed graph
+        let filteredEdges = allEdges.filter((d) => d.normalized_weight > 0.3)
+        filteredEdges = filterTopNEdges(filteredEdges, 2)
 
         // Find connected nodes (only nodes that appear in filtered edges)
         const connected = new Set()
-        edges.forEach((e) => {
+        filteredEdges.forEach((e) => {
             connected.add(e.source.name || e.source)
             connected.add(e.target.name || e.target)
         })
@@ -133,6 +136,15 @@ function init() {
             categoryColorMap[cat] = getColor(i)
         })
 
+        // Create a parent group color map for timeline chart
+        const parentColorMap = {}
+        parentGroups.forEach((parentGroup, i) => {
+            parentColorMap[parentGroup] = getColor(i)
+        })
+
+        console.log('Parent groups:', parentGroups)
+        console.log('Parent color map:', parentColorMap)
+
         // Global handler for tooltip clicks
         window.handleTooltipClick = function (group) {
             if (window.globalSelection) {
@@ -144,15 +156,15 @@ function init() {
         // Pass filtered data and parent groups to both charts
         createForceDirectedGraph(
             filteredCharacters,
-            edges,
+            filteredEdges, // Use filtered edges for force-directed graph
             '.ForceDirectedGraph',
             categoryColorMap
         )
         createTimeLineChart(
             filteredCharacters,
-            edges,
+            timelineEdges, // Use full edge dataset for timeline analysis
             '.TimelineChart',
-            categoryColorMap,
+            parentColorMap, // Use parent color map for timeline
             parentGroups
         )
         //createTimeLineChart(characters, edges, '.TimelineChart');

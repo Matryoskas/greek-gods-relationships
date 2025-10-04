@@ -40,6 +40,12 @@ function createTimeLineChart(
         })
     })
 
+    // Debug: Check if data actually varies by period
+    console.log('Periods found:', periods)
+    periods.forEach((period) => {
+        console.log(`Period ${period} counts:`, counts[period])
+    })
+
     // Use ALL the global parent groups exactly (same as force-directed graph)
     const groups = parentGroups
 
