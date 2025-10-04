@@ -1,16 +1,36 @@
+// Global edge filtering function (same as in force-directed graph)
+function filterTopNEdges(edges, n = 5) {
+    // Group edges by source node
+    const grouped = d3.group(edges, (d) => d.source.name || d.source)
+
+    const topEdges = []
+
+    grouped.forEach((edgeList, source) => {
+        // Sort descending by weight
+        edgeList.sort((a, b) =>
+            d3.descending(a.normalized_weight, b.normalized_weight)
+        )
+
+        // Take top-N
+        topEdges.push(...edgeList.slice(0, n))
+    })
+
+    return topEdges
+}
+
 function init() {
     // Global event dispatcher for selection (is it working?)
     window.globalSelection = {
         selectedGroup: null,
         listeners: [],
         set(group) {
-            this.selectedGroup = group;
-            this.listeners.forEach(fn => fn(group));
+            this.selectedGroup = group
+            this.listeners.forEach((fn) => fn(group))
         },
         onChange(fn) {
-            this.listeners.push(fn);
-        }
-    };
+            this.listeners.push(fn)
+        },
+    }
     Promise.all([
         d3.csv('datasets/unique_characters.csv', (d) => ({
             name: d.name,
@@ -34,18 +54,69 @@ function init() {
             period: d.period,
         })),
     ]).then(([characters, edges]) => {
-        //createForceDirectedGraph(characters, edges, '.ForceDirectedGraph');
+        // GLOBAL DATA PROCESSING - used by both charts
 
-        // Get all unique categories for coloring
+        // Filter edges by weight (same as force-directed graph)
+        edges = edges.filter((d) => d.normalized_weight > 0.3)
+        edges = filterTopNEdges(edges, 2)
+
+        // Find connected nodes (only nodes that appear in filtered edges)
+        const connected = new Set()
+        edges.forEach((e) => {
+            connected.add(e.source.name || e.source)
+            connected.add(e.target.name || e.target)
+        })
+
+        // Filter characters to only those that are connected
+        const filteredCharacters = characters.filter((n) =>
+            connected.has(n.name)
+        )
+
+        // Normalize level names globally (capitalize first letter, rest lowercase)
+        function normalize(str) {
+            if (!str) return str
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+        }
+
+        // Apply normalization to all characters
+        filteredCharacters.forEach((n) => {
+            if (n.level1) n.level1 = normalize(n.level1)
+            if (n.level2) n.level2 = normalize(n.level2)
+            if (n.level3) n.level3 = normalize(n.level3)
+            if (n.level4) n.level4 = normalize(n.level4)
+        })
+
+        // Define global grouping logic (same as force-directed graph)
+        const parentKey = (n) => n.level2 || n.level1 || 'Unknown'
+        const childKey = (n) => n.level3 || n.level4 || null
+
+        // Build parent → children map from filtered characters
+        const groupMap = new Map()
+        filteredCharacters.forEach((n) => {
+            const p = parentKey(n)
+            const c = childKey(n)
+            if (!groupMap.has(p)) groupMap.set(p, new Set())
+            if (c) groupMap.get(p).add(c)
+        })
+
+        // Get all parent groups for consistent category list
+        const parentGroups = Array.from(groupMap.keys()).sort()
+
+        // Get all unique categories for coloring (from filtered data)
         const usedCategories = Array.from(
             new Set(
-                characters.map(
-                    (n) => n.level4 || n.level3 || n.level2 || n.level1 || 'Unknown'
+                filteredCharacters.map(
+                    (n) =>
+                        n.level4 ||
+                        n.level3 ||
+                        n.level2 ||
+                        n.level1 ||
+                        'Unknown'
                 )
             )
-        );
+        )
 
-        const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3);
+        const combinedColors = d3.schemeTableau10.concat(d3.schemeSet3)
 
         // If we have more categories than colors, generate extra ones
         function getColor(i) {
@@ -62,19 +133,28 @@ function init() {
             categoryColorMap[cat] = getColor(i)
         })
 
-    
         // Global handler for tooltip clicks
-        window.handleTooltipClick = function(group) {
+        window.handleTooltipClick = function (group) {
             if (window.globalSelection) {
-                window.globalSelection.set(group);
+                window.globalSelection.set(group)
             }
             //  can add more custom actions here
         }
 
-
-        createForceDirectedGraph(characters, edges, '.ForceDirectedGraph', categoryColorMap);
-        createTimeLineChart(characters, edges, '.TimelineChart', categoryColorMap);
+        // Pass filtered data and parent groups to both charts
+        createForceDirectedGraph(
+            filteredCharacters,
+            edges,
+            '.ForceDirectedGraph',
+            categoryColorMap
+        )
+        createTimeLineChart(
+            filteredCharacters,
+            edges,
+            '.TimelineChart',
+            categoryColorMap,
+            parentGroups
+        )
         //createTimeLineChart(characters, edges, '.TimelineChart');
-
     })
 }

@@ -19,43 +19,13 @@ function filterTopNEdges(edges, n = 5) {
 
 async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     const div = document.querySelector(containerId)
-    // Gather all possible levels
-    const levels = Array.from(
-        new Set([
-            ...nodes.map((n) => n.level1).filter(Boolean),
-            ...nodes.map((n) => n.level2).filter(Boolean),
-            ...nodes.map((n) => n.level3).filter(Boolean),
-            ...nodes.map((n) => n.level4).filter(Boolean),
-            'Unknown',
-        ])
-    )
+
+    // Use pre-filtered data from script.js (no need to filter again)
+    // Data is already filtered by weight, top-N edges, and connected nodes
+    // Levels are already normalized in script.js
+
     // Accept shared color mapping as parameter
     const color = (d) => colorMap[d] || '#888'
-
-    edges = edges.filter((d) => d.normalized_weight > 0.3)
-    edges = filterTopNEdges(edges, 2)
-
-    const connected = new Set()
-    edges.forEach((e) => {
-        connected.add(e.source.name || e.source)
-        connected.add(e.target.name || e.target)
-    })
-
-    nodes = nodes.filter((n) => connected.has(n.name))
-
-    // Normalize levels (capitalize first letter, rest lowercase)
-    function normalize(str) {
-        if (!str) return str
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
-    }
-
-    // Apply normalization to all nodes
-    nodes.forEach((n) => {
-        if (n.level1) n.level1 = normalize(n.level1)
-        if (n.level2) n.level2 = normalize(n.level2)
-        if (n.level3) n.level3 = normalize(n.level3)
-        if (n.level4) n.level4 = normalize(n.level4)
-    })
 
     // First, initialize all nodes with weight 0
     nodes.forEach((n) => (n.weight = 0))
