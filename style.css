@@ -171,3 +171,10 @@ details summary::-webkit-details-marker {
   object-fit: contain;
   display: block;
 }
+
+.ButterflyChart img {
+  width: 100%;          /* stretch to full cell width */
+  height: 100%;         /* stretch to full cell height */
+  object-fit: fill;     /* distort to fill both directions */
+}
+
