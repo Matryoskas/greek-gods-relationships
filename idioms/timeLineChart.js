@@ -124,7 +124,7 @@ function createTimeLineChart(
     })
 
     // D3 multi-line chart
-    const margin = { top: 40, right: 120, bottom: 40, left: 60 }
+    const margin = { top: 40, right: 40, bottom: 40, left: 60 }
     // Responsive: get container size
     const container = d3.select(containerSelector).node()
     const fullWidth = container.offsetWidth || 700
@@ -427,46 +427,6 @@ function createTimeLineChart(
         })
     }
 
-    // Draw legend with solid line previews
-    svg.selectAll('.legend')
-        .data(groups)
-        .enter()
-        .append('g')
-        .attr('class', 'legend')
-        .attr('transform', (d, i) => `translate(${width + 20},${i * 30})`)
-        .call((g) => {
-            // Add solid line preview
-            g.append('line')
-                .attr('x1', 0)
-                .attr('x2', 25)
-                .attr('y1', 9)
-                .attr('y2', 9)
-                .attr('stroke', (d) => color(d))
-                .attr('stroke-width', 3)
-                .attr('stroke-linecap', 'round')
-
-            // Add a dot in the middle of the line
-            g.append('circle')
-                .attr('cx', 12.5)
-                .attr('cy', 9)
-                .attr('r', 8)
-                .attr('fill', (d) => color(d))
-                .attr('stroke', '#fff')
-                .attr('stroke-width', 1)
-
-            g.append('text')
-                .attr('x', 35)
-                .attr('y', 13)
-                .text((d) => d)
-                .style('font-size', '14px')
-                .style('cursor', 'pointer')
-                .on('click', function (event, d) {
-                    if (window.globalSelection) {
-                        window.globalSelection.set(d)
-                    }
-                })
-        })
-
     // Add axis labels
     svg.append('text')
         .attr('x', width / 2)
@@ -480,24 +440,4 @@ function createTimeLineChart(
         .attr('text-anchor', 'middle')
         .text('Rank by Mentions')
         .style('font-size', '12px')
-
-    // Add subtle background shading for rank zones
-    const rankZones = [
-        { rank: 1, color: '#e8f5e8', label: 'Most mentioned' },
-        { rank: 2, color: '#f0f8f0', label: '2nd most' },
-        { rank: 3, color: '#f5f5f5', label: '3rd most' },
-    ]
-
-    rankZones.forEach((zone) => {
-        if (zone.rank <= maxRank) {
-            svg.append('rect')
-                .attr('x', 0)
-                .attr('y', y(zone.rank) - height / maxRank / 2)
-                .attr('width', width)
-                .attr('height', height / maxRank)
-                .attr('fill', zone.color)
-                .attr('opacity', 0.3)
-                .style('pointer-events', 'none') // Don't interfere with interactions
-        }
-    })
 }
