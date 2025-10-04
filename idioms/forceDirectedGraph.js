@@ -103,19 +103,25 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         .join('line')
         .attr('stroke-width', (d) => linkWidth(d.normalized_weight))
         .on('mouseover', (event, d) => {
-            // Show tooltip with edge info
-            tooltip.style('opacity', 1).html(`
-                <h3>Edge Info</h3>
-                <p><strong>Source:</strong> ${d.source.name || d.source}</p>
-                <p><strong>Target:</strong> ${d.target.name || d.target}</p>
-                <p><strong>Weight:</strong> ${d.normalized_weight}</p>
-                <p><strong>Author:</strong> ${d.author || 'Unknown'}</p>
-                <p><strong>Title:</strong> ${d.title || 'Unknown'}</p>
-                <p><strong>Period:</strong> ${d.period || 'Unknown'}</p>
-            `)
+            // Only show edge tooltip if no node is currently fixed/selected
+            if (!fixedNode) {
+                tooltip.style('opacity', 1).style('pointer-events', 'auto')
+                    .html(`
+                    <h3>Edge Info</h3>
+                    <p><strong>Source:</strong> ${d.source.name || d.source}</p>
+                    <p><strong>Target:</strong> ${d.target.name || d.target}</p>
+                    <p><strong>Weight:</strong> ${d.normalized_weight}</p>
+                    <p><strong>Author:</strong> ${d.author || 'Unknown'}</p>
+                    <p><strong>Title:</strong> ${d.title || 'Unknown'}</p>
+                    <p><strong>Period:</strong> ${d.period || 'Unknown'}</p>
+                `)
+            }
         })
         .on('mouseout', () => {
-            tooltip.style('opacity', 0).style('pointer-events', 'none')
+            // Only hide tooltip if no node is currently fixed/selected
+            if (!fixedNode) {
+                tooltip.style('opacity', 0).style('pointer-events', 'none')
+            }
         })
 
     // Draw nodes
