@@ -1,0 +1,1610 @@
+{
+  "metadata": {
+    "total_characters": 446,
+    "total_edges": 28327,
+    "generation_info": "Pre-computed statistics for butterfly chart visualizations"
+  },
+  "domain_analysis": {
+    "individual": {
+      "total_domains": 156,
+      "domain_counts": {
+        "No Domain": 311,
+        "river": 9,
+        "island": 1,
+        "wind": 3,
+        "air": 1,
+        "sea": 19,
+        "destiny": 4,
+        "need": 1,
+        "inevitability": 1,
+        "music": 3,
+        "lie": 1,
+        "deceit": 1,
+        "beauty": 1,
+        "love": 2,
+        "pleasure": 2,
+        "fertility": 5,
+        "lust": 1,
+        "archery": 1,
+        "sun": 2,
+        "prophecy": 2,
+        "healing": 1,
+        "poetry": 4,
+        "light": 2,
+        "war": 3,
+        "courage": 1,
+        "brutality": 1,
+        "bloodlust": 1,
+        "excellence": 1,
+        "virtue": 1,
+        "water": 2,
+        "labyrinth": 1,
+        "beekeeping": 1,
+        "grapevine": 1,
+        "hunting": 1,
+        "wild animals": 1,
+        "nature": 6,
+        "childbirth": 3,
+        "chastity": 1,
+        "moon": 1,
+        "medicine": 1,
+        "stars": 1,
+        "weaving": 1,
+        "handicraft": 1,
+        "wisdom": 2,
+        "strategy": 1,
+        "life": 3,
+        "death": 5,
+        "recklessness": 1,
+        "delusion": 1,
+        "mischief": 1,
+        "seasons": 4,
+        "natural order": 1,
+        "force": 1,
+        "compulsion": 1,
+        "primordial void": 1,
+        "underworld": 2,
+        "flowers": 1,
+        "spring": 3,
+        "witchcraft": 1,
+        "history": 1,
+        "study of history": 1,
+        "fate": 2,
+        "time": 1,
+        "harvest": 2,
+        "agriculture": 1,
+        "soil": 1,
+        "winemaking": 1,
+        "wine": 1,
+        "festivity": 1,
+        "religious ecstasy": 1,
+        "theater": 1,
+        "lawlessness": 1,
+        "echo": 1,
+        "peace": 1,
+        "destruction": 3,
+        "conquest": 1,
+        "dawn": 2,
+        "darkness": 1,
+        "competitiveness": 1,
+        "discord": 1,
+        "strife": 1,
+        "desire": 1,
+        "law": 2,
+        "praise": 1,
+        "Europe": 1,
+        "earth": 1,
+        "riches": 1,
+        "harmony": 1,
+        "youth": 1,
+        "daylight": 1,
+        "daytime": 1,
+        "fire": 2,
+        "volcano": 1,
+        "forging": 1,
+        "artisans": 1,
+        "parturition": 1,
+        "marriage": 1,
+        "motherhood": 3,
+        "women": 1,
+        "thief": 1,
+        "travelers": 1,
+        "trade": 1,
+        "roads": 1,
+        "hearth": 1,
+        "home": 1,
+        "hospitality": 1,
+        "punishment": 2,
+        "sleep": 1,
+        "mountains": 1,
+        "rainbow": 1,
+        "power": 1,
+        "strength": 1,
+        "oblivion": 1,
+        "hunger": 1,
+        "contemplation": 1,
+        "tragedy": 1,
+        "memory": 1,
+        "mockery": 1,
+        "doom": 1,
+        "dream": 1,
+        "querrels": 1,
+        "retribution": 1,
+        "justice": 3,
+        "clouds": 1,
+        "victory": 1,
+        "night": 1,
+        "oceans": 2,
+        "sorrow": 1,
+        "suffering": 1,
+        "mental depression": 1,
+        "misery": 1,
+        "anxiety": 1,
+        "mourning": 1,
+        "warcraft": 1,
+        "wildlife": 1,
+        "cycle of life": 1,
+        "intellect": 1,
+        "hymnos": 1,
+        "hardship": 1,
+        "earthquake": 1,
+        "horses": 1,
+        "storms": 1,
+        "humanity": 1,
+        "soul": 1,
+        "sacred oaths": 1,
+        "abyss": 1,
+        "dance": 1,
+        "comedy": 1,
+        "currents": 1,
+        "astronomy": 1,
+        "sky": 2,
+        "emulation": 1,
+        "envy": 1,
+        "jealousy": 1,
+        "lightning": 1,
+        "thunder": 1
+      },
+      "top_domains": {
+        "No Domain": 311,
+        "sea": 19,
+        "river": 9,
+        "nature": 6,
+        "fertility": 5,
+        "death": 5,
+        "destiny": 4,
+        "poetry": 4,
+        "seasons": 4,
+        "wind": 3
+      },
+      "domain_gender_breakdown": {
+        "No Domain": {
+          "male": 222,
+          "female": 89
+        },
+        "river": {
+          "male": 7,
+          "female": 2
+        },
+        "island": {
+          "female": 1
+        },
+        "wind": {
+          "male": 3
+        },
+        "air": {
+          "male": 1
+        },
+        "sea": {
+          "female": 12,
+          "male": 7
+        },
+        "destiny": {
+          "female": 4
+        },
+        "need": {
+          "female": 1
+        },
+        "inevitability": {
+          "female": 1
+        },
+        "music": {
+          "female": 2,
+          "male": 1
+        },
+        "lie": {
+          "female": 1
+        },
+        "deceit": {
+          "female": 1
+        },
+        "beauty": {
+          "female": 1
+        },
+        "love": {
+          "female": 1,
+          "male": 1
+        },
+        "pleasure": {
+          "female": 1,
+          "male": 1
+        },
+        "fertility": {
+          "female": 4,
+          "male": 1
+        },
+        "lust": {
+          "female": 1
+        },
+        "archery": {
+          "male": 1
+        },
+        "sun": {
+          "male": 2
+        },
+        "prophecy": {
+          "male": 1,
+          "female": 1
+        },
+        "healing": {
+          "male": 1
+        },
+        "poetry": {
+          "male": 1,
+          "female": 3
+        },
+        "light": {
+          "male": 2
+        },
+        "war": {
+          "male": 1,
+          "female": 2
+        },
+        "courage": {
+          "male": 1
+        },
+        "brutality": {
+          "male": 1
+        },
+        "bloodlust": {
+          "male": 1
+        },
+        "excellence": {
+          "unknown": 1
+        },
+        "virtue": {
+          "unknown": 1
+        },
+        "water": {
+          "female": 2
+        },
+        "labyrinth": {
+          "female": 1
+        },
+        "beekeeping": {
+          "male": 1
+        },
+        "grapevine": {
+          "male": 1
+        },
+        "hunting": {
+          "female": 1
+        },
+        "wild animals": {
+          "female": 1
+        },
+        "nature": {
+          "female": 5,
+          "male": 1
+        },
+        "childbirth": {
+          "female": 3
+        },
+        "chastity": {
+          "female": 1
+        },
+        "moon": {
+          "female": 1
+        },
+        "medicine": {
+          "male": 1
+        },
+        "stars": {
+          "female": 1
+        },
+        "weaving": {
+          "female": 1
+        },
+        "handicraft": {
+          "female": 1
+        },
+        "wisdom": {
+          "female": 2
+        },
+        "strategy": {
+          "female": 1
+        },
+        "life": {
+          "female": 3
+        },
+        "death": {
+          "female": 3,
+          "male": 2
+        },
+        "recklessness": {
+          "female": 1
+        },
+        "delusion": {
+          "female": 1
+        },
+        "mischief": {
+          "female": 1
+        },
+        "seasons": {
+          "female": 4
+        },
+        "natural order": {
+          "female": 1
+        },
+        "force": {
+          "female": 1
+        },
+        "compulsion": {
+          "female": 1
+        },
+        "primordial void": {
+          "male": 1
+        },
+        "underworld": {
+          "male": 2
+        },
+        "flowers": {
+          "female": 1
+        },
+        "spring": {
+          "female": 3
+        },
+        "witchcraft": {
+          "female": 1
+        },
+        "history": {
+          "female": 1
+        },
+        "study of history": {
+          "female": 1
+        },
+        "fate": {
+          "female": 2
+        },
+        "time": {
+          "male": 1
+        },
+        "harvest": {
+          "male": 1,
+          "female": 1
+        },
+        "agriculture": {
+          "female": 1
+        },
+        "soil": {
+          "female": 1
+        },
+        "winemaking": {
+          "male": 1
+        },
+        "wine": {
+          "male": 1
+        },
+        "festivity": {
+          "male": 1
+        },
+        "religious ecstasy": {
+          "male": 1
+        },
+        "theater": {
+          "male": 1
+        },
+        "lawlessness": {
+          "female": 1
+        },
+        "echo": {
+          "female": 1
+        },
+        "peace": {
+          "female": 1
+        },
+        "destruction": {
+          "female": 1,
+          "male": 2
+        },
+        "conquest": {
+          "female": 1
+        },
+        "dawn": {
+          "female": 1,
+          "male": 1
+        },
+        "darkness": {
+          "male": 1
+        },
+        "competitiveness": {
+          "female": 1
+        },
+        "discord": {
+          "female": 1
+        },
+        "strife": {
+          "female": 1
+        },
+        "desire": {
+          "male": 1
+        },
+        "law": {
+          "female": 2
+        },
+        "praise": {
+          "female": 1
+        },
+        "Europe": {
+          "female": 1
+        },
+        "earth": {
+          "female": 1
+        },
+        "riches": {
+          "male": 1
+        },
+        "harmony": {
+          "female": 1
+        },
+        "youth": {
+          "female": 1
+        },
+        "daylight": {
+          "female": 1
+        },
+        "daytime": {
+          "female": 1
+        },
+        "fire": {
+          "male": 1,
+          "female": 1
+        },
+        "volcano": {
+          "male": 1
+        },
+        "forging": {
+          "male": 1
+        },
+        "artisans": {
+          "male": 1
+        },
+        "parturition": {
+          "female": 1
+        },
+        "marriage": {
+          "female": 1
+        },
+        "motherhood": {
+          "female": 3
+        },
+        "women": {
+          "female": 1
+        },
+        "thief": {
+          "male": 1
+        },
+        "travelers": {
+          "male": 1
+        },
+        "trade": {
+          "male": 1
+        },
+        "roads": {
+          "male": 1
+        },
+        "hearth": {
+          "female": 1
+        },
+        "home": {
+          "female": 1
+        },
+        "hospitality": {
+          "female": 1
+        },
+        "punishment": {
+          "male": 1,
+          "female": 1
+        },
+        "sleep": {
+          "male": 1
+        },
+        "mountains": {
+          "female": 1
+        },
+        "rainbow": {
+          "female": 1
+        },
+        "power": {
+          "male": 1
+        },
+        "strength": {
+          "male": 1
+        },
+        "oblivion": {
+          "female": 1
+        },
+        "hunger": {
+          "female": 1
+        },
+        "contemplation": {
+          "female": 1
+        },
+        "tragedy": {
+          "female": 1
+        },
+        "memory": {
+          "female": 1
+        },
+        "mockery": {
+          "male": 1
+        },
+        "doom": {
+          "male": 1
+        },
+        "dream": {
+          "male": 1
+        },
+        "querrels": {
+          "female": 1
+        },
+        "retribution": {
+          "female": 1
+        },
+        "justice": {
+          "female": 2,
+          "male": 1
+        },
+        "clouds": {
+          "female": 1
+        },
+        "victory": {
+          "female": 1
+        },
+        "night": {
+          "female": 1
+        },
+        "oceans": {
+          "male": 1,
+          "female": 1
+        },
+        "sorrow": {
+          "female": 1
+        },
+        "suffering": {
+          "female": 1
+        },
+        "mental depression": {
+          "female": 1
+        },
+        "misery": {
+          "female": 1
+        },
+        "anxiety": {
+          "female": 1
+        },
+        "mourning": {
+          "female": 1
+        },
+        "warcraft": {
+          "male": 1
+        },
+        "wildlife": {
+          "male": 1
+        },
+        "cycle of life": {
+          "female": 1
+        },
+        "intellect": {
+          "female": 1
+        },
+        "hymnos": {
+          "female": 1
+        },
+        "hardship": {
+          "male": 1
+        },
+        "earthquake": {
+          "male": 1
+        },
+        "horses": {
+          "male": 1
+        },
+        "storms": {
+          "male": 1
+        },
+        "humanity": {
+          "male": 1
+        },
+        "soul": {
+          "female": 1
+        },
+        "sacred oaths": {
+          "female": 1
+        },
+        "abyss": {
+          "male": 1
+        },
+        "dance": {
+          "female": 1
+        },
+        "comedy": {
+          "female": 1
+        },
+        "currents": {
+          "female": 1
+        },
+        "astronomy": {
+          "female": 1
+        },
+        "sky": {
+          "male": 2
+        },
+        "emulation": {
+          "male": 1
+        },
+        "envy": {
+          "male": 1
+        },
+        "jealousy": {
+          "male": 1
+        },
+        "lightning": {
+          "male": 1
+        },
+        "thunder": {
+          "male": 1
+        }
+      }
+    },
+    "grouped": {
+      "total_domain_groups": 17,
+      "domain_group_counts": {
+        "No Domain": 311,
+        "Water & Sea": 33,
+        "Life, Renewal and Nature": 21,
+        "Sky & Celestial": 19,
+        "Life & Death": 10,
+        "Personification of Negative Forces": 10,
+        "Personification of Abstract Concepts": 20,
+        "Knowledge & Arts": 15,
+        "Love & Beauty": 5,
+        "Crafts & Skills": 5,
+        "Divine and Religion": 9,
+        "War & Conflict": 8,
+        "Miscellaneous": 3,
+        "Justice & Law": 7,
+        "Patrons of Groups": 4,
+        "Forces of Nature": 3,
+        "Home & Hospitality": 1
+      },
+      "top_domain_groups": {
+        "No Domain": 311,
+        "Water & Sea": 33,
+        "Life, Renewal and Nature": 21,
+        "Personification of Abstract Concepts": 20,
+        "Sky & Celestial": 19,
+        "Knowledge & Arts": 15,
+        "Life & Death": 10,
+        "Personification of Negative Forces": 10,
+        "Divine and Religion": 9,
+        "War & Conflict": 8
+      },
+      "domain_group_gender_breakdown": {
+        "No Domain": {
+          "male": 222,
+          "female": 89
+        },
+        "Water & Sea": {
+          "male": 15,
+          "female": 18
+        },
+        "Life, Renewal and Nature": {
+          "female": 16,
+          "male": 5
+        },
+        "Sky & Celestial": {
+          "male": 11,
+          "female": 8
+        },
+        "Life & Death": {
+          "female": 6,
+          "male": 4
+        },
+        "Personification of Negative Forces": {
+          "female": 7,
+          "male": 3
+        },
+        "Personification of Abstract Concepts": {
+          "female": 10,
+          "male": 9,
+          "unknown": 1
+        },
+        "Knowledge & Arts": {
+          "female": 13,
+          "male": 2
+        },
+        "Love & Beauty": {
+          "female": 3,
+          "male": 2
+        },
+        "Crafts & Skills": {
+          "male": 3,
+          "female": 2
+        },
+        "Divine and Religion": {
+          "male": 4,
+          "female": 5
+        },
+        "War & Conflict": {
+          "male": 4,
+          "female": 4
+        },
+        "Miscellaneous": {
+          "female": 3
+        },
+        "Justice & Law": {
+          "female": 5,
+          "male": 2
+        },
+        "Patrons of Groups": {
+          "female": 2,
+          "male": 2
+        },
+        "Forces of Nature": {
+          "male": 2,
+          "female": 1
+        },
+        "Home & Hospitality": {
+          "female": 1
+        }
+      }
+    },
+    "domain_groups_mapping": {
+      "Water & Sea": [
+        "sea",
+        "river",
+        "water",
+        "oceans",
+        "currents",
+        "ocean"
+      ],
+      "War & Conflict": [
+        "war",
+        "destruction",
+        "conquest",
+        "warcraft",
+        "discord",
+        "strife",
+        "bloodlust",
+        "brutality",
+        "violence",
+        "conflict",
+        "quarrels",
+        "querrels",
+        "enmity"
+      ],
+      "Forces of Nature": [
+        "earthquakes",
+        "earthquake",
+        "fire",
+        "volcanoes",
+        "volcano"
+      ],
+      "Life, Renewal and Nature": [
+        "nature",
+        "earth",
+        "soil",
+        "wildlife",
+        "wild animals",
+        "forest",
+        "trees",
+        "flowers",
+        "islands",
+        "island",
+        "mountains",
+        "spring",
+        "seasons",
+        "fertility",
+        "agriculture",
+        "harvest",
+        "grapevine",
+        "winemaking",
+        "beekeeping",
+        "renewal",
+        "vegetation",
+        "plants",
+        "growth",
+        "childbirth",
+        "parturition",
+        "motherhood",
+        "horses"
+      ],
+      "Life & Death": [
+        "underworld",
+        "fate",
+        "destiny",
+        "doom",
+        "cycle of life",
+        "souls",
+        "soul",
+        "abyss",
+        "afterlife"
+      ],
+      "Love & Beauty": [
+        "love",
+        "beauty",
+        "pleasure",
+        "lust",
+        "desire",
+        "marriage",
+        "riches",
+        "victory"
+      ],
+      "Sky & Celestial": [
+        "sky",
+        "sun",
+        "moon",
+        "stars",
+        "daylight",
+        "daytime",
+        "dawn",
+        "night",
+        "light",
+        "lightning",
+        "thunder",
+        "clouds",
+        "rainbow",
+        "astronomy",
+        "air",
+        "wind",
+        "storms",
+        "storm"
+      ],
+      "Knowledge & Arts": [
+        "wisdom",
+        "poetry",
+        "music",
+        "dance",
+        "theater",
+        "comedy",
+        "tragedy",
+        "memory",
+        "intellect",
+        "study of history",
+        "history",
+        "hymnos"
+      ],
+      "Justice & Law": [
+        "justice",
+        "law",
+        "punishment",
+        "retribution",
+        "sacred oaths",
+        "natural order",
+        "civilization"
+      ],
+      "Crafts & Skills": [
+        "weaving",
+        "handicraft",
+        "archery",
+        "hunting",
+        "forging",
+        "healing",
+        "medicine"
+      ],
+      "Home & Hospitality": [
+        "hearth",
+        "home",
+        "hospitality"
+      ],
+      "Patrons of Groups": [
+        "women",
+        "youth",
+        "children",
+        "mariners",
+        "sailors",
+        "farmers",
+        "shepherds",
+        "blacksmiths",
+        "craftsmen",
+        "artisans",
+        "athletes",
+        "musicians",
+        "poets",
+        "travelers",
+        "traders",
+        "thieves",
+        "thief",
+        "road",
+        "roads",
+        "trade"
+      ],
+      "Personification of Abstract Concepts": [
+        "sleep",
+        "dream",
+        "mental depression",
+        "anxiety",
+        "mourning",
+        "mockery",
+        "praise",
+        "contemplation",
+        "courage",
+        "excellence",
+        "virtue",
+        "chastity",
+        "competitiveness",
+        "emulation",
+        "power",
+        "strength",
+        "force",
+        "compulsion",
+        "primordial void",
+        "time",
+        "inevitability",
+        "strategy",
+        "peace",
+        "harmony",
+        "humanity"
+      ],
+      "Divine and Religion": [
+        "prophecy",
+        "witchcraft",
+        "religious ecstasy",
+        "festivity",
+        "rituals",
+        "sacrifice",
+        "oracles",
+        "omens",
+        "augury",
+        "divination",
+        "wine",
+        "life",
+        "death",
+        "rebirth"
+      ],
+      "Personification of Negative Forces": [
+        "lie",
+        "deceit",
+        "lawlessness",
+        "darkness",
+        "oblivion",
+        "hunger",
+        "need",
+        "hardship",
+        "poverty",
+        "plague",
+        "disease",
+        "famine",
+        "pestilence",
+        "drought",
+        "chaos",
+        "despair",
+        "ruin",
+        "envy",
+        "jealousy",
+        "greed",
+        "hatred",
+        "revenge",
+        "vengeance",
+        "recklessness",
+        "delusion",
+        "mischief",
+        "sorrow",
+        "suffering",
+        "misery"
+      ],
+      "Miscellaneous": [
+        "labyrinth",
+        "Europe",
+        "echo"
+      ]
+    }
+  },
+  "gender_analysis": {
+    "gender_distribution": {
+      "male": 274,
+      "female": 171,
+      "unknown": 1
+    },
+    "male_percentage": 61.4,
+    "female_percentage": 38.3,
+    "unknown_percentage": 0.2,
+    "total_genders": 3
+  },
+  "type_analysis": {
+    "total_types": 18,
+    "type_counts": {
+      "Unknown": 281,
+      "Greek water deities": 27,
+      "Greek nymph": 19,
+      "Greek deity": 24,
+      "Greek primordial deity": 10,
+      "Giants": 8,
+      "satyr": 1,
+      "Muse": 11,
+      "allegorical Greek deity": 20,
+      "Olympian god": 14,
+      "titan": 21,
+      "Horae": 2,
+      "Nereid": 2,
+      "demigod of Greek mythology": 2,
+      "autochthonos": 1,
+      "chthonic deities": 1,
+      "cyclops": 1,
+      "Anemoi": 1
+    },
+    "top_types": {
+      "Unknown": 281,
+      "Greek water deities": 27,
+      "Greek deity": 24,
+      "titan": 21,
+      "allegorical Greek deity": 20,
+      "Greek nymph": 19,
+      "Olympian god": 14,
+      "Muse": 11,
+      "Greek primordial deity": 10,
+      "Giants": 8
+    },
+    "type_gender_breakdown": {
+      "Unknown": {
+        "male": 202,
+        "female": 79
+      },
+      "Greek water deities": {
+        "male": 12,
+        "female": 15
+      },
+      "Greek nymph": {
+        "female": 19
+      },
+      "Greek deity": {
+        "male": 11,
+        "female": 13
+      },
+      "Greek primordial deity": {
+        "male": 7,
+        "female": 3
+      },
+      "Giants": {
+        "male": 8
+      },
+      "satyr": {
+        "male": 1
+      },
+      "Muse": {
+        "female": 11
+      },
+      "allegorical Greek deity": {
+        "female": 12,
+        "unknown": 1,
+        "male": 7
+      },
+      "Olympian god": {
+        "female": 7,
+        "male": 7
+      },
+      "titan": {
+        "female": 8,
+        "male": 13
+      },
+      "Horae": {
+        "female": 2
+      },
+      "Nereid": {
+        "female": 2
+      },
+      "demigod of Greek mythology": {
+        "male": 2
+      },
+      "autochthonos": {
+        "male": 1
+      },
+      "chthonic deities": {
+        "male": 1
+      },
+      "cyclops": {
+        "male": 1
+      },
+      "Anemoi": {
+        "male": 1
+      }
+    }
+  },
+  "author_analysis": {
+    "total_authors": 26,
+    "author_stats": {
+      "Nonnus": {
+        "total_characters": 109,
+        "total_edges": 1011,
+        "gender_counts": {
+          "male": 54,
+          "female": 55
+        },
+        "male_percentage": 49.5,
+        "female_percentage": 50.5
+      },
+      "Ovid": {
+        "total_characters": 263,
+        "total_edges": 1719,
+        "gender_counts": {
+          "male": 175,
+          "female": 88
+        },
+        "male_percentage": 66.5,
+        "female_percentage": 33.5
+      },
+      "Virgil": {
+        "total_characters": 143,
+        "total_edges": 550,
+        "gender_counts": {
+          "male": 105,
+          "female": 38
+        },
+        "male_percentage": 73.4,
+        "female_percentage": 26.6
+      },
+      "Aeschylus": {
+        "total_characters": 107,
+        "total_edges": 370,
+        "gender_counts": {
+          "male": 74,
+          "female": 33
+        },
+        "male_percentage": 69.2,
+        "female_percentage": 30.8
+      },
+      "Apollodorus": {
+        "total_characters": 370,
+        "total_edges": 7285,
+        "gender_counts": {
+          "male": 235,
+          "female": 134,
+          "unknown": 1
+        },
+        "male_percentage": 63.5,
+        "female_percentage": 36.2
+      },
+      "Aratus": {
+        "total_characters": 18,
+        "total_edges": 39,
+        "gender_counts": {
+          "female": 10,
+          "male": 8
+        },
+        "male_percentage": 44.4,
+        "female_percentage": 55.6
+      },
+      "Callimachus": {
+        "total_characters": 43,
+        "total_edges": 99,
+        "gender_counts": {
+          "male": 32,
+          "female": 11
+        },
+        "male_percentage": 74.4,
+        "female_percentage": 25.6
+      },
+      "Claudian": {
+        "total_characters": 63,
+        "total_edges": 170,
+        "gender_counts": {
+          "male": 41,
+          "female": 22
+        },
+        "male_percentage": 65.1,
+        "female_percentage": 34.9
+      },
+      "Diodorus Siculus": {
+        "total_characters": 191,
+        "total_edges": 1259,
+        "gender_counts": {
+          "male": 146,
+          "female": 45
+        },
+        "male_percentage": 76.4,
+        "female_percentage": 23.6
+      },
+      "Epic Cycle": {
+        "total_characters": 94,
+        "total_edges": 538,
+        "gender_counts": {
+          "male": 66,
+          "female": 28
+        },
+        "male_percentage": 70.2,
+        "female_percentage": 29.8
+      },
+      "Fulgentius": {
+        "total_characters": 81,
+        "total_edges": 184,
+        "gender_counts": {
+          "male": 38,
+          "female": 43
+        },
+        "male_percentage": 46.9,
+        "female_percentage": 53.1
+      },
+      "Hesiod": {
+        "total_characters": 167,
+        "total_edges": 1171,
+        "gender_counts": {
+          "male": 96,
+          "female": 71
+        },
+        "male_percentage": 57.5,
+        "female_percentage": 42.5
+      },
+      "Homer": {
+        "total_characters": 252,
+        "total_edges": 2820,
+        "gender_counts": {
+          "male": 172,
+          "female": 79,
+          "unknown": 1
+        },
+        "male_percentage": 68.3,
+        "female_percentage": 31.3
+      },
+      "Hyginus": {
+        "total_characters": 100,
+        "total_edges": 769,
+        "gender_counts": {
+          "male": 49,
+          "female": 51
+        },
+        "male_percentage": 49.0,
+        "female_percentage": 51.0
+      },
+      "Parthenius": {
+        "total_characters": 51,
+        "total_edges": 72,
+        "gender_counts": {
+          "female": 18,
+          "male": 33
+        },
+        "male_percentage": 64.7,
+        "female_percentage": 35.3
+      },
+      "Pausanias": {
+        "total_characters": 315,
+        "total_edges": 4765,
+        "gender_counts": {
+          "male": 214,
+          "female": 101
+        },
+        "male_percentage": 67.9,
+        "female_percentage": 32.1
+      },
+      "Philostratus The Elder": {
+        "total_characters": 82,
+        "total_edges": 210,
+        "gender_counts": {
+          "male": 60,
+          "female": 22
+        },
+        "male_percentage": 73.2,
+        "female_percentage": 26.8
+      },
+      "Philostratus The Younger": {
+        "total_characters": 49,
+        "total_edges": 102,
+        "gender_counts": {
+          "male": 38,
+          "female": 11
+        },
+        "male_percentage": 77.6,
+        "female_percentage": 22.4
+      },
+      "Theocritus": {
+        "total_characters": 68,
+        "total_edges": 130,
+        "gender_counts": {
+          "male": 47,
+          "female": 21
+        },
+        "male_percentage": 69.1,
+        "female_percentage": 30.9
+      },
+      "Statius": {
+        "total_characters": 152,
+        "total_edges": 701,
+        "gender_counts": {
+          "male": 111,
+          "female": 41
+        },
+        "male_percentage": 73.0,
+        "female_percentage": 27.0
+      },
+      "Apollonius Rhodius": {
+        "total_characters": 120,
+        "total_edges": 474,
+        "gender_counts": {
+          "male": 89,
+          "female": 31
+        },
+        "male_percentage": 74.2,
+        "female_percentage": 25.8
+      },
+      "Dictys Cretensis": {
+        "total_characters": 135,
+        "total_edges": 983,
+        "gender_counts": {
+          "male": 100,
+          "female": 35
+        },
+        "male_percentage": 74.1,
+        "female_percentage": 25.9
+      },
+      "Lucian": {
+        "total_characters": 116,
+        "total_edges": 389,
+        "gender_counts": {
+          "male": 78,
+          "female": 38
+        },
+        "male_percentage": 67.2,
+        "female_percentage": 32.8
+      },
+      "Quintus Smyrnaeus": {
+        "total_characters": 156,
+        "total_edges": 1002,
+        "gender_counts": {
+          "male": 120,
+          "female": 36
+        },
+        "male_percentage": 76.9,
+        "female_percentage": 23.1
+      },
+      "Seneca": {
+        "total_characters": 169,
+        "total_edges": 916,
+        "gender_counts": {
+          "male": 116,
+          "female": 53
+        },
+        "male_percentage": 68.6,
+        "female_percentage": 31.4
+      },
+      "Valerius Flaccus": {
+        "total_characters": 115,
+        "total_edges": 398,
+        "gender_counts": {
+          "male": 79,
+          "female": 36
+        },
+        "male_percentage": 68.7,
+        "female_percentage": 31.3
+      }
+    },
+    "top_authors_by_characters": {
+      "Apollodorus": {
+        "total_characters": 370,
+        "total_edges": 7285,
+        "gender_counts": {
+          "male": 235,
+          "female": 134,
+          "unknown": 1
+        },
+        "male_percentage": 63.5,
+        "female_percentage": 36.2
+      },
+      "Pausanias": {
+        "total_characters": 315,
+        "total_edges": 4765,
+        "gender_counts": {
+          "male": 214,
+          "female": 101
+        },
+        "male_percentage": 67.9,
+        "female_percentage": 32.1
+      },
+      "Ovid": {
+        "total_characters": 263,
+        "total_edges": 1719,
+        "gender_counts": {
+          "male": 175,
+          "female": 88
+        },
+        "male_percentage": 66.5,
+        "female_percentage": 33.5
+      },
+      "Homer": {
+        "total_characters": 252,
+        "total_edges": 2820,
+        "gender_counts": {
+          "male": 172,
+          "female": 79,
+          "unknown": 1
+        },
+        "male_percentage": 68.3,
+        "female_percentage": 31.3
+      },
+      "Diodorus Siculus": {
+        "total_characters": 191,
+        "total_edges": 1259,
+        "gender_counts": {
+          "male": 146,
+          "female": 45
+        },
+        "male_percentage": 76.4,
+        "female_percentage": 23.6
+      },
+      "Seneca": {
+        "total_characters": 169,
+        "total_edges": 916,
+        "gender_counts": {
+          "male": 116,
+          "female": 53
+        },
+        "male_percentage": 68.6,
+        "female_percentage": 31.4
+      },
+      "Hesiod": {
+        "total_characters": 167,
+        "total_edges": 1171,
+        "gender_counts": {
+          "male": 96,
+          "female": 71
+        },
+        "male_percentage": 57.5,
+        "female_percentage": 42.5
+      },
+      "Quintus Smyrnaeus": {
+        "total_characters": 156,
+        "total_edges": 1002,
+        "gender_counts": {
+          "male": 120,
+          "female": 36
+        },
+        "male_percentage": 76.9,
+        "female_percentage": 23.1
+      },
+      "Statius": {
+        "total_characters": 152,
+        "total_edges": 701,
+        "gender_counts": {
+          "male": 111,
+          "female": 41
+        },
+        "male_percentage": 73.0,
+        "female_percentage": 27.0
+      },
+      "Virgil": {
+        "total_characters": 143,
+        "total_edges": 550,
+        "gender_counts": {
+          "male": 105,
+          "female": 38
+        },
+        "male_percentage": 73.4,
+        "female_percentage": 26.6
+      }
+    }
+  },
+  "level_analysis": {
+    "level1": {
+      "Greek deity": 162,
+      "satyr": 1,
+      "autochthonos": 1,
+      "cyclops": 1
+    },
+    "level2": {
+      "Greek water deities": 27,
+      "titan": 21,
+      "allegorical Greek deity": 20,
+      "Greek nymph": 19,
+      "Olympian god": 14,
+      "Muse": 11,
+      "Greek primordial deity": 10,
+      "Giants": 8,
+      "Horae": 2,
+      "Nereid": 2,
+      "demigod of Greek mythology": 2,
+      "chthonic deities": 1,
+      "Anemoi": 1
+    },
+    "level3": {
+      "Potamoi": 8,
+      "Oceanids": 7,
+      "Pleiades": 6,
+      "Hecatoncheires": 3,
+      "dryad": 2,
+      "naiad": 2,
+      "Oread": 1,
+      "Nereid": 1
+    },
+    "level4": {
+      "Okeanid": 6
+    }
+  },
+  "cross_analysis": {
+    "gender_by_type": {
+      "Unknown": {
+        "male": 202,
+        "female": 79
+      },
+      "Greek water deities": {
+        "male": 12,
+        "female": 15
+      },
+      "Greek deity": {
+        "male": 11,
+        "female": 13
+      },
+      "titan": {
+        "female": 8,
+        "male": 13
+      },
+      "allegorical Greek deity": {
+        "female": 12,
+        "unknown": 1,
+        "male": 7
+      }
+    },
+    "gender_by_author": {
+      "Apollodorus": {
+        "male": 235,
+        "female": 134,
+        "unknown": 1
+      },
+      "Pausanias": {
+        "male": 214,
+        "female": 101
+      },
+      "Ovid": {
+        "male": 175,
+        "female": 88
+      },
+      "Homer": {
+        "male": 172,
+        "female": 79,
+        "unknown": 1
+      },
+      "Diodorus Siculus": {
+        "male": 146,
+        "female": 45
+      }
+    },
+    "top_grouped_domains_for_comparison": [
+      "No Domain",
+      "Water & Sea",
+      "Life, Renewal and Nature",
+      "Personification of Abstract Concepts",
+      "Sky & Celestial",
+      "Knowledge & Arts"
+    ],
+    "top_individual_domains_for_comparison": [
+      "No Domain",
+      "sea",
+      "river",
+      "nature",
+      "fertility",
+      "death"
+    ],
+    "top_types_for_comparison": [
+      "Unknown",
+      "Greek water deities",
+      "Greek deity",
+      "titan",
+      "allegorical Greek deity"
+    ],
+    "top_authors_for_comparison": [
+      "Apollodorus",
+      "Pausanias",
+      "Ovid",
+      "Homer",
+      "Diodorus Siculus"
+    ]
+  }
+}

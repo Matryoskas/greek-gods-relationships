@@ -168,6 +168,10 @@ function init() {
             parentColorMap, // Use parent color map for timeline
             parentGroups
         )
+
+        // Initialize general butterfly chart with pre-computed data
+        createGeneralButterflyChart('.ButterflyChart', 'butterfly_data.json')
+
         //createTimeLineChart(characters, edges, '.TimelineChart');
     })
 }

@@ -10,7 +10,7 @@ Acerbas,priest from Roman mythology,[],male,['Sychaeus'],,,,,,,
 Acestes,mythical character,[],male,['Agestas'],,,,,King (of Western Sicily),,
 Achates,"character of Roman mythology, close friend of Aeneas",[],male,[],,,,,,,
 Achelous,river god in Greek mythology,['river'],male,"['Achilaos', 'Acheloüs', 'Acheloos']",Greek deity,Greek water deities,Potamoi,,,Oceanus,Tethys
-Acheron,"god of river of underworld, Greek mythology",['Acheron'],male,['Acheron'],Greek deity,Greek water deities,Potamoi,,,,Gaia
+Acheron,"god of river of underworld, Greek mythology",['river'],male,['Acheron'],Greek deity,Greek water deities,Potamoi,,,,Gaia
 Achilles,Greek mythological hero,[],male,"['Pelides', 'Peleiades', 'Achilleus']",,,,,,Peleus,Thetis
 Acis,river god in Greek mythology,['river'],male,[],Greek deity,Greek water deities,Potamoi,,,Pan,
 Acontius,character in Greek mythology,[],male,[],,,,,,,
@@ -204,7 +204,7 @@ Hector,prince of Troy in Greek mythology,[],male,"['Sigfrido', 'Siegfried', 'Sig
 Hecuba,spouse of king Priam,[],female,['Hekuba'],,,,,,Cisseus,
 Helen of Troy,daughter of Zeus in Greek mythology,[],female,"['Helen of Sparta', 'Helen of Argos', 'Helen']",,,,,,Zeus,Leda
 Helenus,mythical son of Priam,[],male,[],,,,,,Priam,Hecuba
-Helios,sun god in Greek mythology,['Sun'],male,"['Helius', 'Baal-hamon']",Greek deity,titan,,,,Hyperion,
+Helios,sun god in Greek mythology,['sun'],male,"['Helius', 'Baal-hamon']",Greek deity,titan,,,,Hyperion,
 Helle,Greek mythology character,[],female,"['Athamantis', 'Ellie']",Greek deity,Greek water deities,,,,Athamas,Nephele
 Hellen,mythological progenitor of the Hellenes,[],male,[],,,,,,Deucalion,Pyrrha
 Hemera,Ancient Greek goddess of the day,"['daylight', 'daytime']",female,['Dies'],Greek deity,,,,,Erebos,Nyx
