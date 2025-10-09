@@ -172,7 +172,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             const targetName = d.target.name || d.target
 
             node.attr('stroke', (n) =>
-                n.name === sourceName || n.name === targetName ? '#ff0' : '#fff'
+                n.name === sourceName || n.name === targetName ? '# ' : '#000'
             )
                 .attr('stroke-width', (n) =>
                     n.name === sourceName || n.name === targetName ? 4 : 1.5
@@ -428,47 +428,89 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         node.attr('fill', (d) => nodeColor(d))
     }
 
-    // --- Build a collapsible legend using <details>/<summary> ---
-    let legendHtml = `<h3>Mythological Categories</h3>`
+// --- Build a collapsible legend using <details>/<summary> ---
+function buildLegendHTML() {
+    let html = `<h3>Mythological Categories</h3>`
 
     // Render each parent; use <details> only if it actually has children, otherwise a simple row
     parents.forEach((p) => {
         const pColor = parentColor.get(p)
         const children = Array.from(groupMap.get(p)).sort()
         if (children.length === 0) {
-            // Flat parent (no subgroups)
-            legendHtml += `
-      <div class="legend-item">
-        <span class="legend-dot" style="background:${pColor};"></span>
-        ${p}
-      </div>`
+            // Flat parent (no subgroups) - now clickable
+            html += `
+          <div class="legend-item" data-category="${p}" data-type="parent" style="cursor: pointer;">
+            <span class="legend-dot" style="background:${pColor};"></span>
+            ${p}
+          </div>`
         } else {
             // Parent with children (collapsible)
-            legendHtml += `
-      <details class="legend-group">
-        <summary>
-          <span class="legend-dot" style="background:${pColor};"></span>
-          ${p}
-        </summary>
-        <ul class="legend-list">
-          ${children
-              .map(
-                  (c) => `
-            <li>
-              <span class="legend-dot" style="background:${childColor.get(
-                  compositeKey(p, c)
-              )};"></span>
-              ${c}
-            </li>`
-              )
-              .join('')}
-        </ul>
-      </details>`
+            html += `
+          <details class="legend-group">
+            <summary data-category="${p}" data-type="parent">
+              <span class="legend-dot" style="background:${pColor};"></span>
+              <span class="legend-label" style="cursor: pointer;">${p}</span>
+            </summary>
+            <ul class="legend-list">
+              ${children
+                  .map(
+                      (c) => `
+                <li class="legend-item" data-category="${c}" data-parent="${p}" data-type="child" style="cursor: pointer;">
+                  <span class="legend-dot" style="background:${childColor.get(
+                      compositeKey(p, c)
+                  )};"></span>
+                  ${c}
+                </li>`
+                  )
+                  .join('')}
+            </ul>
+          </details>`
         }
     })
 
-    permanentTooltip.html(legendHtml)
-    // ---------- /GROUPED COLORS + COLLAPSIBLE LEGEND ----------
+    // Add a placeholder div for selection info below the legend
+    html += `<div id="legend-selection-info" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"></div>`
+
+    return html
+}
+
+function attachLegendHandlers() {
+    // Add click handlers to legend items (children and flat parents)
+    permanentTooltip.selectAll('.legend-item').on('click', function(event) {
+        event.stopPropagation()
+
+        const clickedCategory = this.getAttribute('data-category')
+        const categoryType = this.getAttribute('data-type')
+        const parentCategory = this.getAttribute('data-parent')
+
+        if (window.globalSelection) {
+            if (categoryType === 'child') {
+                // For child categories, highlight the entire parent family
+                window.globalSelection.set(parentCategory)
+            } else {
+                // For parent categories, highlight the entire family
+                window.globalSelection.set(clickedCategory)
+            }
+        }
+    })
+
+    // Add click handlers to legend labels inside summary (only to the text, not the arrow)
+    permanentTooltip.selectAll('.legend-label').on('click', function(event) {
+        event.stopPropagation()
+
+        // Find the parent summary element to get the category
+        const summaryElement = this.closest('summary')
+        const clickedCategory = summaryElement.getAttribute('data-category')
+
+        if (window.globalSelection) {
+            window.globalSelection.set(clickedCategory)
+        }
+    })
+}
+
+const legendHtml = buildLegendHTML()
+permanentTooltip.html(legendHtml)
+attachLegendHandlers()
 
     // Helper to update label font weight
     function updateLabelBold(selected) {
@@ -521,7 +563,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             // Highlight selected node and direct connections
             const neighbors = getDirectConnections(d)
             node.attr('stroke', (n) =>
-                n === d ? '#ff0' : neighbors.has(n.name) ? '#ffa500' : '#fff'
+                n === d ? '#000' : neighbors.has(n.name) ? '#ffa500' : '#fff'
             )
                 .attr('stroke-width', (n) =>
                     n === d || neighbors.has(n.name) ? 4 : 1.5
@@ -539,7 +581,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             link.attr('stroke', (l) => {
                 const src = l.source.name || l.source
                 const tgt = l.target.name || l.target
-                return src === d.name || tgt === d.name ? '#ff0' : '#999'
+                return src === d.name || tgt === d.name ? '#000' : '#999'
             })
                 .attr('stroke-width', (l) => {
                     const src = l.source.name || l.source
@@ -666,32 +708,32 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                         : '#999'
                 })
 
-                // Update permanent tooltip to show category info
-                permanentTooltip.html(`
-                    <h3>Selected Category: ${selectedGroup}</h3>
-                    <p><strong>Characters shown:</strong> ${relevantNodes.length}</p>
-                    <p><strong>Category:</strong> ${selectedGroup}</p>
-                    <div style="margin-top: 10px;">
-                        <small>Click background to reset view</small>
-                    </div>
-                    <hr style="margin: 10px 0;">
-                    ${legendHtml}
-                `)
-            } else {
-                // Reset to normal view only if no individual node is selected
-                if (!fixedNode) {
-                    node.attr('opacity', 1)
-                        .attr('stroke-width', 1.5)
-                        .attr('stroke', '#fff')
+// Update the selection info div instead of replacing the entire tooltip
+const selectionInfo = permanentTooltip.select('#legend-selection-info')
+if (!selectionInfo.empty()) {
+    selectionInfo.html(`
+        <h4 style="margin: 0 0 8px 0; color: #333;">Selected: ${selectedGroup}</h4>
+        <p style="margin: 0 0 4px 0;"><strong>Characters shown:</strong> ${relevantNodes.length}</p>
+        <div style="margin-top: 8px; font-size: 0.85em; color: #666;">
+            <small>Click background to reset</small>
+        </div>
+    `)
+}
+} else {
+    // Reset to normal view only if no individual node is selected
+    if (!fixedNode) {
+        node.attr('opacity', 1)
+            .attr('stroke-width', 1.5)
+            .attr('stroke', '#fff')
 
-                    label.attr('opacity', 1).attr('font-weight', 'normal')
+        label.attr('opacity', 1).attr('font-weight', 'normal')
 
-                    link.attr('opacity', 0.6).attr('stroke', '#999')
-                }
+        link.attr('opacity', 0.6).attr('stroke', '#999')
+    }
 
-                // Always restore original legend regardless of node selection
-                permanentTooltip.html(legendHtml)
-            }
+    // Always restore original legend regardless of node selection
+    permanentTooltip.html(legendHtml)
+}
         })
     }
 }
