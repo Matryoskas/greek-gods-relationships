@@ -170,7 +170,7 @@ function init() {
         )
 
         // Initialize general butterfly chart with pre-computed data
-        createGeneralButterflyChart('.ButterflyChart', 'butterfly_data.json')
+        createButterflyChart('.ButterflyChart', 'butterfly_data.json')
 
         //createTimeLineChart(characters, edges, '.TimelineChart');
     })
