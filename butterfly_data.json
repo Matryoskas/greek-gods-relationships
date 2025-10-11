@@ -16,7 +16,7 @@
     "death": 5
   },
   "types": {
-    "Unknown": 281,
+    "Others": 281,
     "Greek water deities": 27,
     "Greek deity": 24,
     "titan": 21,
@@ -43,7 +43,7 @@
     "Apollodorus": {
       "male": 235,
       "female": 134,
-      "unknown": 1
+      "other": 1
     },
     "Aratus": {
       "female": 10,
@@ -51,7 +51,7 @@
     }
   },
   "gender_by_type": {
-    "Unknown": {
+    "Others": {
       "male": 202,
       "female": 79
     },
@@ -69,14 +69,14 @@
     },
     "allegorical Greek deity": {
       "female": 12,
-      "unknown": 1,
+      "other": 1,
       "male": 7
     }
   },
   "overall_gender": {
     "male": 274,
     "female": 171,
-    "unknown": 1
+    "other": 1
   },
   "domain_groups_info": {
     "mapping": {
@@ -503,7 +503,7 @@
     "sample_diverse_genders": {
       "male": 274,
       "female": 171,
-      "unknown": 1,
+      "other": 1,
       "non-binary": 0,
       "genderfluid": 0,
       "agender": 0

@@ -6,7 +6,7 @@ function createTimeLineChart(
     parentGroups
 ) {
     // Use same hierarchical grouping logic as global preprocessing
-    const parentKey = (c) => c.level2 || c.level1 || 'Other'
+    const parentKey = (c) => c.level2 || c.level1 || 'Others'
 
     // Build a lookup: name -> parent group (data is already filtered and normalized)
     const charGroup = {}

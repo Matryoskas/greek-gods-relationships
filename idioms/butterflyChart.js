@@ -48,6 +48,20 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
 
         const yAxisGroup = svg.append('g').attr('class', 'y-axis')
 
+        // Create simple tooltip
+        const tooltip = d3
+            .select('body')
+            .append('div')
+            .style('position', 'absolute')
+            .style('background', 'rgba(0, 0, 0, 0.8)')
+            .style('color', 'white')
+            .style('padding', '8px')
+            .style('border-radius', '4px')
+            .style('font-size', '12px')
+            .style('pointer-events', 'none')
+            .style('z-index', '1000')
+            .style('visibility', 'hidden')
+
         // Add title (similar to timeline chart)
         svg.append('text')
             .attr('x', width / 2)
@@ -110,6 +124,23 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .enter()
                 .append('rect')
                 .attr('class', 'male-bar')
+                .on('mouseover', function (event, d) {
+                    tooltip
+                        .style('visibility', 'visible')
+                        .html(
+                            `<strong>${d}</strong><br/>Male: ${
+                                selectedData[d].male
+                            }<br/>Female: ${selectedData[d].female || 0}`
+                        )
+                })
+                .on('mousemove', function (event) {
+                    tooltip
+                        .style('top', event.pageY - 10 + 'px')
+                        .style('left', event.pageX + 10 + 'px')
+                })
+                .on('mouseout', function (event, d) {
+                    tooltip.style('visibility', 'hidden')
+                })
                 .merge(maleBars)
                 .transition()
                 .duration(500)
@@ -151,6 +182,23 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .enter()
                 .append('rect')
                 .attr('class', 'female-bar')
+                .on('mouseover', function (event, d) {
+                    tooltip
+                        .style('visibility', 'visible')
+                        .html(
+                            `<strong>${d}</strong><br/>Male: ${
+                                selectedData[d].male || 0
+                            }<br/>Female: ${selectedData[d].female}`
+                        )
+                })
+                .on('mousemove', function (event) {
+                    tooltip
+                        .style('top', event.pageY - 10 + 'px')
+                        .style('left', event.pageX + 10 + 'px')
+                })
+                .on('mouseout', function (event, d) {
+                    tooltip.style('visibility', 'hidden')
+                })
                 .merge(femaleBars)
                 .transition()
                 .duration(500)
@@ -183,43 +231,6 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
             femaleCoverBars.exit().remove()
 
             femaleBars.exit().remove()
-
-            // Add labels to male bars
-            const maleLabels = svg.selectAll('.male-label').data(categories)
-
-            maleLabels
-                .enter()
-                .append('text')
-                .attr('class', 'bar-label male-label')
-                .merge(maleLabels)
-                .transition()
-                .duration(500)
-                .attr('x', (d) => xScaleLeft(selectedData[d].male))
-                .attr('y', (d) => yScale(d) + yScale.bandwidth() / 2)
-                .attr('dy', '0.35em')
-                .text((d) => selectedData[d].male)
-
-            maleLabels.exit().remove()
-
-            // Add labels to female bars
-            const femaleLabels = svg.selectAll('.female-label').data(categories)
-
-            femaleLabels
-                .enter()
-                .append('text')
-                .attr('class', 'bar-label female-label')
-                .merge(femaleLabels)
-                .transition()
-                .duration(500)
-                .attr(
-                    'x',
-                    (d) => width / 2 + xScaleRight(selectedData[d].female) / 2
-                )
-                .attr('y', (d) => yScale(d) + yScale.bandwidth() / 2)
-                .attr('dy', '0.35em')
-                .text((d) => selectedData[d].female)
-
-            femaleLabels.exit().remove()
         }
 
         // Initial chart rendering

@@ -91,7 +91,7 @@ function init() {
         })
 
         // Define global grouping logic (same as force-directed graph)
-        const parentKey = (n) => n.level2 || n.level1 || 'Other'
+        const parentKey = (n) => n.level2 || n.level1 || 'Others'
         const childKey = (n) => n.level3 || n.level4 || null
 
         // Build parent → children map from filtered characters
@@ -115,7 +115,7 @@ function init() {
                         n.level3 ||
                         n.level2 ||
                         n.level1 ||
-                        'Other'
+                        'Others'
                 )
             )
         )
