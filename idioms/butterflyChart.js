@@ -119,7 +119,9 @@ function createButterflyChart(
                 .text(dataType === 'gender_by_author' ? 'Author' : 'Type')
 
             // Create male bars (left side) - rectangles with rounded corners
-            const maleBars = svg.selectAll('.male-bar').data(categories)
+            const maleBars = svg
+                .selectAll('.male-bar')
+                .data(categories, (d) => d)
 
             maleBars
                 .enter()
@@ -177,7 +179,9 @@ function createButterflyChart(
             maleBars.exit().remove()
 
             // Create female bars (right side) - rectangles with rounded corners
-            const femaleBars = svg.selectAll('.female-bar').data(categories)
+            const femaleBars = svg
+                .selectAll('.female-bar')
+                .data(categories, (d) => d)
 
             femaleBars
                 .enter()
