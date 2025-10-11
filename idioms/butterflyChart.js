@@ -331,7 +331,9 @@ function createButterflyChart(
                     if (
                         !currentSelectedGroup ||
                         currentSelectedGroup !== d ||
-                        dataType !== 'gender_by_type'
+                        (dataType !== 'gender_by_type' &&
+                            dataType !== 'domains_grouped_by_gender' &&
+                            dataType !== 'gender_by_author')
                     ) {
                         d3.select(this)
                             .transition()
@@ -360,7 +362,9 @@ function createButterflyChart(
                     event.stopPropagation() // Prevent background deselection
                     if (dataType === 'gender_by_author') {
                         console.log('Author selected:', d)
-                        window.globalSelection.setAuthor(d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
                     } else if (dataType === 'gender_by_type') {
                         console.log('Character type selected:', d)
                         if (window.globalSelection) {
@@ -451,7 +455,9 @@ function createButterflyChart(
                     if (
                         !currentSelectedGroup ||
                         currentSelectedGroup !== d ||
-                        dataType !== 'gender_by_type'
+                        (dataType !== 'gender_by_type' &&
+                            dataType !== 'domains_grouped_by_gender' &&
+                            dataType !== 'gender_by_author')
                     ) {
                         d3.select(this)
                             .transition()
@@ -479,7 +485,9 @@ function createButterflyChart(
                     event.stopPropagation() // Prevent background deselection
                     if (dataType === 'gender_by_author') {
                         console.log('Author selected:', d)
-                        window.globalSelection.setAuthor(d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
                     } else if (dataType === 'gender_by_type') {
                         console.log('Character type selected:', d)
                         if (window.globalSelection) {
@@ -574,7 +582,8 @@ function createButterflyChart(
                 // Apply highlighting similar to timeline chart
                 if (
                     dataType === 'gender_by_type' ||
-                    dataType === 'domains_grouped_by_gender'
+                    dataType === 'domains_grouped_by_gender' ||
+                    dataType === 'gender_by_author'
                 ) {
                     svg.selectAll('.male-bar, .female-bar').each(function (d) {
                         const bar = d3.select(this)
