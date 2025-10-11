@@ -524,18 +524,11 @@ function createButterflyChart(
             .style('cursor', 'pointer')
             .lower() // make sure it's behind all bars
             .on('click', function () {
-                console.log('Background clicked, current dataType:', dataType)
+                console.log('Background clicked - clearing all selections')
                 if (window.globalSelection) {
-                    if (dataType === 'gender_by_author') {
-                        console.log('Deselecting author')
-                        window.globalSelection.setAuthor(null) // deselect
-                    } else if (dataType === 'gender_by_type') {
-                        console.log('Deselecting group')
-                        window.globalSelection.setGroup(null) // deselect
-                    } else if (dataType === 'domains_grouped_by_gender') {
-                        console.log('Deselecting domain group')
-                        window.globalSelection.setGroup(null) // deselect
-                    }
+                    // Clear all possible selections to ensure consistency across charts
+                    window.globalSelection.setGroup(null) // Clear group/type/domain selections
+                    window.globalSelection.setAuthor(null) // Clear author selections
                 }
             })
 

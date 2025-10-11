@@ -577,9 +577,10 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             })
             simulation.alphaTarget(0)
 
-            // Reset global selection (this will propagate to timeline chart)
+            // Reset global selection (this will propagate to all charts)
             if (window.globalSelection) {
-                window.globalSelection.setGroup(null)
+                window.globalSelection.setGroup(null) // Clear group/type/domain selections
+                window.globalSelection.setAuthor(null) // Clear author selections
             }
         }
     })
