@@ -2,7 +2,7 @@
 function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
     d3.json(dataUrl).then((data) => {
         // Set up dimensions
-        const margin = { top: 40, right: 120, bottom: 40, left: 120 }
+        const margin = { top: 60, right: 120, bottom: 40, left: 120 }
         const container = d3.select(containerId).node()
         const fullWidth = container.offsetWidth || 700
         const fullHeight = container.offsetHeight || 400
@@ -18,11 +18,17 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`)
 
+        // Add defs for clip paths (simpler approach)
+        const defs = svg.append('defs')
+
+        // Create a unique ID for this chart instance
+        const chartId = Math.random().toString(36).substr(2, 9)
+
         // Create scales
         const xScaleRight = d3.scaleLinear().range([0, width / 2])
         const xScaleLeft = d3.scaleLinear().range([width / 2, 0])
 
-        const yScale = d3.scaleBand().range([0, height]).padding(0.2)
+        const yScale = d3.scaleBand().range([0, height]).padding(0.4)
 
         // Create axes
         const xAxisLeft = d3.axisBottom(xScaleLeft)
@@ -41,6 +47,15 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
             .attr('transform', `translate(${width / 2}, ${height})`)
 
         const yAxisGroup = svg.append('g').attr('class', 'y-axis')
+
+        // Add title (similar to timeline chart)
+        svg.append('text')
+            .attr('x', width / 2)
+            .attr('y', -margin.top / 2)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '1vw')
+            .style('font-weight', 'bold')
+            .text('Gender Distribution Analysis')
 
         // Function to update the chart based on selected data
         function updateChart(dataType) {
@@ -88,7 +103,7 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .attr('text-anchor', 'middle')
                 .text(dataType === 'gender_by_author' ? 'Author' : 'Type')
 
-            // Create male bars (left side)
+            // Create male bars (left side) - rectangles with left-only rounded corners
             const maleBars = svg.selectAll('.male-bar').data(categories)
 
             maleBars
@@ -105,11 +120,31 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                     (d) => width / 2 - xScaleLeft(selectedData[d].male)
                 )
                 .attr('height', yScale.bandwidth())
-                .attr('fill', '#3498db')
+                .attr('fill', '#f4a261')
+                .attr('rx', 6)
+                .attr('ry', 6)
+
+            // Add covering rectangles to hide right rounded corners of male bars
+            const maleCoverBars = svg.selectAll('.male-cover').data(categories)
+
+            maleCoverBars
+                .enter()
+                .append('rect')
+                .attr('class', 'male-cover')
+                .merge(maleCoverBars)
+                .transition()
+                .duration(500)
+                .attr('x', width / 2 - 6)
+                .attr('y', (d) => yScale(d))
+                .attr('width', 6)
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#f4a261')
+
+            maleCoverBars.exit().remove()
 
             maleBars.exit().remove()
 
-            // Create female bars (right side)
+            // Create female bars (right side) - rectangles with right-only rounded corners
             const femaleBars = svg.selectAll('.female-bar').data(categories)
 
             femaleBars
@@ -123,7 +158,29 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .attr('y', (d) => yScale(d))
                 .attr('width', (d) => xScaleRight(selectedData[d].female))
                 .attr('height', yScale.bandwidth())
-                .attr('fill', '#e74c3c')
+                .attr('fill', '#2a9d8f')
+                .attr('rx', 6)
+                .attr('ry', 6)
+
+            // Add covering rectangles to hide left rounded corners of female bars
+            const femaleCoverBars = svg
+                .selectAll('.female-cover')
+                .data(categories)
+
+            femaleCoverBars
+                .enter()
+                .append('rect')
+                .attr('class', 'female-cover')
+                .merge(femaleCoverBars)
+                .transition()
+                .duration(500)
+                .attr('x', width / 2)
+                .attr('y', (d) => yScale(d))
+                .attr('width', 6)
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#2a9d8f')
+
+            femaleCoverBars.exit().remove()
 
             femaleBars.exit().remove()
 
