@@ -237,14 +237,76 @@ function createButterflyChart(
         }
 
         // Initial chart rendering
-        updateChart('gender_by_author')
+        let dataType = 'gender_by_author'
+        updateChart(dataType)
 
         // Set dropdown to match initial chart state
         d3.select('#data-select').property('value', 'gender_by_author')
 
         // Add event listener for dropdown
         d3.select('#data-select').on('change', function () {
-            updateChart(this.value)
+            dataType = this.value
+            updateChart(dataType)
+
+            // Reapply current selection after switching data views
+            const currentSelection = window.globalSelection.getSelectedGroup()
+            if (currentSelection) {
+                setTimeout(() => {
+                    console.log(
+                        'Reapplying selection after render:',
+                        currentSelection
+                    )
+                    window.globalSelection.listeners.forEach((fn) =>
+                        fn(currentSelection)
+                    )
+                }, 400) // wait ~half a second for transitions to complete
+            }
         })
+
+        // Add global selection handling
+        if (window.globalSelection) {
+            window.globalSelection.onChange(function (selectedGroup) {
+                console.log(
+                    'Butterfly chart received selection:',
+                    selectedGroup
+                )
+                console.log(dataType)
+                // Highlight bars matching the selected group (category)
+                if (selectedGroup && dataType === 'gender_by_type') {
+                    // Dim all bars initially
+                    svg.selectAll('.male-bar, .female-bar')
+                        .transition()
+                        .duration(300)
+                        .attr('opacity', selectedGroup ? 0.2 : 1)
+                        .attr('stroke', '#fff')
+
+                    svg.selectAll('.male-bar, .female-bar')
+                        .filter((d) => d === selectedGroup)
+                        .transition()
+                        .duration(300)
+                        .attr('opacity', 1)
+                        .attr('stroke', '#000')
+                        .attr('stroke-width', 3)
+
+                    // Optionally bold the y-axis label of the selected group
+                    yAxisGroup
+                        .selectAll('text')
+                        .attr('font-weight', (d) =>
+                            d === selectedGroup ? 'bold' : 'normal'
+                        )
+                } else {
+                    // Reset styles when no selection
+                    svg.selectAll('.male-bar, .female-bar')
+                        .attr('stroke', 'none')
+                        .attr('stroke-width', 0)
+                        .attr('opacity', 1)
+
+                    yAxisGroup
+                        .selectAll('text')
+                        .attr('font-weight', 'normal')
+                        .attr('fill', '#000')
+                }
+            })
+        }
     })
 }

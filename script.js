@@ -30,6 +30,9 @@ function init() {
         onChange(fn) {
             this.listeners.push(fn)
         },
+        getSelectedGroup() {
+            return this.selectedGroup
+        },
     }
     Promise.all([
         d3.csv('datasets/unique_characters.csv', (d) => ({
