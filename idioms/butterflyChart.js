@@ -125,6 +125,7 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .append('rect')
                 .attr('class', 'male-bar')
                 .on('mouseover', function (event, d) {
+                    // Show tooltip
                     tooltip
                         .style('visibility', 'visible')
                         .html(
@@ -132,6 +133,24 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                                 selectedData[d].male
                             }<br/>Female: ${selectedData[d].female || 0}`
                         )
+
+                    // Apply hover effect to both main bar and cover bar - scale up and style changes
+                    d3.select(this)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth() * 1.2)
+                        .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                        .attr('fill', '#e9940e') // Slightly darker shade of orange
+                    // .attr('fill-opacity', 0.9)
+
+                    // Also scale the corresponding cover bar
+                    svg.select(`.male-cover[data-category="${d}"]`)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth() * 1.2)
+                        .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                        .attr('fill', '#e9940e') // Match the main bar color
+                    // .attr('fill-opacity', 0.9)
                 })
                 .on('mousemove', function (event) {
                     tooltip
@@ -139,7 +158,26 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                         .style('left', event.pageX + 10 + 'px')
                 })
                 .on('mouseout', function (event, d) {
+                    // Hide tooltip
                     tooltip.style('visibility', 'hidden')
+
+                    // Reset hover effect for both bars
+                    d3.select(this)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth())
+                        .attr('y', yScale(d))
+                        .attr('fill', '#f4a261') // Reset to original color
+                    // .attr('fill-opacity', 1)
+
+                    svg.select(`.male-cover[data-category="${d}"]`)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth())
+                        .attr('y', yScale(d))
+                        .attr('fill', '#f4a261') // Reset to original color
+                        // .attr('fill-opacity', 1)
+                        .attr('y', yScale(d))
                 })
                 .merge(maleBars)
                 .transition()
@@ -162,6 +200,7 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .enter()
                 .append('rect')
                 .attr('class', 'male-cover')
+                .attr('data-category', (d) => d) // Add data attribute for targeting
                 .merge(maleCoverBars)
                 .transition()
                 .duration(500)
@@ -183,6 +222,7 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .append('rect')
                 .attr('class', 'female-bar')
                 .on('mouseover', function (event, d) {
+                    // Show tooltip
                     tooltip
                         .style('visibility', 'visible')
                         .html(
@@ -190,6 +230,24 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                                 selectedData[d].male || 0
                             }<br/>Female: ${selectedData[d].female}`
                         )
+
+                    // Apply hover effect to both main bar and cover bar - scale up and style changes
+                    d3.select(this)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth() * 1.2)
+                        .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                        .attr('fill', '#238d7a') // Slightly darker shade of teal
+                    // .attr('fill-opacity', 0.9)
+
+                    // Also scale the corresponding cover bar
+                    svg.select(`.female-cover[data-category="${d}"]`)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth() * 1.2)
+                        .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                        .attr('fill', '#238d7a') // Match the main bar color
+                    // .attr('fill-opacity', 0.9)
                 })
                 .on('mousemove', function (event) {
                     tooltip
@@ -197,7 +255,27 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                         .style('left', event.pageX + 10 + 'px')
                 })
                 .on('mouseout', function (event, d) {
+                    // Hide tooltip
                     tooltip.style('visibility', 'hidden')
+
+                    // Reset hover effect for both bars
+                    d3.select(this)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth())
+                        .attr('y', yScale(d))
+                        .attr('fill', '#2a9d8f') // Reset to original color
+                    // .attr('fill-opacity', 1)
+
+                    svg.select(`.female-cover[data-category="${d}"]`)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth())
+                        .attr('y', yScale(d))
+                        .attr('fill', '#2a9d8f') // Reset to original color
+                        // .attr('fill-opacity', 1)
+                        .attr('height', yScale.bandwidth())
+                        .attr('y', yScale(d))
                 })
                 .merge(femaleBars)
                 .transition()
@@ -219,6 +297,7 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
                 .enter()
                 .append('rect')
                 .attr('class', 'female-cover')
+                .attr('data-category', (d) => d) // Add data attribute for targeting
                 .merge(femaleCoverBars)
                 .transition()
                 .duration(500)
