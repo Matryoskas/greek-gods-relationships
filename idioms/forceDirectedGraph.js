@@ -370,7 +370,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     // ---------- GROUPED COLORS + COLLAPSIBLE LEGEND ----------
 
     // Decide parent/subgroup keys from your hierarchy columns
-    const parentKey = (n) => n.level2 || n.level1 || 'Unknown'
+    const parentKey = (n) => n.level2 || n.level1 || 'Other'
     const childKey = (n) => n.level3 || n.level4 || null
     const compositeKey = (p, c) => `${p}::${c}` // avoid child-name clashes across parents
 
