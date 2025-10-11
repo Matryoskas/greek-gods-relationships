@@ -3,8 +3,11 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
     d3.json(dataUrl).then((data) => {
         // Set up dimensions
         const margin = { top: 40, right: 120, bottom: 40, left: 120 }
-        const width = 800 - margin.left - margin.right
-        const height = 500 - margin.top - margin.bottom
+        const container = d3.select(containerId).node()
+        const fullWidth = container.offsetWidth || 700
+        const fullHeight = container.offsetHeight || 400
+        const width = fullWidth - margin.left - margin.right
+        const height = fullHeight - margin.top - margin.bottom
 
         // Create SVG
         const svg = d3
