@@ -111,11 +111,7 @@ function init() {
             new Set(
                 filteredCharacters.map(
                     (n) =>
-                        n.level4 ||
-                        n.level3 ||
-                        n.level2 ||
-                        n.level1 ||
-                        'Others'
+                        n.level4 || n.level3 || n.level2 || n.level1 || 'Others'
                 )
             )
         )
@@ -170,7 +166,11 @@ function init() {
         )
 
         // Initialize general butterfly chart with pre-computed data
-        createButterflyChart('.ButterflyChart', 'butterfly_data.json')
+        createButterflyChart(
+            '.ButterflyChart',
+            parentGroups,
+            'butterfly_data.json'
+        )
 
         //createTimeLineChart(characters, edges, '.TimelineChart');
     })
