@@ -132,6 +132,9 @@ function createButterflyChart(
 
         // Function to update the chart based on selected data
         function updateChart(dataType) {
+            // Clear current selection tracking when updating chart
+            currentSelectedGroup = null
+            
             // Set animation state to prevent hover interactions during transitions
             isAnimating = true
 
@@ -549,22 +552,14 @@ function createButterflyChart(
 
         // Add event listener for dropdown
         d3.select('#data-select').on('change', function () {
+            // Clear any existing selection when changing views
+            currentSelectedGroup = null
+            if (window.globalSelection) {
+                window.globalSelection.setGroup(null)
+            }
+            
             dataType = this.value
             updateChart(dataType)
-
-            // Reapply current selection after switching data views
-            const currentSelection = window.globalSelection.getSelectedGroup()
-            if (currentSelection) {
-                setTimeout(() => {
-                    console.log(
-                        'Reapplying selection after render:',
-                        currentSelection
-                    )
-                    window.globalSelection.groupListeners.forEach((fn) =>
-                        fn(currentSelection)
-                    )
-                }, 400) // wait ~half a second for transitions to complete
-            }
         })
 
         // Add global selection handling
