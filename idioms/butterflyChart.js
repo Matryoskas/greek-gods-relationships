@@ -225,6 +225,9 @@ function createButterflyChart(containerId, dataUrl = 'butterfly_data.json') {
         // Initial chart rendering
         updateChart('gender_by_author')
 
+        // Set dropdown to match initial chart state
+        d3.select('#data-select').property('value', 'gender_by_author')
+
         // Add event listener for dropdown
         d3.select('#data-select').on('change', function () {
             updateChart(this.value)
