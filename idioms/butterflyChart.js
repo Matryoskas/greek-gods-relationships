@@ -6,7 +6,7 @@ function createButterflyChart(
 ) {
     d3.json(dataUrl).then((data) => {
         // Set up dimensions
-        const margin = { top: 60, right: 120, bottom: 40, left: 120 }
+        const margin = { top: 60, right: 160, bottom: 40, left: 180 }
         const container = d3.select(containerId).node()
         const fullWidth = container.offsetWidth || 700
         const fullHeight = container.offsetHeight || 400
