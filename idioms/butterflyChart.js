@@ -5,6 +5,9 @@ function createButterflyChart(
     dataUrl = 'butterfly_data.json'
 ) {
     d3.json(dataUrl).then((data) => {
+        // Make butterfly data globally accessible for domain character mapping
+        window.butterflyData = data
+
         // Set up dimensions
         const margin = { top: 60, right: 160, bottom: 40, left: 180 }
         const container = d3.select(containerId).node()
@@ -363,6 +366,11 @@ function createButterflyChart(
                         if (window.globalSelection) {
                             window.globalSelection.setGroup(d)
                         }
+                    } else if (dataType === 'domains_grouped_by_gender') {
+                        console.log('Domain group selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
                     }
                 })
                 .transition()
@@ -477,6 +485,11 @@ function createButterflyChart(
                         if (window.globalSelection) {
                             window.globalSelection.setGroup(d)
                         }
+                    } else if (dataType === 'domains_grouped_by_gender') {
+                        console.log('Domain group selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
                     }
                 })
                 .transition()
@@ -518,6 +531,9 @@ function createButterflyChart(
                         window.globalSelection.setAuthor(null) // deselect
                     } else if (dataType === 'gender_by_type') {
                         console.log('Deselecting group')
+                        window.globalSelection.setGroup(null) // deselect
+                    } else if (dataType === 'domains_grouped_by_gender') {
+                        console.log('Deselecting domain group')
                         window.globalSelection.setGroup(null) // deselect
                     }
                 }

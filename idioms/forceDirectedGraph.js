@@ -619,15 +619,34 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             )
             if (selectedGroup) {
                 // Filter nodes to show only characters from selected category
-                // Check both hierarchy-based grouping and character type description
+                // Check hierarchy-based grouping, character type description, and precomputed domain mapping
                 const relevantNodes = nodes.filter((n) => {
                     const parentGroup = parentKey(n)
                     const characterType = n.description
-                    // Match either by parent group (level2/level1) or by character type description
-                    return (
+
+                    // Match by parent group (level2/level1) or by character type description
+                    if (
                         parentGroup === selectedGroup ||
                         characterType === selectedGroup
-                    )
+                    ) {
+                        return true
+                    }
+
+                    // Check precomputed domain character lists from butterfly_data.json
+                    if (
+                        window.butterflyData &&
+                        window.butterflyData.domains_grouped_by_gender
+                    ) {
+                        const domainGroup =
+                            window.butterflyData.domains_grouped_by_gender[
+                                selectedGroup
+                            ]
+                        if (domainGroup && domainGroup.characters) {
+                            return domainGroup.characters.includes(n.name)
+                        }
+                    }
+
+                    return false
                 })
 
                 const relevantNodeNames = new Set(

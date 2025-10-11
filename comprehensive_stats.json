@@ -1128,8 +1128,8 @@
         "total_characters": 109,
         "total_edges": 1011,
         "gender_counts": {
-          "male": 54,
-          "female": 55
+          "female": 55,
+          "male": 54
         },
         "male_percentage": 49.5,
         "female_percentage": 50.5
@@ -1158,8 +1158,8 @@
         "total_characters": 107,
         "total_edges": 370,
         "gender_counts": {
-          "female": 33,
-          "male": 74
+          "male": 74,
+          "female": 33
         },
         "male_percentage": 69.2,
         "female_percentage": 30.8
@@ -1179,8 +1179,8 @@
         "total_characters": 18,
         "total_edges": 39,
         "gender_counts": {
-          "male": 8,
-          "female": 10
+          "female": 10,
+          "male": 8
         },
         "male_percentage": 44.4,
         "female_percentage": 55.6
@@ -1239,8 +1239,8 @@
         "total_characters": 167,
         "total_edges": 1171,
         "gender_counts": {
-          "female": 71,
-          "male": 96
+          "male": 96,
+          "female": 71
         },
         "male_percentage": 57.5,
         "female_percentage": 42.5
@@ -1290,8 +1290,8 @@
         "total_characters": 82,
         "total_edges": 210,
         "gender_counts": {
-          "male": 60,
-          "female": 22
+          "female": 22,
+          "male": 60
         },
         "male_percentage": 73.2,
         "female_percentage": 26.8
@@ -1330,8 +1330,8 @@
         "total_characters": 120,
         "total_edges": 474,
         "gender_counts": {
-          "male": 89,
-          "female": 31
+          "female": 31,
+          "male": 89
         },
         "male_percentage": 74.2,
         "female_percentage": 25.8
@@ -1350,8 +1350,8 @@
         "total_characters": 116,
         "total_edges": 389,
         "gender_counts": {
-          "male": 78,
-          "female": 38
+          "female": 38,
+          "male": 78
         },
         "male_percentage": 67.2,
         "female_percentage": 32.8
@@ -1454,8 +1454,8 @@
         "total_characters": 167,
         "total_edges": 1171,
         "gender_counts": {
-          "female": 71,
-          "male": 96
+          "male": 96,
+          "female": 71
         },
         "male_percentage": 57.5,
         "female_percentage": 42.5

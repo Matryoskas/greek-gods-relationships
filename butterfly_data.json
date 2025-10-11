@@ -2,27 +2,157 @@
   "domains_grouped_by_gender": {
     "Water & Sea": {
       "male": 15,
-      "female": 18
+      "female": 18,
+      "characters": [
+        "Achelous",
+        "Acheron",
+        "Acis",
+        "Amphitrite",
+        "Arethusa",
+        "Asopus",
+        "Ceto",
+        "Doris",
+        "Dynamene",
+        "Eurybia",
+        "Galatea",
+        "Glaucus",
+        "Hippothoe",
+        "Inachus",
+        "Klymene",
+        "Lethe",
+        "Melite",
+        "Nereus",
+        "Oceanus",
+        "Perse",
+        "Phorcys",
+        "Phoroneus",
+        "Pleione",
+        "Pontus",
+        "Poseidon",
+        "Scamander",
+        "Scylla",
+        "Styx",
+        "Tethys",
+        "Thaumas",
+        "Thetis",
+        "Thoosa",
+        "Triton"
+      ]
     },
     "Renewal & Nature": {
       "male": 5,
-      "female": 16
+      "female": 16,
+      "characters": [
+        "Aegina",
+        "Aphrodite",
+        "Aristaeus",
+        "Artemis",
+        "Auxo",
+        "Carpo",
+        "Chloris",
+        "Cronus",
+        "Demeter",
+        "Dionysus",
+        "Gaia",
+        "Hera",
+        "Idaea",
+        "Iynx",
+        "Leto",
+        "Oenone",
+        "Pan",
+        "Persephone",
+        "Poseidon",
+        "Rhea",
+        "Thallo"
+      ]
     },
     "Abstract Concepts": {
       "male": 9,
-      "female": 10
+      "female": 10,
+      "characters": [
+        "Ananke",
+        "Ares",
+        "Arete",
+        "Artemis",
+        "Athena",
+        "Bia",
+        "Chaos",
+        "Cronus",
+        "Eirene",
+        "Eris",
+        "Eupheme",
+        "Harmonia",
+        "Hypnos",
+        "Kratos",
+        "Melete",
+        "Momus",
+        "Morpheus",
+        "Oizys",
+        "Prometheus",
+        "Zelus"
+      ]
     },
     "Sky & Celestial": {
       "male": 11,
-      "female": 8
+      "female": 8,
+      "characters": [
+        "Aeolus",
+        "Aether",
+        "Apollo",
+        "Artemis",
+        "Asteria",
+        "Astraeus",
+        "Eos",
+        "Helios",
+        "Hemera",
+        "Hyperion",
+        "Iris",
+        "Nephele",
+        "Nyx",
+        "Phosphorus",
+        "Poseidon",
+        "Urania",
+        "Uranus",
+        "Zephyrus",
+        "Zeus"
+      ]
     },
     "Knowledge & Arts": {
       "male": 2,
-      "female": 13
+      "female": 13,
+      "characters": [
+        "Aoide",
+        "Apollo",
+        "Athena",
+        "Calliope",
+        "Clio",
+        "Dionysus",
+        "Erato",
+        "Euterpe",
+        "Melpomene",
+        "Metis",
+        "Mneme",
+        "Phoebe",
+        "Polyhymnia",
+        "Terpsichore",
+        "Thalia"
+      ]
     },
     "Life & Death": {
       "male": 4,
-      "female": 6
+      "female": 6,
+      "characters": [
+        "Ananke",
+        "Atropos",
+        "Charon",
+        "Clotho",
+        "Hades",
+        "Lachesis",
+        "Moros",
+        "Persephone",
+        "Psyche",
+        "Tartarus"
+      ]
     }
   },
   "domains_individual_by_gender": {
@@ -71,14 +201,14 @@
     "Greek water deities": 27,
     "Greek deity": 24,
     "Titan": 21,
-    "Allegorical greek deity": 20,
+    "Allegorical Greek deity": 20,
     "Greek nymph": 19,
     "Olympian god": 14
   },
   "gender_by_author": {
     "Nonnus": {
-      "male": 54,
-      "female": 55
+      "female": 55,
+      "male": 54
     },
     "Ovid": {
       "male": 175,
@@ -89,8 +219,8 @@
       "female": 38
     },
     "Aeschylus": {
-      "female": 33,
-      "male": 74
+      "male": 74,
+      "female": 33
     },
     "Apollodorus": {
       "male": 235,
@@ -98,8 +228,8 @@
       "unknown": 1
     },
     "Aratus": {
-      "male": 8,
-      "female": 10
+      "female": 10,
+      "male": 8
     }
   },
   "gender_by_type": {
@@ -115,7 +245,7 @@
       "female": 8,
       "male": 13
     },
-    "Allegorical greek deity": {
+    "Allegorical Greek deity": {
       "female": 12,
       "Others": 1,
       "male": 7

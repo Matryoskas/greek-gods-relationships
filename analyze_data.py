@@ -192,16 +192,19 @@ def analyze_comprehensive_data():
     # Grouped domain counts (new)
     grouped_domain_counts = defaultdict(int)
     grouped_domain_gender = defaultdict(lambda: defaultdict(int))
+    grouped_domain_characters = defaultdict(list)  # Track characters in each grouped domain
     
     for _, char in characters_df.iterrows():
         domains = safe_parse_list(char['domain'])
         gender = char['gender'] if pd.notna(char['gender']) else 'unknown'
+        char_name = char['name'] if pd.notna(char['name']) else 'Unknown'
         
         if not domains:
             individual_domain_counts['No Domain'] += 1
             individual_domain_gender['No Domain'][gender] += 1
             grouped_domain_counts['No Domain'] += 1
             grouped_domain_gender['No Domain'][gender] += 1
+            grouped_domain_characters['No Domain'].append(char_name)
         else:
             processed_groups = set()  # Avoid double-counting if character has multiple domains in same group
             for domain in domains:
@@ -217,6 +220,7 @@ def analyze_comprehensive_data():
                 if group not in processed_groups:
                     grouped_domain_counts[group] += 1
                     grouped_domain_gender[group][gender] += 1
+                    grouped_domain_characters[group].append(char_name)
                     processed_groups.add(group)
     
     # Sort domains by count and get top 10 for both individual and grouped
@@ -417,7 +421,8 @@ def analyze_comprehensive_data():
         "domains_grouped_by_gender": {
             name: {
                 "male": grouped_domain_gender[name].get('male', 0),
-                "female": grouped_domain_gender[name].get('female', 0)
+                "female": grouped_domain_gender[name].get('female', 0),
+                "characters": sorted(list(set(grouped_domain_characters[name])))  # Remove duplicates and sort
             }
             for name, count in top_grouped_domains_filtered[:6]
         },
