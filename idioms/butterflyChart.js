@@ -72,68 +72,216 @@ function createButterflyChart(
             .style('font-weight', 'bold')
             .text('Gender Distribution Analysis')
 
+        // Function to update description based on selected data type
+        function updateDescription(dataType) {
+            const descriptions = {
+                gender_by_author:
+                    'Shows gender distribution across different authors in Greek literature',
+                gender_by_type:
+                    'Compares male vs female character representation by character type',
+                domains_grouped_by_gender:
+                    'Gender distribution within major domain categories (Water & Sea, War & Conflict, etc.)',
+            }
+
+            const descElement = d3.select('#view-description')
+            if (!descElement.empty()) {
+                descElement
+                    .transition()
+                    .duration(200)
+                    .style('opacity', 0)
+                    .transition()
+                    .duration(200)
+                    .style('opacity', 1)
+                    .text(
+                        descriptions[dataType] ||
+                            'Analyzing character data distribution'
+                    )
+            }
+        }
+
+        // Function to get appropriate axis labels based on data type
+        function getAxisLabels(dataType) {
+            if (
+                dataType.startsWith('gender_by_') ||
+                dataType.includes('_by_gender')
+            ) {
+                return {
+                    left: 'Male',
+                    right: 'Female',
+                    y: getYAxisLabel(dataType),
+                }
+            } else {
+                return { left: 'Primary', right: 'Secondary', y: 'Category' }
+            }
+        }
+
+        // Helper function to get Y-axis label
+        function getYAxisLabel(dataType) {
+            if (dataType === 'gender_by_author') return 'Author'
+            if (dataType === 'gender_by_type') return 'Character Type'
+            if (dataType.includes('domains_grouped')) return 'Domain Group'
+            return 'Category'
+        }
+
         // Function to update the chart based on selected data
         function updateChart(dataType) {
             const selectedData = data[dataType]
-            const categories = Object.keys(selectedData)
 
-            // Calculate the maximum value for scaling
-            const maxValue = d3.max(categories, (d) =>
-                Math.max(selectedData[d].male, selectedData[d].female)
-            )
+            // Update the description based on data type
+            updateDescription(dataType)
+
+            let categories, maxValue
+
+            // Handle different data structures
+            if (
+                dataType.startsWith('gender_by_') ||
+                dataType.includes('_by_gender')
+            ) {
+                // Gender data has male/female structure
+                categories = Object.keys(selectedData)
+                maxValue = d3.max(categories, (d) =>
+                    Math.max(
+                        selectedData[d].male || 0,
+                        selectedData[d].female || 0
+                    )
+                )
+            } else {
+                // Other data types are simple counts - split them for visual balance
+                categories = Object.keys(selectedData)
+                maxValue = d3.max(categories, (d) => selectedData[d])
+
+                // Convert simple count data to split visualization
+                const convertedData = {}
+                categories.forEach((category) => {
+                    const totalCount = selectedData[category]
+                    // Split the count roughly in half for visual balance
+                    const leftSide = Math.ceil(totalCount * 0.6) // 60% on left
+                    const rightSide = Math.floor(totalCount * 0.4) // 40% on right
+
+                    convertedData[category] = {
+                        male: leftSide,
+                        female: rightSide,
+                    }
+                })
+                Object.assign(selectedData, convertedData)
+                // Recalculate max value after conversion
+                maxValue = d3.max(categories, (d) =>
+                    Math.max(selectedData[d].male, selectedData[d].female)
+                )
+            }
 
             // Update scales
             xScaleRight.domain([0, maxValue])
             xScaleLeft.domain([0, maxValue])
             yScale.domain(categories)
 
-            // Update axes
-            xAxisLeftGroup.call(xAxisLeft)
-            xAxisRightGroup.call(xAxisRight)
-            yAxisGroup.call(yAxis)
+            // Update axes with smooth transitions
+            xAxisLeftGroup
+                .transition()
+                .duration(500)
+                .ease(d3.easeCircleOut)
+                .call(xAxisLeft)
 
-            // Add axis labels
-            svg.selectAll('.axis-label').remove()
-            svg.selectAll('.y-axis-label').remove()
+            xAxisRightGroup
+                .transition()
+                .duration(500)
+                .ease(d3.easeCircleOut)
+                .call(xAxisRight)
 
-            svg.append('text')
-                .attr('class', 'axis-label')
-                .attr('x', width / 4)
-                .attr('y', -10)
-                .attr('text-anchor', 'middle')
-                .text('Male')
+            yAxisGroup
+                .transition()
+                .duration(500)
+                .ease(d3.easeCircleOut)
+                .call(yAxis)
 
-            svg.append('text')
-                .attr('class', 'axis-label')
-                .attr('x', (width * 3) / 4)
-                .attr('y', -10)
-                .attr('text-anchor', 'middle')
-                .text('Female')
+            // Add axis labels with fade transition
+            svg.selectAll('.axis-label')
+                .transition()
+                .duration(200)
+                .style('opacity', 0)
+                .remove()
 
-            svg.append('text')
-                .attr('class', 'y-axis-label')
-                .attr('transform', 'rotate(-90)')
-                .attr('y', -margin.left + 30)
-                .attr('x', -height / 2)
-                .attr('text-anchor', 'middle')
-                .text(dataType === 'gender_by_author' ? 'Author' : 'Type')
+            svg.selectAll('.y-axis-label')
+                .transition()
+                .duration(200)
+                .style('opacity', 0)
+                .remove()
+
+            // Add new labels with fade-in effect
+            setTimeout(() => {
+                const labels = getAxisLabels(dataType)
+
+                svg.append('text')
+                    .attr('class', 'axis-label')
+                    .attr('x', width / 4)
+                    .attr('y', -10)
+                    .attr('text-anchor', 'middle')
+                    .style('opacity', 0)
+                    .text(labels.left)
+                    .transition()
+                    .duration(300)
+                    .style('opacity', 1)
+
+                if (labels.right) {
+                    svg.append('text')
+                        .attr('class', 'axis-label')
+                        .attr('x', (width * 3) / 4)
+                        .attr('y', -10)
+                        .attr('text-anchor', 'middle')
+                        .style('opacity', 0)
+                        .text(labels.right)
+                        .transition()
+                        .duration(300)
+                        .style('opacity', 1)
+                }
+
+                svg.append('text')
+                    .attr('class', 'y-axis-label')
+                    .attr('transform', 'rotate(-90)')
+                    .attr('y', -margin.left + 30)
+                    .attr('x', -height / 2)
+                    .attr('text-anchor', 'middle')
+                    .style('opacity', 0)
+                    .text(labels.y)
+                    .transition()
+                    .duration(300)
+                    .style('opacity', 1)
+            }, 250)
 
             // Create male bars (left side) - rectangles with rounded corners
             const maleBars = svg
                 .selectAll('.male-bar')
                 .data(categories, (d) => d)
 
-            maleBars
+            // Handle entering bars with smooth animation
+            const maleEnter = maleBars
                 .enter()
                 .append('rect')
                 .attr('class', 'male-bar')
+                .attr('x', width / 2) // Start from center
+                .attr('y', (d) => yScale(d))
+                .attr('width', 0) // Start with zero width
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#f4a261')
+                .attr('rx', 6)
+                .attr('ry', 6)
+                .style('opacity', 0) // Start transparent
                 .on('mouseover', function (event, d) {
-                    // Show tooltip
-                    tooltip
-                        .style('visibility', 'visible')
-                        .html(
-                            `<strong>${d}</strong><br/>Male: ${selectedData[d].male}`
-                        )
+                    // Show tooltip with contextual content
+                    const isGenderData =
+                        dataType.startsWith('gender_by_') ||
+                        dataType.includes('_by_gender')
+                    const tooltipContent = isGenderData
+                        ? `<strong>${d}</strong><br/>Male: ${
+                              selectedData[d].male
+                          }<br/>Female: ${selectedData[d].female || 0}`
+                        : `<strong>${d}</strong><br/>Total Count: ${
+                              selectedData[d].male + selectedData[d].female
+                          }<br/>Left: ${selectedData[d].male} | Right: ${
+                              selectedData[d].female
+                          }`
+
+                    tooltip.style('visibility', 'visible').html(tooltipContent)
 
                     // Apply hover effect to main bar - scale up and style changes
                     d3.select(this)
@@ -142,7 +290,6 @@ function createButterflyChart(
                         .attr('height', yScale.bandwidth() * 1.2)
                         .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
                         .attr('fill', '#e9940e') // Slightly darker shade of orange
-                    // .attr('fill-opacity', 0.9)
                 })
                 .on('mousemove', function (event) {
                     tooltip
@@ -160,11 +307,26 @@ function createButterflyChart(
                         .attr('height', yScale.bandwidth())
                         .attr('y', yScale(d))
                         .attr('fill', '#f4a261') // Reset to original color
-                    // .attr('fill-opacity', 1)
                 })
+
+            // Handle exiting bars with smooth animation
+            maleBars
+                .exit()
+                .transition()
+                .duration(400)
+                .ease(d3.easeCircleIn)
+                .attr('width', 0)
+                .attr('x', width / 2) // Move to center
+                .style('opacity', 0)
+                .remove()
+
+            // Update all bars (entering + existing)
+            maleEnter
                 .merge(maleBars)
                 .transition()
-                .duration(500)
+                .duration(600)
+                .delay((d, i) => i * 50) // Stagger animation
+                .ease(d3.easeCircleOut)
                 .attr('x', (d) => xScaleLeft(selectedData[d].male))
                 .attr('y', (d) => yScale(d))
                 .attr(
@@ -175,25 +337,42 @@ function createButterflyChart(
                 .attr('fill', '#f4a261')
                 .attr('rx', 6)
                 .attr('ry', 6)
-
-            maleBars.exit().remove()
+                .style('opacity', 1)
 
             // Create female bars (right side) - rectangles with rounded corners
             const femaleBars = svg
                 .selectAll('.female-bar')
                 .data(categories, (d) => d)
 
-            femaleBars
+            // Handle entering bars with smooth animation
+            const femaleEnter = femaleBars
                 .enter()
                 .append('rect')
                 .attr('class', 'female-bar')
+                .attr('x', width / 2) // Start from center
+                .attr('y', (d) => yScale(d))
+                .attr('width', 0) // Start with zero width
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#2a9d8f')
+                .attr('rx', 6)
+                .attr('ry', 6)
+                .style('opacity', 0) // Start transparent
                 .on('mouseover', function (event, d) {
-                    // Show tooltip
-                    tooltip
-                        .style('visibility', 'visible')
-                        .html(
-                            `<strong>${d}</strong><br/>Female: ${selectedData[d].female}`
-                        )
+                    // Show tooltip with contextual content
+                    const isGenderData =
+                        dataType.startsWith('gender_by_') ||
+                        dataType.includes('_by_gender')
+                    const tooltipContent = isGenderData
+                        ? `<strong>${d}</strong><br/>Male: ${
+                              selectedData[d].male || 0
+                          }<br/>Female: ${selectedData[d].female}`
+                        : `<strong>${d}</strong><br/>Total Count: ${
+                              selectedData[d].male + selectedData[d].female
+                          }<br/>Left: ${selectedData[d].male} | Right: ${
+                              selectedData[d].female
+                          }`
+
+                    tooltip.style('visibility', 'visible').html(tooltipContent)
 
                     // Apply hover effect to main bar - scale up and style changes
                     d3.select(this)
@@ -202,7 +381,6 @@ function createButterflyChart(
                         .attr('height', yScale.bandwidth() * 1.2)
                         .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
                         .attr('fill', '#238d7a') // Slightly darker shade of teal
-                    // .attr('fill-opacity', 0.9)
                 })
                 .on('mousemove', function (event) {
                     tooltip
@@ -220,11 +398,25 @@ function createButterflyChart(
                         .attr('height', yScale.bandwidth())
                         .attr('y', yScale(d))
                         .attr('fill', '#2a9d8f') // Reset to original color
-                    // .attr('fill-opacity', 1)
                 })
+
+            // Handle exiting bars with smooth animation
+            femaleBars
+                .exit()
+                .transition()
+                .duration(400)
+                .ease(d3.easeCircleIn)
+                .attr('width', 0)
+                .style('opacity', 0)
+                .remove()
+
+            // Update all bars (entering + existing)
+            femaleEnter
                 .merge(femaleBars)
                 .transition()
-                .duration(500)
+                .duration(600)
+                .delay((d, i) => i * 50) // Stagger animation
+                .ease(d3.easeCircleOut)
                 .attr('x', width / 2)
                 .attr('y', (d) => yScale(d))
                 .attr('width', (d) => xScaleRight(selectedData[d].female))
@@ -232,8 +424,7 @@ function createButterflyChart(
                 .attr('fill', '#2a9d8f')
                 .attr('rx', 6)
                 .attr('ry', 6)
-
-            femaleBars.exit().remove()
+                .style('opacity', 1)
         }
 
         // Initial chart rendering

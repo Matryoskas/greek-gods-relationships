@@ -16,6 +16,28 @@ def safe_parse_list(value):
     except:
         return []
 
+def normalize_domain_name(domain):
+    """Normalize domain names to have first letter capitalized"""
+    if not domain or not isinstance(domain, str):
+        return domain
+    
+    # Simple capitalization: just capitalize the first letter
+    normalized = domain.strip()
+    if normalized:
+        return normalized[0].upper() + normalized[1:].lower()
+    return domain
+
+def normalize_character_type(char_type):
+    """Normalize character type names to have first letter capitalized"""
+    if not char_type or not isinstance(char_type, str):
+        return char_type
+    
+    # Simple capitalization: just capitalize the first letter
+    normalized = char_type.strip()
+    if normalized:
+        return normalized[0].upper() + normalized[1:]
+    return char_type
+
 def create_domain_groups():
     """Create meaningful domain groupings for analysis"""
     return {
@@ -34,7 +56,7 @@ def create_domain_groups():
              "earthquakes", "earthquake", "fire", "volcanoes", "volcano"
         ],
         # Life, Renewal and Nature
-        "Life, Renewal and Nature": [
+        "Renewal & Nature": [
             "nature", "earth", "soil", "wildlife", 
             "wild animals", "forest", "trees", "flowers", "islands", "island", "mountains",
             "spring", "seasons", "fertility", "agriculture", "harvest",
@@ -91,7 +113,7 @@ def create_domain_groups():
             "travelers", "traders", "thieves", "thief", "road", "roads", "trade"
         ],
         # Personification of Abstract Concepts
-        "Personification of Abstract Concepts": [
+        "Abstract Concepts": [
             "sleep", "dream", "mental depression", 
             "anxiety", "mourning", "mockery", "praise", 
             "contemplation", "courage", "excellence", "virtue", "chastity", 
@@ -108,7 +130,7 @@ def create_domain_groups():
         ],
         
         # Negative Forces
-        "Personification of Negative Forces": [
+        "Negative Forces": [
             "lie", "deceit", "lawlessness", "darkness", "oblivion", 
             "hunger", "need", "hardship", "poverty", "plague", "disease",
             "famine", "pestilence", "drought", "chaos", "despair", "ruin",
@@ -183,9 +205,12 @@ def analyze_comprehensive_data():
         else:
             processed_groups = set()  # Avoid double-counting if character has multiple domains in same group
             for domain in domains:
-                # Count individual domains
-                individual_domain_counts[domain] += 1
-                individual_domain_gender[domain][gender] += 1
+                # Normalize domain name for consistency
+                normalized_domain = normalize_domain_name(domain)
+                
+                # Count individual domains (using normalized names)
+                individual_domain_counts[normalized_domain] += 1
+                individual_domain_gender[normalized_domain][gender] += 1
                 
                 # Count grouped domains
                 group = group_domain(domain, domain_groups)
@@ -197,6 +222,10 @@ def analyze_comprehensive_data():
     # Sort domains by count and get top 10 for both individual and grouped
     top_individual_domains = sorted(individual_domain_counts.items(), key=lambda x: x[1], reverse=True)[:10]
     top_grouped_domains = sorted(grouped_domain_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+    
+    # Create filtered versions for display (excluding uninformative categories)
+    top_individual_domains_filtered = [(name, count) for name, count in top_individual_domains if name != "No Domain"]
+    top_grouped_domains_filtered = [(name, count) for name, count in top_grouped_domains if name != "No Domain"]
     
     analysis_results["domain_analysis"] = {
         "individual": {
@@ -215,13 +244,13 @@ def analyze_comprehensive_data():
     }
     
     print(f"Total unique individual domains: {len(individual_domain_counts)}")
-    print("Top 5 individual domains:")
-    for domain, count in top_individual_domains[:5]:
+    print("Top 5 informative individual domains (excluding 'No Domain'):")
+    for domain, count in top_individual_domains_filtered[:6]:
         print(f"  {domain}: {count}")
     
     print(f"\nTotal domain groups: {len(grouped_domain_counts)}")
-    print("Top 5 domain groups:")
-    for domain, count in top_grouped_domains[:5]:
+    print("Top 5 informative domain groups (excluding 'No Domain'):")
+    for domain, count in top_grouped_domains_filtered[:6]:
         print(f"  {domain}: {count}")
     
     # 2. CHARACTER TYPE ANALYSIS
@@ -232,13 +261,20 @@ def analyze_comprehensive_data():
     for _, char in characters_df.iterrows():
         # Use hierarchical typing: level2 > level1 > 'Unknown'
         char_type = char['level2'] if pd.notna(char['level2']) else \
-                   char['level1'] if pd.notna(char['level1']) else 'Unknown'
-        gender = char['gender'] if pd.notna(char['gender']) else 'unknown'
+                   char['level1'] if pd.notna(char['level1']) else 'Others'
         
-        type_counts[char_type] += 1
-        type_gender[char_type][gender] += 1
+        # Normalize character type name
+        normalized_char_type = normalize_character_type(char_type)
+        
+        gender = char['gender'] if pd.notna(char['gender']) else 'Others'
+        
+        type_counts[normalized_char_type] += 1
+        type_gender[normalized_char_type][gender] += 1
     
     top_types = sorted(type_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+    
+    # Create filtered version for display (excluding uninformative categories)
+    top_types_filtered = [(name, count) for name, count in top_types if name not in ["Others", "Unknown"]]
     
     analysis_results["type_analysis"] = {
         "total_types": len(type_counts),
@@ -248,8 +284,8 @@ def analyze_comprehensive_data():
     }
     
     print(f"Total character types: {len(type_counts)}")
-    print("Top 5 character types:")
-    for char_type, count in top_types[:5]:
+    print("Top 5 informative character types (excluding 'Others'):")
+    for char_type, count in top_types_filtered[:6]:
         print(f"  {char_type}: {count}")
     
     # 3. GENDER ANALYSIS (inclusive of all gender categories)
@@ -340,8 +376,8 @@ def analyze_comprehensive_data():
     print("\n=== GENERATING CROSS-ANALYSIS ===")
     cross_analysis = {}
     
-    # Gender by top character types
-    top_5_types = [t[0] for t in top_types[:5]]
+    # Gender by top character types (using filtered types to exclude "Others")
+    top_5_types = [t[0] for t in top_types_filtered[:6]]
     gender_by_type = {}
     for char_type in top_5_types:
         gender_by_type[char_type] = type_gender[char_type]
@@ -376,10 +412,26 @@ def analyze_comprehensive_data():
         json.dump(analysis_results, f, indent=2, ensure_ascii=False)
     
     # Export simplified data for butterfly chart
+    # Use the already filtered lists for more informative visualization
     butterfly_data = {
-        "domains_grouped": {name: count for name, count in top_grouped_domains[:6]},
-        "domains_individual": {name: count for name, count in top_individual_domains[:6]},
-        "types": {name: count for name, count in top_types[:6]},
+        "domains_grouped_by_gender": {
+            name: {
+                "male": grouped_domain_gender[name].get('male', 0),
+                "female": grouped_domain_gender[name].get('female', 0)
+            }
+            for name, count in top_grouped_domains_filtered[:6]
+        },
+        "domains_individual_by_gender": {
+            name: {
+                "male": individual_domain_gender[name].get('male', 0),
+                "female": individual_domain_gender[name].get('female', 0)
+            }
+            for name, count in top_individual_domains_filtered[:6]
+        },
+        # Keep the original count-only versions for backwards compatibility
+        "domains_grouped": {name: count for name, count in top_grouped_domains_filtered[:6]},
+        "domains_individual": {name: count for name, count in top_individual_domains_filtered[:6]},
+        "types": {name: count for name, count in top_types_filtered[:6]},
         "gender_by_author": {
             author: stats['gender_counts'] 
             for author, stats in list(author_gender_stats.items())[:6]
