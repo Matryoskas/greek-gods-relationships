@@ -220,7 +220,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
             // Reset global selection when clicking on an edge
             if (window.globalSelection) {
-                window.globalSelection.set(null)
+                window.globalSelection.setGroup(null)
             }
         })
 
@@ -554,7 +554,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
             // Reset timeline/category selection when clicking on a specific node
             if (window.globalSelection) {
-                window.globalSelection.set(null)
+                window.globalSelection.setGroup(null)
             }
         })
 
@@ -579,7 +579,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
             // Reset global selection (this will propagate to timeline chart)
             if (window.globalSelection) {
-                window.globalSelection.set(null)
+                window.globalSelection.setGroup(null)
             }
         }
     })
@@ -612,12 +612,11 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
     // Listen for global selection changes from timeline chart
     if (window.globalSelection) {
-        window.globalSelection.onChange(function (selectedGroup) {
+        window.globalSelection.onGroupChange(function (selectedGroup) {
             console.log(
                 'Force-directed graph received selection:',
                 selectedGroup
             )
-
             if (selectedGroup) {
                 // Filter nodes to show only characters from selected category
                 const relevantNodes = nodes.filter((n) => {
@@ -679,6 +678,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                 `)
             } else {
                 // Reset to normal view only if no individual node is selected
+                console.log('afsd')
                 if (!fixedNode) {
                     node.attr('opacity', 1)
                         .attr('stroke-width', 1.5)
@@ -690,6 +690,77 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                 }
 
                 // Always restore original legend regardless of node selection
+                permanentTooltip.html(legendHtml)
+            }
+        })
+
+        window.globalSelection.onAuthorChange(function (selectedAuthor) {
+            console.log('Force-directed graph received author:', selectedAuthor)
+
+            if (selectedAuthor) {
+                // Filter links written by the selected author
+                const relevantLinks = edges.filter(
+                    (l) => l.author === selectedAuthor
+                )
+
+                // Get all node names connected by those links
+                const relevantNodeNames = new Set()
+                relevantLinks.forEach((l) => {
+                    relevantNodeNames.add(l.source.name || l.source)
+                    relevantNodeNames.add(l.target.name || l.target)
+                })
+
+                // Highlight nodes connected to selected author's edges
+                node.attr('opacity', (n) =>
+                    relevantNodeNames.has(n.name) ? 1 : 0.1
+                )
+                    .attr('stroke-width', (n) =>
+                        relevantNodeNames.has(n.name) ? 3 : 1.5
+                    )
+                    .attr('stroke', (n) =>
+                        relevantNodeNames.has(n.name) ? '#ff0' : '#fff'
+                    )
+
+                // Highlight labels of those nodes
+                label
+                    .attr('opacity', (n) =>
+                        relevantNodeNames.has(n.name) ? 1 : 0.1
+                    )
+                    .attr('font-weight', (n) =>
+                        relevantNodeNames.has(n.name) ? 'bold' : 'normal'
+                    )
+
+                // Highlight only edges by the selected author
+                link.attr('opacity', (l) =>
+                    l.author === selectedAuthor ? 0.8 : 0.05
+                ).attr('stroke', (l) =>
+                    l.author === selectedAuthor ? '#ff0' : '#999'
+                )
+
+                // Update tooltip
+                permanentTooltip.html(`
+            <h3>Selected Author: ${selectedAuthor}</h3>
+            <p><strong>Edges shown:</strong> ${relevantLinks.length}</p>
+            <p><strong>Characters connected:</strong> ${relevantNodeNames.size}</p>
+            <div style="margin-top: 10px;">
+                <small>Click background to reset view</small>
+            </div>
+            <hr style="margin: 10px 0;">
+            ${legendHtml}
+        `)
+            } else {
+                // Reset to normal view if no author selected
+                if (!fixedNode) {
+                    node.attr('opacity', 1)
+                        .attr('stroke-width', 1.5)
+                        .attr('stroke', '#fff')
+
+                    label.attr('opacity', 1).attr('font-weight', 'normal')
+
+                    link.attr('opacity', 0.6).attr('stroke', '#999')
+                }
+
+                // Restore legend
                 permanentTooltip.html(legendHtml)
             }
         })

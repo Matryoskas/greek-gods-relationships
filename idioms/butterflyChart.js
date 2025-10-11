@@ -346,6 +346,12 @@ function createButterflyChart(
             // Update all bars (entering + existing)
             maleEnter
                 .merge(maleBars)
+                .on('click', function (event, d) {
+                    if (dataType === 'gender_by_author') {
+                        console.log('Author selected:', d)
+                        window.globalSelection.setAuthor(d)
+                    }
+                })
                 .transition()
                 .duration(600)
                 .delay((d, i) => i * 50) // Stagger animation
@@ -442,6 +448,12 @@ function createButterflyChart(
             // Update all bars (entering + existing)
             femaleEnter
                 .merge(femaleBars)
+                .on('click', function (event, d) {
+                    if (dataType === 'gender_by_author') {
+                        console.log('Author selected:', d)
+                        window.globalSelection.setAuthor(d)
+                    }
+                })
                 .transition()
                 .duration(600)
                 .delay((d, i) => i * 50) // Stagger animation
@@ -458,6 +470,21 @@ function createButterflyChart(
                     // Reset animation state when the last bar finishes animating
                     if (i === categories.length - 1) {
                         isAnimating = false
+                    }
+                })
+
+            svg.append('rect')
+                .attr('width', width)
+                .attr('height', height)
+                .attr('fill', 'transparent')
+                .style('cursor', 'pointer')
+                .lower() // make sure it's behind all bars
+                .on('click', function () {
+                    if (
+                        window.globalSelection &&
+                        dataType === 'gender_by_author'
+                    ) {
+                        window.globalSelection.setAuthor(null) // deselect
                     }
                 })
         }
@@ -482,7 +509,7 @@ function createButterflyChart(
                         'Reapplying selection after render:',
                         currentSelection
                     )
-                    window.globalSelection.listeners.forEach((fn) =>
+                    window.globalSelection.groupListeners.forEach((fn) =>
                         fn(currentSelection)
                     )
                 }, 400) // wait ~half a second for transitions to complete
@@ -491,7 +518,7 @@ function createButterflyChart(
 
         // Add global selection handling
         if (window.globalSelection) {
-            window.globalSelection.onChange(function (selectedGroup) {
+            window.globalSelection.onGroupChange(function (selectedGroup) {
                 console.log(
                     'Butterfly chart received selection:',
                     selectedGroup

@@ -150,7 +150,7 @@ function createTimeLineChart(
         .on('click', function (event) {
             // Only reset if clicking on the background, not a line
             if (window.globalSelection) {
-                window.globalSelection.set(null)
+                window.globalSelection.setGroup(null)
             }
         })
 
@@ -333,7 +333,7 @@ function createTimeLineChart(
             })
             .on('click', function () {
                 if (window.globalSelection) {
-                    window.globalSelection.set(group)
+                    window.globalSelection.setGroup(group)
                 }
             })
 
@@ -399,7 +399,7 @@ function createTimeLineChart(
             })
             .on('click', function () {
                 if (window.globalSelection) {
-                    window.globalSelection.set(group)
+                    window.globalSelection.setGroup(group)
                 }
             })
 
@@ -408,7 +408,7 @@ function createTimeLineChart(
 
     // Listen for global selection changes to highlight lines
     if (window.globalSelection) {
-        window.globalSelection.onChange(function (selectedGroup) {
+        window.globalSelection.onGroupChange(function (selectedGroup) {
             linePaths.forEach(({ group, path }) => {
                 if (selectedGroup === group) {
                     path.attr('stroke-width', 5)
