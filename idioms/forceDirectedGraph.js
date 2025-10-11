@@ -619,9 +619,15 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             )
             if (selectedGroup) {
                 // Filter nodes to show only characters from selected category
+                // Check both hierarchy-based grouping and character type description
                 const relevantNodes = nodes.filter((n) => {
                     const parentGroup = parentKey(n)
-                    return parentGroup === selectedGroup
+                    const characterType = n.description
+                    // Match either by parent group (level2/level1) or by character type description
+                    return (
+                        parentGroup === selectedGroup ||
+                        characterType === selectedGroup
+                    )
                 })
 
                 const relevantNodeNames = new Set(

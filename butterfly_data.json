@@ -71,7 +71,7 @@
     "Greek water deities": 27,
     "Greek deity": 24,
     "Titan": 21,
-    "Allegorical Greek deity": 20,
+    "Allegorical greek deity": 20,
     "Greek nymph": 19,
     "Olympian god": 14
   },
@@ -115,7 +115,7 @@
       "female": 8,
       "male": 13
     },
-    "Allegorical Greek deity": {
+    "Allegorical greek deity": {
       "female": 12,
       "Others": 1,
       "male": 7

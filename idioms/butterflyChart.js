@@ -27,6 +27,7 @@ function createButterflyChart(
 
         // Animation state tracking
         let isAnimating = false
+        let currentSelectedGroup = null // Track current selection to prevent hover interference
 
         // Create scales
         const xScaleRight = d3.scaleLinear().range([0, width / 2])
@@ -282,7 +283,7 @@ function createButterflyChart(
                 .attr('fill', '#f4a261')
                 .attr('rx', 6)
                 .attr('ry', 6)
-                .style('opacity', 0) // Start transparent
+                .attr('opacity', 0) // Start transparent
                 .on('mouseover', function (event, d) {
                     // Don't apply hover effects during animations
                     if (isAnimating) return
@@ -303,7 +304,7 @@ function createButterflyChart(
 
                     tooltip.style('visibility', 'visible').html(tooltipContent)
 
-                    // Apply hover effect to main bar - scale up and style changes
+                    // Apply hover effect
                     d3.select(this)
                         .transition()
                         .duration(150)
@@ -323,13 +324,19 @@ function createButterflyChart(
                     // Hide tooltip
                     tooltip.style('visibility', 'hidden')
 
-                    // Reset hover effect for both bars
-                    d3.select(this)
-                        .transition()
-                        .duration(150)
-                        .attr('height', yScale.bandwidth())
-                        .attr('y', yScale(d))
-                        .attr('fill', '#f4a261') // Reset to original color
+                    // Reset hover effect (unless this bar is currently selected)
+                    if (
+                        !currentSelectedGroup ||
+                        currentSelectedGroup !== d ||
+                        dataType !== 'gender_by_type'
+                    ) {
+                        d3.select(this)
+                            .transition()
+                            .duration(150)
+                            .attr('height', yScale.bandwidth())
+                            .attr('y', yScale(d))
+                            .attr('fill', '#f4a261') // Reset to original male color
+                    }
                 })
 
             // Handle exiting bars with smooth animation
@@ -340,16 +347,22 @@ function createButterflyChart(
                 .ease(d3.easeCircleIn)
                 .attr('width', 0)
                 .attr('x', width / 2) // Move to center
-                .style('opacity', 0)
+                .attr('opacity', 0)
                 .remove()
 
             // Update all bars (entering + existing)
             maleEnter
                 .merge(maleBars)
                 .on('click', function (event, d) {
+                    event.stopPropagation() // Prevent background deselection
                     if (dataType === 'gender_by_author') {
                         console.log('Author selected:', d)
                         window.globalSelection.setAuthor(d)
+                    } else if (dataType === 'gender_by_type') {
+                        console.log('Character type selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
                     }
                 })
                 .transition()
@@ -366,7 +379,7 @@ function createButterflyChart(
                 .attr('fill', '#f4a261')
                 .attr('rx', 6)
                 .attr('ry', 6)
-                .style('opacity', 1)
+                .attr('opacity', 1)
 
             // Create female bars (right side) - rectangles with rounded corners
             const femaleBars = svg
@@ -385,7 +398,7 @@ function createButterflyChart(
                 .attr('fill', '#2a9d8f')
                 .attr('rx', 6)
                 .attr('ry', 6)
-                .style('opacity', 0) // Start transparent
+                .attr('opacity', 0) // Start transparent
                 .on('mouseover', function (event, d) {
                     // Don't apply hover effects during animations
                     if (isAnimating) return
@@ -406,7 +419,7 @@ function createButterflyChart(
 
                     tooltip.style('visibility', 'visible').html(tooltipContent)
 
-                    // Apply hover effect to main bar - scale up and style changes
+                    // Apply hover effect
                     d3.select(this)
                         .transition()
                         .duration(150)
@@ -426,13 +439,19 @@ function createButterflyChart(
                     // Hide tooltip
                     tooltip.style('visibility', 'hidden')
 
-                    // Reset hover effect for both bars
-                    d3.select(this)
-                        .transition()
-                        .duration(150)
-                        .attr('height', yScale.bandwidth())
-                        .attr('y', yScale(d))
-                        .attr('fill', '#2a9d8f') // Reset to original color
+                    // Reset hover effect (unless this bar is currently selected)
+                    if (
+                        !currentSelectedGroup ||
+                        currentSelectedGroup !== d ||
+                        dataType !== 'gender_by_type'
+                    ) {
+                        d3.select(this)
+                            .transition()
+                            .duration(150)
+                            .attr('height', yScale.bandwidth())
+                            .attr('y', yScale(d))
+                            .attr('fill', '#2a9d8f') // Reset to original color
+                    }
                 })
 
             // Handle exiting bars with smooth animation
@@ -442,16 +461,22 @@ function createButterflyChart(
                 .duration(400)
                 .ease(d3.easeCircleIn)
                 .attr('width', 0)
-                .style('opacity', 0)
+                .attr('opacity', 0)
                 .remove()
 
             // Update all bars (entering + existing)
             femaleEnter
                 .merge(femaleBars)
                 .on('click', function (event, d) {
+                    event.stopPropagation() // Prevent background deselection
                     if (dataType === 'gender_by_author') {
                         console.log('Author selected:', d)
                         window.globalSelection.setAuthor(d)
+                    } else if (dataType === 'gender_by_type') {
+                        console.log('Character type selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
                     }
                 })
                 .transition()
@@ -465,7 +490,7 @@ function createButterflyChart(
                 .attr('fill', '#2a9d8f')
                 .attr('rx', 6)
                 .attr('ry', 6)
-                .style('opacity', 1)
+                .attr('opacity', 1)
                 .on('end', function (d, i) {
                     // Reset animation state when the last bar finishes animating
                     if (i === categories.length - 1) {
@@ -473,21 +498,30 @@ function createButterflyChart(
                     }
                 })
 
-            svg.append('rect')
-                .attr('width', width)
-                .attr('height', height)
-                .attr('fill', 'transparent')
-                .style('cursor', 'pointer')
-                .lower() // make sure it's behind all bars
-                .on('click', function () {
-                    if (
-                        window.globalSelection &&
-                        dataType === 'gender_by_author'
-                    ) {
-                        window.globalSelection.setAuthor(null) // deselect
-                    }
-                })
+            // Ensure background rect stays behind all bars
+            backgroundRect.lower()
         }
+
+        // Create background click area for deselection (outside updateChart to avoid duplicates)
+        const backgroundRect = svg
+            .append('rect')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', 'transparent')
+            .style('cursor', 'pointer')
+            .lower() // make sure it's behind all bars
+            .on('click', function () {
+                console.log('Background clicked, current dataType:', dataType)
+                if (window.globalSelection) {
+                    if (dataType === 'gender_by_author') {
+                        console.log('Deselecting author')
+                        window.globalSelection.setAuthor(null) // deselect
+                    } else if (dataType === 'gender_by_type') {
+                        console.log('Deselecting group')
+                        window.globalSelection.setGroup(null) // deselect
+                    }
+                }
+            })
 
         // Initial chart rendering
         let dataType = 'gender_by_author'
@@ -524,40 +558,76 @@ function createButterflyChart(
                     selectedGroup
                 )
                 console.log(dataType)
-                // Highlight bars matching the selected group (category)
-                if (selectedGroup && dataType === 'gender_by_type') {
-                    // Dim all bars initially
-                    svg.selectAll('.male-bar, .female-bar')
-                        .transition()
-                        .duration(300)
-                        .attr('opacity', selectedGroup ? 0.2 : 1)
-                        .attr('stroke', '#fff')
 
-                    svg.selectAll('.male-bar, .female-bar')
-                        .filter((d) => d === selectedGroup)
-                        .transition()
-                        .duration(300)
-                        .attr('opacity', 1)
-                        .attr('stroke', '#000')
-                        .attr('stroke-width', 3)
+                // Update current selection tracking
+                currentSelectedGroup = selectedGroup
 
-                    // Optionally bold the y-axis label of the selected group
-                    yAxisGroup
-                        .selectAll('text')
-                        .attr('font-weight', (d) =>
-                            d === selectedGroup ? 'bold' : 'normal'
-                        )
-                } else {
-                    // Reset styles when no selection
-                    svg.selectAll('.male-bar, .female-bar')
-                        .attr('stroke', 'none')
-                        .attr('stroke-width', 0)
-                        .attr('opacity', 1)
+                // Apply highlighting similar to timeline chart
+                if (
+                    dataType === 'gender_by_type' ||
+                    dataType === 'domains_grouped_by_gender'
+                ) {
+                    svg.selectAll('.male-bar, .female-bar').each(function (d) {
+                        const bar = d3.select(this)
+                        if (selectedGroup === d) {
+                            // Highlight selected bars - make them darker and bigger like hover
+                            bar.transition()
+                                .duration(300)
+                                .attr('opacity', 1)
+                                .attr('height', yScale.bandwidth() * 1.2)
+                                .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                                .attr(
+                                    'fill',
+                                    bar.classed('male-bar')
+                                        ? '#e9940e'
+                                        : '#207b6aeb'
+                                )
+                        } else if (selectedGroup) {
+                            // Dim non-selected bars
+                            bar.transition()
+                                .duration(300)
+                                .attr('opacity', 0.2)
+                                .attr('height', yScale.bandwidth())
+                                .attr('y', yScale(d))
+                                .attr(
+                                    'fill',
+                                    bar.classed('male-bar')
+                                        ? '#f4a261'
+                                        : '#2a9d8f'
+                                )
+                        } else {
+                            // Reset all bars when no selection
+                            bar.transition()
+                                .duration(300)
+                                .attr('opacity', 1)
+                                .attr('height', yScale.bandwidth())
+                                .attr('y', yScale(d))
+                                .attr(
+                                    'fill',
+                                    bar.classed('male-bar')
+                                        ? '#f4a261'
+                                        : '#2a9d8f'
+                                )
+                        }
+                    })
 
-                    yAxisGroup
-                        .selectAll('text')
-                        .attr('font-weight', 'normal')
-                        .attr('fill', '#000')
+                    // Update y-axis labels
+                    yAxisGroup.selectAll('text').each(function (d) {
+                        const label = d3.select(this)
+                        if (selectedGroup === d) {
+                            label
+                                .attr('font-weight', 'bold')
+                                .attr('fill', '#000')
+                        } else if (selectedGroup) {
+                            label
+                                .attr('font-weight', 'normal')
+                                .attr('fill', '#666')
+                        } else {
+                            label
+                                .attr('font-weight', 'normal')
+                                .attr('fill', '#000')
+                        }
+                    })
                 }
             })
         }
