@@ -25,6 +25,9 @@ function createButterflyChart(
 
         console.log(groups)
 
+        // Animation state tracking
+        let isAnimating = false
+
         // Create scales
         const xScaleRight = d3.scaleLinear().range([0, width / 2])
         const xScaleLeft = d3.scaleLinear().range([width / 2, 0])
@@ -125,6 +128,20 @@ function createButterflyChart(
 
         // Function to update the chart based on selected data
         function updateChart(dataType) {
+            // Set animation state to prevent hover interactions during transitions
+            isAnimating = true
+
+            // Hide tooltip and reset any interrupted hover effects
+            tooltip.style('visibility', 'hidden')
+            svg.selectAll('.male-bar, .female-bar')
+                .interrupt() // Stop any ongoing hover transitions
+                .attr('height', yScale.bandwidth())
+                .attr('fill', function () {
+                    return d3.select(this).classed('male-bar')
+                        ? '#f4a261'
+                        : '#2a9d8f'
+                })
+
             const selectedData = data[dataType]
 
             // Update the description based on data type
@@ -267,6 +284,9 @@ function createButterflyChart(
                 .attr('ry', 6)
                 .style('opacity', 0) // Start transparent
                 .on('mouseover', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
                     // Show tooltip with contextual content
                     const isGenderData =
                         dataType.startsWith('gender_by_') ||
@@ -297,6 +317,9 @@ function createButterflyChart(
                         .style('left', event.pageX + 10 + 'px')
                 })
                 .on('mouseout', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
                     // Hide tooltip
                     tooltip.style('visibility', 'hidden')
 
@@ -358,6 +381,9 @@ function createButterflyChart(
                 .attr('ry', 6)
                 .style('opacity', 0) // Start transparent
                 .on('mouseover', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
                     // Show tooltip with contextual content
                     const isGenderData =
                         dataType.startsWith('gender_by_') ||
@@ -380,7 +406,7 @@ function createButterflyChart(
                         .duration(150)
                         .attr('height', yScale.bandwidth() * 1.2)
                         .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
-                        .attr('fill', '#238d7a') // Slightly darker shade of teal
+                        .attr('fill', '#207b6aeb') // Slightly darker shade of teal
                 })
                 .on('mousemove', function (event) {
                     tooltip
@@ -388,6 +414,9 @@ function createButterflyChart(
                         .style('left', event.pageX + 10 + 'px')
                 })
                 .on('mouseout', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
                     // Hide tooltip
                     tooltip.style('visibility', 'hidden')
 
@@ -425,6 +454,12 @@ function createButterflyChart(
                 .attr('rx', 6)
                 .attr('ry', 6)
                 .style('opacity', 1)
+                .on('end', function (d, i) {
+                    // Reset animation state when the last bar finishes animating
+                    if (i === categories.length - 1) {
+                        isAnimating = false
+                    }
+                })
         }
 
         // Initial chart rendering
