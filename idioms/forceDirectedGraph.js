@@ -124,10 +124,10 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                     <p><strong>Connection Strength:</strong> ${
                         d.normalized_weight
                     }</p>
-                    <p><strong>Source Work:</strong> ${d.title || 'Unknown'}</p>
-                    <p><strong>Author:</strong> ${d.author || 'Unknown'}</p>
+                    <p><strong>Source Work:</strong> ${d.title || 'Other'}</p>
+                    <p><strong>Author:</strong> ${d.author || 'Other'}</p>
                     <p><strong>Literary Period:</strong> ${
-                        d.period || 'Unknown'
+                        d.period || 'Other'
                     }</p>
                     <div style="margin-top: 10px; font-size: 0.85em; color: #666;">
                         <em>Click to pin this information</em>
@@ -157,10 +157,10 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                 <p><strong>Connection Strength:</strong> ${
                     d.normalized_weight
                 }</p>
-                <p><strong>Source Work:</strong> ${d.title || 'Unknown'}</p>
-                <p><strong>Author:</strong> ${d.author || 'Unknown'}</p>
+                <p><strong>Source Work:</strong> ${d.title || 'Other'}</p>
+                <p><strong>Author:</strong> ${d.author || 'Other'}</p>
                 <p><strong>Literary Period:</strong> ${
-                    d.period || 'Unknown'
+                    d.period || 'Other'
                 }</p>
                 <div style="margin-top: 10px; font-size: 0.85em; color: #666;">
                     <em>Click background to deselect</em>
@@ -311,9 +311,9 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             .html(`
             <h3>${d.name}</h3>
             <p>${d.description || 'No description available.'}</p>
-            <p><strong>Gender:</strong> ${d.gender || 'Unknown'}</p>
-            <p><strong>Father:</strong> ${d.father || 'Unknown'}</p>
-            <p><strong>Mother:</strong> ${d.mother || 'Unknown'}</p>
+            <p><strong>Gender:</strong> ${d.gender || 'Other'}</p>
+            <p><strong>Father:</strong> ${d.father || 'Other'}</p>
+            <p><strong>Mother:</strong> ${d.mother || 'Other'}</p>
             <p><strong>Aliases:</strong> ${
                 Array.isArray(d.aliases)
                     ? d.aliases.map((a) => a.trim()).join(', ')
@@ -370,7 +370,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     // ---------- GROUPED COLORS + COLLAPSIBLE LEGEND ----------
 
     // Decide parent/subgroup keys from your hierarchy columns
-    const parentKey = (n) => n.level2 || n.level1 || 'Unknown'
+    const parentKey = (n) => n.level2 || n.level1 || 'Other'
     const childKey = (n) => n.level3 || n.level4 || null
     const compositeKey = (p, c) => `${p}::${c}` // avoid child-name clashes across parents
 
