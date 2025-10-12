@@ -733,6 +733,7 @@ if (!selectionInfo.empty()) {
 
     // Always restore original legend regardless of node selection
     permanentTooltip.html(legendHtml)
+    attachLegendHandlers()
 }
         })
     }
