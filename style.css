@@ -25,6 +25,7 @@ html, body {
 
 .TimelineChart,
 .ButterflyChart {
+  position: relative;     /* Allow absolute positioning within */
   display: flex;          /* flexbox centers content */
   align-items: center;
   justify-content: center;
@@ -213,3 +214,71 @@ details summary::-webkit-details-marker {
   width: 260px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+/* Enhanced Butterfly Chart Controls */
+.controls {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  min-width: min(100px, 20vw);
+  max-width: 100px;
+  z-index: 10;
+}
+
+.controls label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.controls select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 6px;
+  background: white;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.controls select:hover {
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
+}
+
+.controls select:focus {
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2);
+}
+
+.view-description {
+  margin-top: 8px;
+  padding: 6px 0;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.4;
+  border-top: 1px solid #f0f0f0;
+  font-style: italic;
+}
+
+/* Responsive controls for smaller screens */
+@media (max-width: 768px) {
+  .controls {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 10px;
+    min-width: auto;
+  }
+}
+

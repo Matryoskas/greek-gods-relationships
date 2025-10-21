@@ -220,7 +220,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
             // Reset global selection when clicking on an edge
             if (window.globalSelection) {
-                window.globalSelection.set(null)
+                window.globalSelection.setGroup(null)
             }
         })
 
@@ -596,7 +596,7 @@ attachLegendHandlers()
 
             // Reset timeline/category selection when clicking on a specific node
             if (window.globalSelection) {
-                window.globalSelection.set(null)
+                window.globalSelection.setGroup(null)
             }
         })
 
@@ -619,9 +619,9 @@ attachLegendHandlers()
             })
             simulation.alphaTarget(0)
 
-            // Reset global selection (this will propagate to timeline chart)
+            // Reset global selection (this will propagate to all charts)
             if (window.globalSelection) {
-                window.globalSelection.set(null)
+                window.globalSelection.setGroup(null) // Clear all selections (groups, types, domains, authors)
             }
         }
     })
@@ -654,59 +654,303 @@ attachLegendHandlers()
 
     // Listen for global selection changes from timeline chart
     if (window.globalSelection) {
-        window.globalSelection.onChange(function (selectedGroup) {
+        window.globalSelection.onGroupChange(function (selectedGroup) {
             console.log(
                 'Force-directed graph received selection:',
                 selectedGroup
             )
-
             if (selectedGroup) {
-                // Filter nodes to show only characters from selected category
-                const relevantNodes = nodes.filter((n) => {
-                    const parentGroup = parentKey(n)
-                    return parentGroup === selectedGroup
-                })
+                // Check if this is an author selection by looking at butterfly data
+                const isAuthorSelection =
+                    window.butterflyData &&
+                    window.butterflyData.gender_by_author &&
+                    window.butterflyData.gender_by_author[selectedGroup]
 
-                const relevantNodeNames = new Set(
-                    relevantNodes.map((n) => n.name)
-                )
-
-                // Update node visibility and styling
-                node.attr('opacity', (n) =>
-                    relevantNodeNames.has(n.name) ? 1 : 0.1
-                )
-                    .attr('stroke-width', (n) =>
-                        relevantNodeNames.has(n.name) ? 3 : 1.5
-                    )
-                    .attr('stroke', (n) =>
-                        relevantNodeNames.has(n.name) ? '#ff0' : '#fff'
+                if (isAuthorSelection) {
+                    // Handle author selection - filter by edges written by this author
+                    const relevantLinks = edges.filter(
+                        (l) => l.author === selectedGroup
                     )
 
-                // Update label visibility
-                label
-                    .attr('opacity', (n) =>
-                        relevantNodeNames.has(n.name) ? 1 : 0.1
-                    )
-                    .attr('font-weight', (n) =>
-                        relevantNodeNames.has(n.name) ? 'bold' : 'normal'
+                    // Get all node names connected by those links
+                    const relevantNodeNames = new Set()
+                    relevantLinks.forEach((l) => {
+                        relevantNodeNames.add(l.source.name || l.source)
+                        relevantNodeNames.add(l.target.name || l.target)
+                    })
+
+                    // Check if author has no connections in the filtered graph
+                    if (relevantLinks.length === 0) {
+                        // Show message when no edges are found
+                        let noConnectionsMessage = g.select(
+                            '.no-connections-message'
+                        )
+                        if (noConnectionsMessage.empty()) {
+                            noConnectionsMessage = g
+                                .append('text')
+                                .attr('class', 'no-connections-message')
+                                .attr('x', width / 2)
+                                .attr('y', height / 2)
+                                .attr('text-anchor', 'middle')
+                                .attr('dominant-baseline', 'middle')
+                                .attr('font-size', '18px')
+                                .attr('font-weight', 'bold')
+                                .attr('fill', '#666')
+                                .attr('opacity', 0)
+                        }
+
+                        noConnectionsMessage
+                            .text(
+                                `No connections found for ${selectedGroup} in the filtered graph`
+                            )
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 1)
+
+                        // Add subtitle explaining the filtering
+                        let subtitleMessage = g.select(
+                            '.no-connections-subtitle'
+                        )
+                        if (subtitleMessage.empty()) {
+                            subtitleMessage = g
+                                .append('text')
+                                .attr('class', 'no-connections-subtitle')
+                                .attr('x', width / 2)
+                                .attr('y', height / 2 + 25)
+                                .attr('text-anchor', 'middle')
+                                .attr('dominant-baseline', 'middle')
+                                .attr('font-size', '14px')
+                                .attr('fill', '#999')
+                                .attr('opacity', 0)
+                        }
+
+                        subtitleMessage
+                            .text(
+                                '(Graph shows only the strongest character relationships)'
+                            )
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 1)
+
+                        // Dim all nodes and edges
+                        node.attr('opacity', 0.1)
+                            .attr('stroke-width', 1.5)
+                            .attr('stroke', '#fff')
+                        label.attr('opacity', 0.1).attr('font-weight', 'normal')
+                        link.attr('opacity', 0.05).attr('stroke', '#999')
+                    } else {
+                        // Hide no connections message if it exists
+                        g.select('.no-connections-message')
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 0)
+                            .remove()
+                        g.select('.no-connections-subtitle')
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 0)
+                            .remove()
+
+                        // Highlight nodes connected to selected author's edges
+                        node.attr('opacity', (n) =>
+                            relevantNodeNames.has(n.name) ? 1 : 0.1
+                        )
+                            .attr('stroke-width', (n) =>
+                                relevantNodeNames.has(n.name) ? 3 : 1.5
+                            )
+                            .attr('stroke', (n) =>
+                                relevantNodeNames.has(n.name) ? '#ff0' : '#fff'
+                            )
+
+                        // Highlight labels of those nodes
+                        label
+                            .attr('opacity', (n) =>
+                                relevantNodeNames.has(n.name) ? 1 : 0.1
+                            )
+                            .attr('font-weight', (n) =>
+                                relevantNodeNames.has(n.name)
+                                    ? 'bold'
+                                    : 'normal'
+                            )
+
+                        // Highlight only edges by the selected author
+                        link.attr('opacity', (l) =>
+                            l.author === selectedGroup ? 0.8 : 0.05
+                        ).attr('stroke', (l) =>
+                            l.author === selectedGroup ? '#ff0' : '#999'
+                        )
+                    }
+
+                    // Update tooltip for author selection
+                    permanentTooltip.html(`
+                <h3>Selected Author: ${selectedGroup}</h3>
+                <p><strong>Edges shown:</strong> ${relevantLinks.length}</p>
+                <p><strong>Characters connected:</strong> ${relevantNodeNames.size}</p>
+                <div style="margin-top: 10px;">
+                    <small>Click background to reset view</small>
+                </div>
+                <hr style="margin: 10px 0;">
+                ${legendHtml}
+            `)
+                } else {
+                    // Handle character type or domain selection - filter by node properties
+                    // Filter nodes to show only characters from selected category
+                    // Check hierarchy-based grouping, character type description, and precomputed domain mapping
+                    const relevantNodes = nodes.filter((n) => {
+                        const parentGroup = parentKey(n)
+                        const characterType = n.description
+
+                        // Match by parent group (level2/level1) or by character type description
+                        if (
+                            parentGroup === selectedGroup ||
+                            characterType === selectedGroup
+                        ) {
+                            return true
+                        }
+
+                        // Check precomputed domain character lists from butterfly_data.json
+                        if (
+                            window.butterflyData &&
+                            window.butterflyData.domains_grouped_by_gender
+                        ) {
+                            const domainGroup =
+                                window.butterflyData.domains_grouped_by_gender[
+                                    selectedGroup
+                                ]
+                            if (domainGroup && domainGroup.characters) {
+                                return domainGroup.characters.includes(n.name)
+                            }
+                        }
+
+                        return false
+                    })
+
+                    const relevantNodeNames = new Set(
+                        relevantNodes.map((n) => n.name)
                     )
 
-                // Update edge visibility (show only edges between relevant nodes)
-                link.attr('opacity', (l) => {
-                    const srcName = l.source.name || l.source
-                    const tgtName = l.target.name || l.target
-                    return relevantNodeNames.has(srcName) &&
-                        relevantNodeNames.has(tgtName)
-                        ? 0.8
-                        : 0.05
-                }).attr('stroke', (l) => {
-                    const srcName = l.source.name || l.source
-                    const tgtName = l.target.name || l.target
-                    return relevantNodeNames.has(srcName) &&
-                        relevantNodeNames.has(tgtName)
-                        ? '#ff0'
-                        : '#999'
-                })
+                    // Check if no characters are found for this type/domain
+                    if (relevantNodes.length === 0) {
+                        // Show message when no characters are found
+                        let noConnectionsMessage = g.select(
+                            '.no-connections-message'
+                        )
+                        if (noConnectionsMessage.empty()) {
+                            noConnectionsMessage = g
+                                .append('text')
+                                .attr('class', 'no-connections-message')
+                                .attr('x', width / 2)
+                                .attr('y', height / 2)
+                                .attr('text-anchor', 'middle')
+                                .attr('dominant-baseline', 'middle')
+                                .attr('font-size', '18px')
+                                .attr('font-weight', 'bold')
+                                .attr('fill', '#666')
+                                .attr('opacity', 0)
+                        }
+
+                        noConnectionsMessage
+                            .text(
+                                `No characters found for "${selectedGroup}" in the filtered graph`
+                            )
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 1)
+
+                        // Add subtitle explaining the filtering
+                        let subtitleMessage = g.select(
+                            '.no-connections-subtitle'
+                        )
+                        if (subtitleMessage.empty()) {
+                            subtitleMessage = g
+                                .append('text')
+                                .attr('class', 'no-connections-subtitle')
+                                .attr('x', width / 2)
+                                .attr('y', height / 2 + 25)
+                                .attr('text-anchor', 'middle')
+                                .attr('dominant-baseline', 'middle')
+                                .attr('font-size', '14px')
+                                .attr('fill', '#999')
+                                .attr('opacity', 0)
+                        }
+
+                        subtitleMessage
+                            .text(
+                                '(Graph shows only characters with the strongest relationships)'
+                            )
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 1)
+
+                        // Dim all nodes and edges
+                        node.attr('opacity', 0.1)
+                            .attr('stroke-width', 1.5)
+                            .attr('stroke', '#fff')
+                        label.attr('opacity', 0.1).attr('font-weight', 'normal')
+                        link.attr('opacity', 0.05).attr('stroke', '#999')
+
+                        // Update permanent tooltip to show no results info
+                        permanentTooltip.html(`
+                            <h3>Selected Category: ${selectedGroup}</h3>
+                            <p><strong>Characters shown:</strong> 0</p>
+                            <p><strong>Category:</strong> ${selectedGroup}</p>
+                            <div style="margin-top: 10px;">
+                                <small>Click background to reset view</small>
+                            </div>
+                            <hr style="margin: 10px 0;">
+                            ${legendHtml}
+                        `)
+                    } else {
+                        // Hide no connections message if it exists (for non-empty selections)
+                        g.select('.no-connections-message')
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 0)
+                            .remove()
+                        g.select('.no-connections-subtitle')
+                            .transition()
+                            .duration(300)
+                            .attr('opacity', 0)
+                            .remove()
+
+                        // Update node visibility and styling
+                        node.attr('opacity', (n) =>
+                            relevantNodeNames.has(n.name) ? 1 : 0.1
+                        )
+                            .attr('stroke-width', (n) =>
+                                relevantNodeNames.has(n.name) ? 3 : 1.5
+                            )
+                            .attr('stroke', (n) =>
+                                relevantNodeNames.has(n.name) ? '#ff0' : '#fff'
+                            )
+
+                        // Update label visibility
+                        label
+                            .attr('opacity', (n) =>
+                                relevantNodeNames.has(n.name) ? 1 : 0.1
+                            )
+                            .attr('font-weight', (n) =>
+                                relevantNodeNames.has(n.name)
+                                    ? 'bold'
+                                    : 'normal'
+                            )
+
+                        // Update edge visibility (show only edges between relevant nodes)
+                        link.attr('opacity', (l) => {
+                            const srcName = l.source.name || l.source
+                            const tgtName = l.target.name || l.target
+                            return relevantNodeNames.has(srcName) &&
+                                relevantNodeNames.has(tgtName)
+                                ? 0.8
+                                : 0.05
+                        }).attr('stroke', (l) => {
+                            const srcName = l.source.name || l.source
+                            const tgtName = l.target.name || l.target
+                            return relevantNodeNames.has(srcName) &&
+                                relevantNodeNames.has(tgtName)
+                                ? '#ff0'
+                                : '#999'
+                        })
 
 // Update the selection info div instead of replacing the entire tooltip
 const selectionInfo = permanentTooltip.select('#legend-selection-info')
@@ -719,8 +963,22 @@ if (!selectionInfo.empty()) {
         </div>
     `)
 }
-} else {
-    // Reset to normal view only if no individual node is selected
+}}
+            } else {
+    // Remove no connections message if it exists
+                g.select('.no-connections-message')
+                    .transition()
+                    .duration(300)
+                    .attr('opacity', 0)
+                    .remove()
+                g.select('.no-connections-subtitle')
+                    .transition()
+                    .duration(300)
+                    .attr('opacity', 0)
+                    .remove()
+
+                // Reset to normal view only if no individual node is selected
+                console.log('afsd')
     if (!fixedNode) {
         node.attr('opacity', 1)
             .attr('stroke-width', 1.5)

@@ -9,660 +9,660 @@
       "total_domains": 156,
       "domain_counts": {
         "No Domain": 311,
-        "river": 9,
-        "island": 1,
-        "wind": 3,
-        "air": 1,
-        "sea": 19,
-        "destiny": 4,
-        "need": 1,
-        "inevitability": 1,
-        "music": 3,
-        "lie": 1,
-        "deceit": 1,
-        "beauty": 1,
-        "love": 2,
-        "pleasure": 2,
-        "fertility": 5,
-        "lust": 1,
-        "archery": 1,
-        "sun": 2,
-        "prophecy": 2,
-        "healing": 1,
-        "poetry": 4,
-        "light": 2,
-        "war": 3,
-        "courage": 1,
-        "brutality": 1,
-        "bloodlust": 1,
-        "excellence": 1,
-        "virtue": 1,
-        "water": 2,
-        "labyrinth": 1,
-        "beekeeping": 1,
-        "grapevine": 1,
-        "hunting": 1,
-        "wild animals": 1,
-        "nature": 6,
-        "childbirth": 3,
-        "chastity": 1,
-        "moon": 1,
-        "medicine": 1,
-        "stars": 1,
-        "weaving": 1,
-        "handicraft": 1,
-        "wisdom": 2,
-        "strategy": 1,
-        "life": 3,
-        "death": 5,
-        "recklessness": 1,
-        "delusion": 1,
-        "mischief": 1,
-        "seasons": 4,
-        "natural order": 1,
-        "force": 1,
-        "compulsion": 1,
-        "primordial void": 1,
-        "underworld": 2,
-        "flowers": 1,
-        "spring": 3,
-        "witchcraft": 1,
-        "history": 1,
-        "study of history": 1,
-        "fate": 2,
-        "time": 1,
-        "harvest": 2,
-        "agriculture": 1,
-        "soil": 1,
-        "winemaking": 1,
-        "wine": 1,
-        "festivity": 1,
-        "religious ecstasy": 1,
-        "theater": 1,
-        "lawlessness": 1,
-        "echo": 1,
-        "peace": 1,
-        "destruction": 3,
-        "conquest": 1,
-        "dawn": 2,
-        "darkness": 1,
-        "competitiveness": 1,
-        "discord": 1,
-        "strife": 1,
-        "desire": 1,
-        "law": 2,
-        "praise": 1,
+        "River": 9,
+        "Island": 1,
+        "Wind": 3,
+        "Air": 1,
+        "Sea": 19,
+        "Destiny": 4,
+        "Need": 1,
+        "Inevitability": 1,
+        "Music": 3,
+        "Lie": 1,
+        "Deceit": 1,
+        "Beauty": 1,
+        "Love": 2,
+        "Pleasure": 2,
+        "Fertility": 5,
+        "Lust": 1,
+        "Archery": 1,
+        "Sun": 2,
+        "Prophecy": 2,
+        "Healing": 1,
+        "Poetry": 4,
+        "Light": 2,
+        "War": 3,
+        "Courage": 1,
+        "Brutality": 1,
+        "Bloodlust": 1,
+        "Excellence": 1,
+        "Virtue": 1,
+        "Water": 2,
+        "Labyrinth": 1,
+        "Beekeeping": 1,
+        "Grapevine": 1,
+        "Hunting": 1,
+        "Wild animals": 1,
+        "Nature": 6,
+        "Childbirth": 3,
+        "Chastity": 1,
+        "Moon": 1,
+        "Medicine": 1,
+        "Stars": 1,
+        "Weaving": 1,
+        "Handicraft": 1,
+        "Wisdom": 2,
+        "Strategy": 1,
+        "Life": 3,
+        "Death": 5,
+        "Recklessness": 1,
+        "Delusion": 1,
+        "Mischief": 1,
+        "Seasons": 4,
+        "Natural order": 1,
+        "Force": 1,
+        "Compulsion": 1,
+        "Primordial void": 1,
+        "Underworld": 2,
+        "Flowers": 1,
+        "Spring": 3,
+        "Witchcraft": 1,
+        "History": 1,
+        "Study of history": 1,
+        "Fate": 2,
+        "Time": 1,
+        "Harvest": 2,
+        "Agriculture": 1,
+        "Soil": 1,
+        "Winemaking": 1,
+        "Wine": 1,
+        "Festivity": 1,
+        "Religious ecstasy": 1,
+        "Theater": 1,
+        "Lawlessness": 1,
+        "Echo": 1,
+        "Peace": 1,
+        "Destruction": 3,
+        "Conquest": 1,
+        "Dawn": 2,
+        "Darkness": 1,
+        "Competitiveness": 1,
+        "Discord": 1,
+        "Strife": 1,
+        "Desire": 1,
+        "Law": 2,
+        "Praise": 1,
         "Europe": 1,
-        "earth": 1,
-        "riches": 1,
-        "harmony": 1,
-        "youth": 1,
-        "daylight": 1,
-        "daytime": 1,
-        "fire": 2,
-        "volcano": 1,
-        "forging": 1,
-        "artisans": 1,
-        "parturition": 1,
-        "marriage": 1,
-        "motherhood": 3,
-        "women": 1,
-        "thief": 1,
-        "travelers": 1,
-        "trade": 1,
-        "roads": 1,
-        "hearth": 1,
-        "home": 1,
-        "hospitality": 1,
-        "punishment": 2,
-        "sleep": 1,
-        "mountains": 1,
-        "rainbow": 1,
-        "power": 1,
-        "strength": 1,
-        "oblivion": 1,
-        "hunger": 1,
-        "contemplation": 1,
-        "tragedy": 1,
-        "memory": 1,
-        "mockery": 1,
-        "doom": 1,
-        "dream": 1,
-        "querrels": 1,
-        "retribution": 1,
-        "justice": 3,
-        "clouds": 1,
-        "victory": 1,
-        "night": 1,
-        "oceans": 2,
-        "sorrow": 1,
-        "suffering": 1,
-        "mental depression": 1,
-        "misery": 1,
-        "anxiety": 1,
-        "mourning": 1,
-        "warcraft": 1,
-        "wildlife": 1,
-        "cycle of life": 1,
-        "intellect": 1,
-        "hymnos": 1,
-        "hardship": 1,
-        "earthquake": 1,
-        "horses": 1,
-        "storms": 1,
-        "humanity": 1,
-        "soul": 1,
-        "sacred oaths": 1,
-        "abyss": 1,
-        "dance": 1,
-        "comedy": 1,
-        "currents": 1,
-        "astronomy": 1,
-        "sky": 2,
-        "emulation": 1,
-        "envy": 1,
-        "jealousy": 1,
-        "lightning": 1,
-        "thunder": 1
+        "Earth": 1,
+        "Riches": 1,
+        "Harmony": 1,
+        "Youth": 1,
+        "Daylight": 1,
+        "Daytime": 1,
+        "Fire": 2,
+        "Volcano": 1,
+        "Forging": 1,
+        "Artisans": 1,
+        "Parturition": 1,
+        "Marriage": 1,
+        "Motherhood": 3,
+        "Women": 1,
+        "Thief": 1,
+        "Travelers": 1,
+        "Trade": 1,
+        "Roads": 1,
+        "Hearth": 1,
+        "Home": 1,
+        "Hospitality": 1,
+        "Punishment": 2,
+        "Sleep": 1,
+        "Mountains": 1,
+        "Rainbow": 1,
+        "Power": 1,
+        "Strength": 1,
+        "Oblivion": 1,
+        "Hunger": 1,
+        "Contemplation": 1,
+        "Tragedy": 1,
+        "Memory": 1,
+        "Mockery": 1,
+        "Doom": 1,
+        "Dream": 1,
+        "Querrels": 1,
+        "Retribution": 1,
+        "Justice": 3,
+        "Clouds": 1,
+        "Victory": 1,
+        "Night": 1,
+        "Oceans": 2,
+        "Sorrow": 1,
+        "Suffering": 1,
+        "Mental depression": 1,
+        "Misery": 1,
+        "Anxiety": 1,
+        "Mourning": 1,
+        "Warcraft": 1,
+        "Wildlife": 1,
+        "Cycle of life": 1,
+        "Intellect": 1,
+        "Hymnos": 1,
+        "Hardship": 1,
+        "Earthquake": 1,
+        "Horses": 1,
+        "Storms": 1,
+        "Humanity": 1,
+        "Soul": 1,
+        "Sacred oaths": 1,
+        "Abyss": 1,
+        "Dance": 1,
+        "Comedy": 1,
+        "Currents": 1,
+        "Astronomy": 1,
+        "Sky": 2,
+        "Emulation": 1,
+        "Envy": 1,
+        "Jealousy": 1,
+        "Lightning": 1,
+        "Thunder": 1
       },
       "top_domains": {
         "No Domain": 311,
-        "sea": 19,
-        "river": 9,
-        "nature": 6,
-        "fertility": 5,
-        "death": 5,
-        "destiny": 4,
-        "poetry": 4,
-        "seasons": 4,
-        "wind": 3
+        "Sea": 19,
+        "River": 9,
+        "Nature": 6,
+        "Fertility": 5,
+        "Death": 5,
+        "Destiny": 4,
+        "Poetry": 4,
+        "Seasons": 4,
+        "Wind": 3
       },
       "domain_gender_breakdown": {
         "No Domain": {
           "male": 222,
           "female": 89
         },
-        "river": {
+        "River": {
           "male": 7,
           "female": 2
         },
-        "island": {
+        "Island": {
           "female": 1
         },
-        "wind": {
+        "Wind": {
           "male": 3
         },
-        "air": {
+        "Air": {
           "male": 1
         },
-        "sea": {
+        "Sea": {
           "female": 12,
           "male": 7
         },
-        "destiny": {
+        "Destiny": {
           "female": 4
         },
-        "need": {
+        "Need": {
           "female": 1
         },
-        "inevitability": {
+        "Inevitability": {
           "female": 1
         },
-        "music": {
+        "Music": {
           "female": 2,
           "male": 1
         },
-        "lie": {
+        "Lie": {
           "female": 1
         },
-        "deceit": {
+        "Deceit": {
           "female": 1
         },
-        "beauty": {
+        "Beauty": {
           "female": 1
         },
-        "love": {
+        "Love": {
           "female": 1,
           "male": 1
         },
-        "pleasure": {
+        "Pleasure": {
           "female": 1,
           "male": 1
         },
-        "fertility": {
+        "Fertility": {
           "female": 4,
           "male": 1
         },
-        "lust": {
+        "Lust": {
           "female": 1
         },
-        "archery": {
+        "Archery": {
           "male": 1
         },
-        "sun": {
+        "Sun": {
           "male": 2
         },
-        "prophecy": {
+        "Prophecy": {
           "male": 1,
           "female": 1
         },
-        "healing": {
+        "Healing": {
           "male": 1
         },
-        "poetry": {
+        "Poetry": {
           "male": 1,
           "female": 3
         },
-        "light": {
+        "Light": {
           "male": 2
         },
-        "war": {
+        "War": {
           "male": 1,
           "female": 2
         },
-        "courage": {
+        "Courage": {
           "male": 1
         },
-        "brutality": {
+        "Brutality": {
           "male": 1
         },
-        "bloodlust": {
+        "Bloodlust": {
           "male": 1
         },
-        "excellence": {
+        "Excellence": {
           "unknown": 1
         },
-        "virtue": {
+        "Virtue": {
           "unknown": 1
         },
-        "water": {
+        "Water": {
           "female": 2
         },
-        "labyrinth": {
+        "Labyrinth": {
           "female": 1
         },
-        "beekeeping": {
+        "Beekeeping": {
           "male": 1
         },
-        "grapevine": {
+        "Grapevine": {
           "male": 1
         },
-        "hunting": {
+        "Hunting": {
           "female": 1
         },
-        "wild animals": {
+        "Wild animals": {
           "female": 1
         },
-        "nature": {
+        "Nature": {
           "female": 5,
           "male": 1
         },
-        "childbirth": {
+        "Childbirth": {
           "female": 3
         },
-        "chastity": {
+        "Chastity": {
           "female": 1
         },
-        "moon": {
+        "Moon": {
           "female": 1
         },
-        "medicine": {
+        "Medicine": {
           "male": 1
         },
-        "stars": {
+        "Stars": {
           "female": 1
         },
-        "weaving": {
+        "Weaving": {
           "female": 1
         },
-        "handicraft": {
+        "Handicraft": {
           "female": 1
         },
-        "wisdom": {
+        "Wisdom": {
           "female": 2
         },
-        "strategy": {
+        "Strategy": {
           "female": 1
         },
-        "life": {
+        "Life": {
           "female": 3
         },
-        "death": {
+        "Death": {
           "female": 3,
           "male": 2
         },
-        "recklessness": {
+        "Recklessness": {
           "female": 1
         },
-        "delusion": {
+        "Delusion": {
           "female": 1
         },
-        "mischief": {
+        "Mischief": {
           "female": 1
         },
-        "seasons": {
+        "Seasons": {
           "female": 4
         },
-        "natural order": {
+        "Natural order": {
           "female": 1
         },
-        "force": {
+        "Force": {
           "female": 1
         },
-        "compulsion": {
+        "Compulsion": {
           "female": 1
         },
-        "primordial void": {
+        "Primordial void": {
           "male": 1
         },
-        "underworld": {
+        "Underworld": {
           "male": 2
         },
-        "flowers": {
+        "Flowers": {
           "female": 1
         },
-        "spring": {
+        "Spring": {
           "female": 3
         },
-        "witchcraft": {
+        "Witchcraft": {
           "female": 1
         },
-        "history": {
+        "History": {
           "female": 1
         },
-        "study of history": {
+        "Study of history": {
           "female": 1
         },
-        "fate": {
+        "Fate": {
           "female": 2
         },
-        "time": {
+        "Time": {
           "male": 1
         },
-        "harvest": {
+        "Harvest": {
           "male": 1,
           "female": 1
         },
-        "agriculture": {
+        "Agriculture": {
           "female": 1
         },
-        "soil": {
+        "Soil": {
           "female": 1
         },
-        "winemaking": {
+        "Winemaking": {
           "male": 1
         },
-        "wine": {
+        "Wine": {
           "male": 1
         },
-        "festivity": {
+        "Festivity": {
           "male": 1
         },
-        "religious ecstasy": {
+        "Religious ecstasy": {
           "male": 1
         },
-        "theater": {
+        "Theater": {
           "male": 1
         },
-        "lawlessness": {
+        "Lawlessness": {
           "female": 1
         },
-        "echo": {
+        "Echo": {
           "female": 1
         },
-        "peace": {
+        "Peace": {
           "female": 1
         },
-        "destruction": {
+        "Destruction": {
           "female": 1,
           "male": 2
         },
-        "conquest": {
+        "Conquest": {
           "female": 1
         },
-        "dawn": {
+        "Dawn": {
           "female": 1,
           "male": 1
         },
-        "darkness": {
+        "Darkness": {
           "male": 1
         },
-        "competitiveness": {
+        "Competitiveness": {
           "female": 1
         },
-        "discord": {
+        "Discord": {
           "female": 1
         },
-        "strife": {
+        "Strife": {
           "female": 1
         },
-        "desire": {
+        "Desire": {
           "male": 1
         },
-        "law": {
+        "Law": {
           "female": 2
         },
-        "praise": {
+        "Praise": {
           "female": 1
         },
         "Europe": {
           "female": 1
         },
-        "earth": {
+        "Earth": {
           "female": 1
         },
-        "riches": {
+        "Riches": {
           "male": 1
         },
-        "harmony": {
+        "Harmony": {
           "female": 1
         },
-        "youth": {
+        "Youth": {
           "female": 1
         },
-        "daylight": {
+        "Daylight": {
           "female": 1
         },
-        "daytime": {
+        "Daytime": {
           "female": 1
         },
-        "fire": {
+        "Fire": {
           "male": 1,
           "female": 1
         },
-        "volcano": {
+        "Volcano": {
           "male": 1
         },
-        "forging": {
+        "Forging": {
           "male": 1
         },
-        "artisans": {
+        "Artisans": {
           "male": 1
         },
-        "parturition": {
+        "Parturition": {
           "female": 1
         },
-        "marriage": {
+        "Marriage": {
           "female": 1
         },
-        "motherhood": {
+        "Motherhood": {
           "female": 3
         },
-        "women": {
+        "Women": {
           "female": 1
         },
-        "thief": {
+        "Thief": {
           "male": 1
         },
-        "travelers": {
+        "Travelers": {
           "male": 1
         },
-        "trade": {
+        "Trade": {
           "male": 1
         },
-        "roads": {
+        "Roads": {
           "male": 1
         },
-        "hearth": {
+        "Hearth": {
           "female": 1
         },
-        "home": {
+        "Home": {
           "female": 1
         },
-        "hospitality": {
+        "Hospitality": {
           "female": 1
         },
-        "punishment": {
+        "Punishment": {
           "male": 1,
           "female": 1
         },
-        "sleep": {
+        "Sleep": {
           "male": 1
         },
-        "mountains": {
+        "Mountains": {
           "female": 1
         },
-        "rainbow": {
+        "Rainbow": {
           "female": 1
         },
-        "power": {
+        "Power": {
           "male": 1
         },
-        "strength": {
+        "Strength": {
           "male": 1
         },
-        "oblivion": {
+        "Oblivion": {
           "female": 1
         },
-        "hunger": {
+        "Hunger": {
           "female": 1
         },
-        "contemplation": {
+        "Contemplation": {
           "female": 1
         },
-        "tragedy": {
+        "Tragedy": {
           "female": 1
         },
-        "memory": {
+        "Memory": {
           "female": 1
         },
-        "mockery": {
+        "Mockery": {
           "male": 1
         },
-        "doom": {
+        "Doom": {
           "male": 1
         },
-        "dream": {
+        "Dream": {
           "male": 1
         },
-        "querrels": {
+        "Querrels": {
           "female": 1
         },
-        "retribution": {
+        "Retribution": {
           "female": 1
         },
-        "justice": {
+        "Justice": {
           "female": 2,
           "male": 1
         },
-        "clouds": {
+        "Clouds": {
           "female": 1
         },
-        "victory": {
+        "Victory": {
           "female": 1
         },
-        "night": {
+        "Night": {
           "female": 1
         },
-        "oceans": {
+        "Oceans": {
           "male": 1,
           "female": 1
         },
-        "sorrow": {
+        "Sorrow": {
           "female": 1
         },
-        "suffering": {
+        "Suffering": {
           "female": 1
         },
-        "mental depression": {
+        "Mental depression": {
           "female": 1
         },
-        "misery": {
+        "Misery": {
           "female": 1
         },
-        "anxiety": {
+        "Anxiety": {
           "female": 1
         },
-        "mourning": {
+        "Mourning": {
           "female": 1
         },
-        "warcraft": {
+        "Warcraft": {
           "male": 1
         },
-        "wildlife": {
+        "Wildlife": {
           "male": 1
         },
-        "cycle of life": {
+        "Cycle of life": {
           "female": 1
         },
-        "intellect": {
+        "Intellect": {
           "female": 1
         },
-        "hymnos": {
+        "Hymnos": {
           "female": 1
         },
-        "hardship": {
+        "Hardship": {
           "male": 1
         },
-        "earthquake": {
+        "Earthquake": {
           "male": 1
         },
-        "horses": {
+        "Horses": {
           "male": 1
         },
-        "storms": {
+        "Storms": {
           "male": 1
         },
-        "humanity": {
+        "Humanity": {
           "male": 1
         },
-        "soul": {
+        "Soul": {
           "female": 1
         },
-        "sacred oaths": {
+        "Sacred oaths": {
           "female": 1
         },
-        "abyss": {
+        "Abyss": {
           "male": 1
         },
-        "dance": {
+        "Dance": {
           "female": 1
         },
-        "comedy": {
+        "Comedy": {
           "female": 1
         },
-        "currents": {
+        "Currents": {
           "female": 1
         },
-        "astronomy": {
+        "Astronomy": {
           "female": 1
         },
-        "sky": {
+        "Sky": {
           "male": 2
         },
-        "emulation": {
+        "Emulation": {
           "male": 1
         },
-        "envy": {
+        "Envy": {
           "male": 1
         },
-        "jealousy": {
+        "Jealousy": {
           "male": 1
         },
-        "lightning": {
+        "Lightning": {
           "male": 1
         },
-        "thunder": {
+        "Thunder": {
           "male": 1
         }
       }
@@ -672,11 +672,11 @@
       "domain_group_counts": {
         "No Domain": 311,
         "Water & Sea": 33,
-        "Life, Renewal and Nature": 21,
+        "Renewal & Nature": 21,
         "Sky & Celestial": 19,
         "Life & Death": 10,
-        "Personification of Negative Forces": 10,
-        "Personification of Abstract Concepts": 20,
+        "Negative Forces": 10,
+        "Abstract Concepts": 20,
         "Knowledge & Arts": 15,
         "Love & Beauty": 5,
         "Crafts & Skills": 5,
@@ -691,12 +691,12 @@
       "top_domain_groups": {
         "No Domain": 311,
         "Water & Sea": 33,
-        "Life, Renewal and Nature": 21,
-        "Personification of Abstract Concepts": 20,
+        "Renewal & Nature": 21,
+        "Abstract Concepts": 20,
         "Sky & Celestial": 19,
         "Knowledge & Arts": 15,
         "Life & Death": 10,
-        "Personification of Negative Forces": 10,
+        "Negative Forces": 10,
         "Divine and Religion": 9,
         "War & Conflict": 8
       },
@@ -709,7 +709,7 @@
           "male": 15,
           "female": 18
         },
-        "Life, Renewal and Nature": {
+        "Renewal & Nature": {
           "female": 16,
           "male": 5
         },
@@ -721,11 +721,11 @@
           "female": 6,
           "male": 4
         },
-        "Personification of Negative Forces": {
+        "Negative Forces": {
           "female": 7,
           "male": 3
         },
-        "Personification of Abstract Concepts": {
+        "Abstract Concepts": {
           "female": 10,
           "male": 9,
           "unknown": 1
@@ -801,7 +801,7 @@
         "volcanoes",
         "volcano"
       ],
-      "Life, Renewal and Nature": [
+      "Renewal & Nature": [
         "nature",
         "earth",
         "soil",
@@ -930,7 +930,7 @@
         "roads",
         "trade"
       ],
-      "Personification of Abstract Concepts": [
+      "Abstract Concepts": [
         "sleep",
         "dream",
         "mental depression",
@@ -973,7 +973,7 @@
         "death",
         "rebirth"
       ],
-      "Personification of Negative Forces": [
+      "Negative Forces": [
         "lie",
         "deceit",
         "lawlessness",
@@ -1025,31 +1025,31 @@
   "type_analysis": {
     "total_types": 18,
     "type_counts": {
-      "Unknown": 281,
+      "Others": 281,
       "Greek water deities": 27,
       "Greek nymph": 19,
       "Greek deity": 24,
       "Greek primordial deity": 10,
       "Giants": 8,
-      "satyr": 1,
+      "Satyr": 1,
       "Muse": 11,
-      "allegorical Greek deity": 20,
+      "Allegorical Greek deity": 20,
       "Olympian god": 14,
-      "titan": 21,
+      "Titan": 21,
       "Horae": 2,
       "Nereid": 2,
-      "demigod of Greek mythology": 2,
-      "autochthonos": 1,
-      "chthonic deities": 1,
-      "cyclops": 1,
+      "Demigod of Greek mythology": 2,
+      "Autochthonos": 1,
+      "Chthonic deities": 1,
+      "Cyclops": 1,
       "Anemoi": 1
     },
     "top_types": {
-      "Unknown": 281,
+      "Others": 281,
       "Greek water deities": 27,
       "Greek deity": 24,
-      "titan": 21,
-      "allegorical Greek deity": 20,
+      "Titan": 21,
+      "Allegorical Greek deity": 20,
       "Greek nymph": 19,
       "Olympian god": 14,
       "Muse": 11,
@@ -1057,7 +1057,7 @@
       "Giants": 8
     },
     "type_gender_breakdown": {
-      "Unknown": {
+      "Others": {
         "male": 202,
         "female": 79
       },
@@ -1079,22 +1079,22 @@
       "Giants": {
         "male": 8
       },
-      "satyr": {
+      "Satyr": {
         "male": 1
       },
       "Muse": {
         "female": 11
       },
-      "allegorical Greek deity": {
+      "Allegorical Greek deity": {
         "female": 12,
-        "unknown": 1,
+        "Others": 1,
         "male": 7
       },
       "Olympian god": {
         "female": 7,
         "male": 7
       },
-      "titan": {
+      "Titan": {
         "female": 8,
         "male": 13
       },
@@ -1104,16 +1104,16 @@
       "Nereid": {
         "female": 2
       },
-      "demigod of Greek mythology": {
+      "Demigod of Greek mythology": {
         "male": 2
       },
-      "autochthonos": {
+      "Autochthonos": {
         "male": 1
       },
-      "chthonic deities": {
+      "Chthonic deities": {
         "male": 1
       },
-      "cyclops": {
+      "Cyclops": {
         "male": 1
       },
       "Anemoi": {
@@ -1128,8 +1128,8 @@
         "total_characters": 109,
         "total_edges": 1011,
         "gender_counts": {
-          "male": 54,
-          "female": 55
+          "female": 55,
+          "male": 54
         },
         "male_percentage": 49.5,
         "female_percentage": 50.5
@@ -1209,8 +1209,8 @@
         "total_characters": 191,
         "total_edges": 1259,
         "gender_counts": {
-          "male": 146,
-          "female": 45
+          "female": 45,
+          "male": 146
         },
         "male_percentage": 76.4,
         "female_percentage": 23.6
@@ -1249,8 +1249,8 @@
         "total_characters": 252,
         "total_edges": 2820,
         "gender_counts": {
-          "male": 172,
           "female": 79,
+          "male": 172,
           "unknown": 1
         },
         "male_percentage": 68.3,
@@ -1260,8 +1260,8 @@
         "total_characters": 100,
         "total_edges": 769,
         "gender_counts": {
-          "male": 49,
-          "female": 51
+          "female": 51,
+          "male": 49
         },
         "male_percentage": 49.0,
         "female_percentage": 51.0
@@ -1270,8 +1270,8 @@
         "total_characters": 51,
         "total_edges": 72,
         "gender_counts": {
-          "female": 18,
-          "male": 33
+          "male": 33,
+          "female": 18
         },
         "male_percentage": 64.7,
         "female_percentage": 35.3
@@ -1290,8 +1290,8 @@
         "total_characters": 82,
         "total_edges": 210,
         "gender_counts": {
-          "male": 60,
-          "female": 22
+          "female": 22,
+          "male": 60
         },
         "male_percentage": 73.2,
         "female_percentage": 26.8
@@ -1330,8 +1330,8 @@
         "total_characters": 120,
         "total_edges": 474,
         "gender_counts": {
-          "male": 89,
-          "female": 31
+          "female": 31,
+          "male": 89
         },
         "male_percentage": 74.2,
         "female_percentage": 25.8
@@ -1350,8 +1350,8 @@
         "total_characters": 116,
         "total_edges": 389,
         "gender_counts": {
-          "male": 78,
-          "female": 38
+          "female": 38,
+          "male": 78
         },
         "male_percentage": 67.2,
         "female_percentage": 32.8
@@ -1370,8 +1370,8 @@
         "total_characters": 169,
         "total_edges": 916,
         "gender_counts": {
-          "male": 116,
-          "female": 53
+          "female": 53,
+          "male": 116
         },
         "male_percentage": 68.6,
         "female_percentage": 31.4
@@ -1423,8 +1423,8 @@
         "total_characters": 252,
         "total_edges": 2820,
         "gender_counts": {
-          "male": 172,
           "female": 79,
+          "male": 172,
           "unknown": 1
         },
         "male_percentage": 68.3,
@@ -1434,8 +1434,8 @@
         "total_characters": 191,
         "total_edges": 1259,
         "gender_counts": {
-          "male": 146,
-          "female": 45
+          "female": 45,
+          "male": 146
         },
         "male_percentage": 76.4,
         "female_percentage": 23.6
@@ -1444,8 +1444,8 @@
         "total_characters": 169,
         "total_edges": 916,
         "gender_counts": {
-          "male": 116,
-          "female": 53
+          "female": 53,
+          "male": 116
         },
         "male_percentage": 68.6,
         "female_percentage": 31.4
@@ -1530,10 +1530,6 @@
   },
   "cross_analysis": {
     "gender_by_type": {
-      "Unknown": {
-        "male": 202,
-        "female": 79
-      },
       "Greek water deities": {
         "male": 12,
         "female": 15
@@ -1542,13 +1538,20 @@
         "male": 11,
         "female": 13
       },
-      "titan": {
+      "Titan": {
         "female": 8,
         "male": 13
       },
-      "allegorical Greek deity": {
+      "Allegorical Greek deity": {
         "female": 12,
-        "unknown": 1,
+        "Others": 1,
+        "male": 7
+      },
+      "Greek nymph": {
+        "female": 19
+      },
+      "Olympian god": {
+        "female": 7,
         "male": 7
       }
     },
@@ -1567,37 +1570,38 @@
         "female": 88
       },
       "Homer": {
-        "male": 172,
         "female": 79,
+        "male": 172,
         "unknown": 1
       },
       "Diodorus Siculus": {
-        "male": 146,
-        "female": 45
+        "female": 45,
+        "male": 146
       }
     },
     "top_grouped_domains_for_comparison": [
       "No Domain",
       "Water & Sea",
-      "Life, Renewal and Nature",
-      "Personification of Abstract Concepts",
+      "Renewal & Nature",
+      "Abstract Concepts",
       "Sky & Celestial",
       "Knowledge & Arts"
     ],
     "top_individual_domains_for_comparison": [
       "No Domain",
-      "sea",
-      "river",
-      "nature",
-      "fertility",
-      "death"
+      "Sea",
+      "River",
+      "Nature",
+      "Fertility",
+      "Death"
     ],
     "top_types_for_comparison": [
-      "Unknown",
       "Greek water deities",
       "Greek deity",
-      "titan",
-      "allegorical Greek deity"
+      "Titan",
+      "Allegorical Greek deity",
+      "Greek nymph",
+      "Olympian god"
     ],
     "top_authors_for_comparison": [
       "Apollodorus",

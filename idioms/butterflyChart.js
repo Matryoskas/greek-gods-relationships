@@ -1,815 +1,648 @@
-// General Butterfly Chart Implementation using Pre-computed Data
-class GeneralButterflyChart {
-    constructor(containerId, dataUrl = 'butterfly_data.json') {
-        console.log(
-            'ButterflyChart constructor called with:',
-            containerId,
-            dataUrl
-        )
-        this.container = d3.select(containerId)
-        console.log('Container selected:', this.container.node())
-
-        if (this.container.empty()) {
-            throw new Error(`Container not found: ${containerId}`)
-        }
-
-        this.dataUrl = dataUrl
-        this.margin = { top: 60, right: 120, bottom: 60, left: 120 }
-        // Width and height will be calculated dynamically in setupChart
-
-        // Available comparison types - now using pre-computed data
-        this.comparisonTypes = [
-            {
-                id: 'domain_comparison_grouped',
-                name: 'Domain Groups',
-                description: 'Compare character counts by grouped domains ',
-                dataKey: 'domains_grouped',
-            },
-            {
-                id: 'domain_comparison_individual',
-                name: 'Individual Domains',
-                description: 'Compare character counts by specific domains',
-                dataKey: 'domains_individual',
-            },
-            {
-                id: 'type_comparison',
-                name: 'Character Type',
-                description: 'Compare different character types',
-                dataKey: 'types',
-            },
-            {
-                id: 'gender_by_author',
-                name: 'Gender by Author',
-                description: 'Compare character gender distribution by author',
-                dataKey: 'gender_by_author',
-            },
-            {
-                id: 'gender_by_type',
-                name: 'Gender by Type',
-                description: 'Compare gender distribution by character type',
-                dataKey: 'gender_by_type',
-            },
-            {
-                id: 'overall_gender',
-                name: 'Overall Gender Distribution',
-                description: 'Overall gender distribution in the dataset',
-                dataKey: 'overall_gender',
-            },
-        ]
-
-        this.currentComparison = this.comparisonTypes[0].id
-        this.data = null
-
-        // Inclusive gender color mapping with accessible, diverse colors
-        // This system supports any gender identity and automatically assigns
-        // appropriate colors while maintaining accessibility standards
-        this.genderColors = {
-            male: '#4472C4', // Professional blue
-            female: '#E15759', // Warm red/pink
-            'non-binary': '#70AD47', // Green
-            agender: '#FFC000', // Golden yellow
-            genderfluid: '#9F4F96', // Purple
-            transgender: '#5B9BD5', // Light blue
-            demigender: '#A5A5A5', // Gray
-            bigender: '#FF6B35', // Orange
-            pangender: '#44546A', // Dark blue-gray
-            genderqueer: '#C55A11', // Brown-orange
-            unknown: '#BDC3C7', // Light gray
-            missing: '#95A5A6', // Medium gray
-            other: '#8E44AD', // Dark purple
-        }
-
-        this.loadDataAndInit()
-    }
-
-    // Get inclusive color for any gender identity
-    getGenderColor(gender) {
-        if (!gender || gender === 'null' || gender === 'undefined') {
-            return this.genderColors.missing
-        }
-
-        const normalizedGender = gender.toString().toLowerCase().trim()
-
-        // Direct match
-        if (this.genderColors[normalizedGender]) {
-            return this.genderColors[normalizedGender]
-        }
-
-        // Fuzzy matching for common variations
-        if (
-            normalizedGender.includes('male') &&
-            !normalizedGender.includes('female')
-        ) {
-            return this.genderColors.male
-        }
-        if (normalizedGender.includes('female')) {
-            return this.genderColors.female
-        }
-        if (
-            normalizedGender.includes('non') &&
-            normalizedGender.includes('binary')
-        ) {
-            return this.genderColors['non-binary']
-        }
-        if (normalizedGender.includes('trans')) {
-            return this.genderColors.transgender
-        }
-        if (normalizedGender.includes('fluid')) {
-            return this.genderColors.genderfluid
-        }
-
-        // Generate a consistent color for unknown genders based on hash
-        const hash = this.hashString(normalizedGender)
-        const colorKeys = Object.keys(this.genderColors)
-        const colorIndex = Math.abs(hash) % colorKeys.length
-        return this.genderColors[colorKeys[colorIndex]]
-    }
-
-    // Simple hash function for consistent color assignment
-    hashString(str) {
-        let hash = 0
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i)
-            hash = (hash << 5) - hash + char
-            hash = hash & hash // Convert to 32-bit integer
-        }
-        return hash
-    }
-
-    async loadDataAndInit() {
-        try {
-            console.log('Loading butterfly chart data from:', this.dataUrl)
-            this.data = await d3.json(this.dataUrl)
-            console.log('Butterfly chart data loaded successfully:', this.data)
-            this.init()
-        } catch (error) {
-            console.error('Error loading butterfly chart data:', error)
-            this.showError(
-                'Failed to load data for butterfly chart: ' + error.message
-            )
-        }
-    }
-
-    showError(message) {
-        this.container.selectAll('*').remove()
-        this.container
-            .append('div')
-            .style('text-align', 'center')
-            .style('color', 'red')
-            .style('padding', '20px')
-            .text(message)
-    }
-
-    init() {
-        console.log(
-            'ButterflyChart init() called, data available:',
-            !!this.data
-        )
-        if (!this.data) {
-            console.error('No data available in init()')
-            return
-        }
-
-        // Clear container
-        this.container.selectAll('*').remove()
-        console.log('Container cleared, starting initialization')
-
-        // Create comparison selector
-        const selectorContainer = this.container
-            .append('div')
-            .style('text-align', 'center')
-            .style('margin-bottom', '20px')
-
-        const select = selectorContainer
-            .append('select')
-            .style('padding', '8px 12px')
-            .style('border', '1px solid #ccc')
-            .style('border-radius', '4px')
-            .style('font-size', '14px')
-            .on('change', (event) => {
-                this.currentComparison = event.target.value
-                this.drawChart()
-            })
-
-        select
-            .selectAll('option')
-            .data(this.comparisonTypes)
-            .enter()
-            .append('option')
-            .attr('value', (d) => d.id)
-            .text((d) => d.name)
-            .attr('title', (d) => d.description)
-
-        // Create responsive SVG following timeline chart pattern
-        const containerElement = this.container.node()
-        const fullWidth = containerElement.offsetWidth || 800
-        const fullHeight = containerElement.offsetHeight || 600
-        this.width = fullWidth - this.margin.left - this.margin.right
-        this.height = fullHeight - this.margin.top - this.margin.bottom
-
-        this.svgRoot = this.container
-            .append('svg')
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('viewBox', `0 0 ${fullWidth} ${fullHeight}`)
-            .attr('preserveAspectRatio', 'xMidYMid meet')
-
-        // Add background rect for interactions
-        this.svgRoot
-            .append('rect')
-            .attr('width', fullWidth)
-            .attr('height', fullHeight)
-            .attr('fill', 'transparent')
-            .style('cursor', 'pointer')
-
-        this.g = this.svgRoot
-            .append('g')
-            .attr(
-                'transform',
-                `translate(${this.margin.left},${this.margin.top})`
-            )
-
-        // Draw initial chart
-        this.drawChart()
-
-        // Add resize handler for responsive behavior
-        window.addEventListener('resize', () => this.handleResize())
-    }
-
-    handleResize() {
-        // Debounce resize events
-        clearTimeout(this.resizeTimeout)
-        this.resizeTimeout = setTimeout(() => {
-            const containerElement = this.container.node()
-            const fullWidth = containerElement.offsetWidth || 800
-            const fullHeight = containerElement.offsetHeight || 600
-
-            // Update dimensions
-            this.width = fullWidth - this.margin.left - this.margin.right
-            this.height = fullHeight - this.margin.top - this.margin.bottom
-
-            // Update viewBox
-            this.svgRoot.attr('viewBox', `0 0 ${fullWidth} ${fullHeight}`)
-
-            // Redraw chart with new dimensions
-            this.drawChart()
-        }, 250)
-    }
-
-    processDataForVisualization() {
-        const currentType = this.comparisonTypes.find(
-            (t) => t.id === this.currentComparison
-        )
-        const rawData = this.data[currentType.dataKey]
-
-        if (!rawData) {
-            return {
-                title: 'No data available',
-                type: 'single',
-                categories: [],
-            }
-        }
-
-        switch (this.currentComparison) {
-            case 'domain_comparison_grouped':
-                return this.processSingleComparison(
-                    rawData,
-                    'Character Count by Domain Groups'
-                )
-
-            case 'domain_comparison_individual':
-                return this.processSingleComparison(
-                    rawData,
-                    'Character Count by Individual Domains'
-                )
-
-            case 'type_comparison':
-                return this.processSingleComparison(
-                    rawData,
-                    'Character Count by Type'
-                )
-
-            case 'overall_gender':
-                return this.processSingleComparison(
-                    rawData,
-                    'Overall Gender Distribution'
-                )
-
-            case 'gender_by_author':
-                return this.processGroupedComparison(
-                    rawData,
-                    'Gender Distribution by Author'
-                )
-
-            case 'gender_by_type':
-                return this.processGroupedComparison(
-                    rawData,
-                    'Gender Distribution by Character Type'
-                )
-
-            default:
-                return {
-                    title: 'Unknown comparison type',
-                    type: 'single',
-                    categories: [],
-                }
-        }
-    }
-
-    processSingleComparison(data, title) {
-        const entries = Object.entries(data).slice(0, 6) // Top 6 items
-        return {
-            title: title,
-            type: 'single',
-            categories: entries.map(([name, value], index) => ({
-                name: name,
-                value: value,
-                side: index % 2 === 0 ? 'left' : 'right',
-                color: d3.schemeCategory10[index % 10],
-            })),
-        }
-    }
-
-    processGroupedComparison(data, title) {
-        // Get top 2 groups by total count
-        const groupTotals = Object.entries(data)
-            .map(([group, genderData]) => {
-                const total = Object.values(genderData).reduce(
-                    (sum, count) => sum + count,
-                    0
-                )
-                return { group, total, genderData }
-            })
-            .sort((a, b) => b.total - a.total)
-            .slice(0, 2)
-
-        if (groupTotals.length < 2) {
-            // Fallback to single comparison
-            const flatData = {}
-            Object.entries(data).forEach(([group, genderData]) => {
-                flatData[group] = Object.values(genderData).reduce(
-                    (sum, count) => sum + count,
-                    0
-                )
-            })
-            return this.processSingleComparison(flatData, title)
-        }
-
-        return {
-            title: `${title}: ${groupTotals[0].group} vs ${groupTotals[1].group}`,
-            type: 'grouped',
-            groups: [
-                {
-                    name: groupTotals[0].group,
-                    side: 'left',
-                    categories: Object.entries(groupTotals[0].genderData).map(
-                        ([gender, count]) => ({
-                            name:
-                                gender.charAt(0).toUpperCase() +
-                                gender.slice(1),
-                            value: count,
-                            color: this.getGenderColor(gender),
-                        })
-                    ),
-                },
-                {
-                    name: groupTotals[1].group,
-                    side: 'right',
-                    categories: Object.entries(groupTotals[1].genderData).map(
-                        ([gender, count]) => ({
-                            name:
-                                gender.charAt(0).toUpperCase() +
-                                gender.slice(1),
-                            value: count,
-                            color: this.getGenderColor(gender),
-                        })
-                    ),
-                },
-            ],
-        }
-    }
-
-    drawChart() {
-        // Clear previous chart
-        this.g.selectAll('*').remove()
-
-        const data = this.processDataForVisualization()
-
-        if (data.type === 'single') {
-            this.drawSingleComparison(data)
-        } else {
-            this.drawGroupedComparison(data)
-        }
-    }
-
-    drawSingleComparison(data) {
-        if (data.categories.length === 0) {
-            this.g
-                .append('text')
-                .attr('x', this.width / 2)
-                .attr('y', this.height / 2)
-                .attr('text-anchor', 'middle')
-                .attr('font-family', 'Arial, sans-serif')
-                .attr('font-size', '14px')
-                .attr('fill', '#666')
-                .text('No data available for this comparison')
-            return
-        }
-
-        const maxValue = Math.max(...data.categories.map((d) => d.value))
-        const xScale = d3
-            .scaleLinear()
-            .domain([0, maxValue])
-            .range([0, this.width / 2 - 30])
-
-        const yScale = d3
-            .scaleBand()
-            .domain(data.categories.map((d) => d.name))
-            .range([60, this.height - 40])
-            .padding(0.15)
-
-        // Draw center line
-        this.g
-            .append('line')
-            .attr('x1', this.width / 2)
-            .attr('x2', this.width / 2)
-            .attr('y1', 40)
-            .attr('y2', this.height - 20)
-            .attr('stroke', '#34495E')
-            .attr('stroke-width', 2)
-            .attr('stroke-dasharray', '5,5')
-            .attr('opacity', 0.7)
-
-        // Draw bars and labels
-        data.categories.forEach((category) => {
-            const barHeight = yScale.bandwidth()
-            const y = yScale(category.name)
-            const barWidth = xScale(category.value)
-
-            let x
-            if (category.side === 'left') {
-                x = this.width / 2 - barWidth
-            } else {
-                x = this.width / 2
-            }
-
-            // Draw bar with enhanced styling
-            this.g
-                .append('rect')
-                .attr('x', x)
-                .attr('y', y)
-                .attr('width', 0) // Start with 0 width for animation
-                .attr('height', barHeight)
-                .attr('fill', category.color)
-                .attr('opacity', 0.85)
-                .attr('rx', 3) // Rounded corners
-                .attr('ry', 3)
-                .style('cursor', 'pointer')
-                .transition()
-                .duration(800)
-                .ease(d3.easeBackOut)
-                .attr('width', barWidth)
-                .selection()
-                .on('mouseover', function (event) {
-                    d3.select(this)
-                        .transition()
-                        .duration(200)
-                        .attr('opacity', 1)
-                        .attr('stroke', '#2C3E50')
-                        .attr('stroke-width', 2)
-
-                    // Show tooltip
-                    const tooltip = d3
-                        .select('body')
-                        .append('div')
-                        .attr('class', 'butterfly-tooltip')
-                        .style('opacity', 0)
-                        .style('position', 'absolute')
-                        .style('background', 'rgba(0,0,0,0.8)')
-                        .style('color', 'white')
-                        .style('padding', '8px 12px')
-                        .style('border-radius', '4px')
-                        .style('font-size', '12px')
-                        .style('pointer-events', 'none')
-
-                    tooltip.transition().duration(200).style('opacity', 1)
-
-                    tooltip
-                        .html(`${category.name}: ${category.value}`)
-                        .style('left', event.pageX + 10 + 'px')
-                        .style('top', event.pageY - 10 + 'px')
-                })
-                .on('mouseout', function () {
-                    d3.select(this)
-                        .transition()
-                        .duration(200)
-                        .attr('opacity', 0.85)
-                        .attr('stroke', 'none')
-
-                    d3.selectAll('.butterfly-tooltip').remove()
-                })
-
-            // Add value labels with enhanced styling
-            const labelX = category.side === 'left' ? x - 10 : x + barWidth + 10
-            this.g
-                .append('text')
-                .attr('x', labelX)
-                .attr('y', y + barHeight / 2)
-                .attr('dy', '0.35em')
-                .attr('text-anchor', category.side === 'left' ? 'end' : 'start')
-                .attr('font-family', 'Arial, sans-serif')
-                .attr('font-size', '13px')
-                .attr('font-weight', 'bold')
-                .attr('fill', '#2C3E50')
-                .style('opacity', 0)
-                .transition()
-                .delay(400)
-                .duration(600)
-                .style('opacity', 1)
-                .selection()
-                .text(category.value)
-
-            // Add category labels with enhanced styling
-            const catLabelX =
-                category.side === 'left' ? x - 35 : x + barWidth + 35
-            this.g
-                .append('text')
-                .attr('x', catLabelX)
-                .attr('y', y + barHeight / 2)
-                .attr('dy', '0.35em')
-                .attr('text-anchor', category.side === 'left' ? 'end' : 'start')
-                .attr('font-family', 'Arial, sans-serif')
-                .attr('font-size', '12px')
-                .attr('font-weight', '500')
-                .attr('fill', '#34495E')
-                .style('opacity', 0)
-                .transition()
-                .delay(200)
-                .duration(600)
-                .style('opacity', 1)
-                .selection()
-                .text(category.name)
-        })
-
-        // Add title with enhanced styling
-        this.g
-            .append('text')
-            .attr('x', this.width / 2)
-            .attr('y', 30)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'Arial, sans-serif')
-            .attr('font-size', '18px')
-            .attr('font-weight', 'bold')
-            .attr('fill', '#2C3E50')
-            .style('opacity', 0)
-            .transition()
-            .duration(600)
-            .style('opacity', 1)
-            .selection()
-            .text(data.title)
-    }
-
-    drawGroupedComparison(data) {
-        const allValues = data.groups.flatMap((g) =>
-            g.categories.map((c) => c.value)
-        )
-        const maxValue = Math.max(...allValues)
-
-        const xScale = d3
-            .scaleLinear()
-            .domain([0, maxValue])
-            .range([0, this.width / 2 - 30])
-
-        const yScale = d3
-            .scaleBand()
-            .domain(data.groups[0].categories.map((c) => c.name))
-            .range([80, this.height - 80])
-            .padding(0.3)
-
-        // Draw center line with enhanced styling
-        this.g
-            .append('line')
-            .attr('x1', this.width / 2)
-            .attr('x2', this.width / 2)
-            .attr('y1', 60)
-            .attr('y2', this.height - 40)
-            .attr('stroke', '#34495E')
-            .attr('stroke-width', 2)
-            .attr('stroke-dasharray', '5,5')
-            .attr('opacity', 0.7)
-
-        // Draw bars for each group
-        data.groups.forEach((group) => {
-            group.categories.forEach((category) => {
-                const barHeight = yScale.bandwidth() / 2.2
-                const baseY = yScale(category.name)
-                const y = group.side === 'left' ? baseY : baseY + barHeight + 5
-                const barWidth = xScale(category.value)
-
-                let x
-                if (group.side === 'left') {
-                    x = this.width / 2 - barWidth
-                } else {
-                    x = this.width / 2
-                }
-
-                // Draw bar with enhanced styling and animation
-                this.g
-                    .append('rect')
-                    .attr('x', x)
-                    .attr('y', y)
-                    .attr('width', 0)
-                    .attr('height', barHeight)
-                    .attr('fill', category.color)
-                    .attr('opacity', 0.85)
-                    .attr('rx', 2)
-                    .attr('ry', 2)
-                    .style('cursor', 'pointer')
-                    .transition()
-                    .duration(800)
-                    .ease(d3.easeBackOut)
-                    .attr('width', barWidth)
-                    .selection()
-                    .on('mouseover', function (event) {
-                        d3.select(this)
-                            .transition()
-                            .duration(200)
-                            .attr('opacity', 1)
-                            .attr('stroke', '#2C3E50')
-                            .attr('stroke-width', 1)
-
-                        // Show tooltip
-                        const tooltip = d3
-                            .select('body')
-                            .append('div')
-                            .attr('class', 'butterfly-tooltip')
-                            .style('opacity', 0)
-                            .style('position', 'absolute')
-                            .style('background', 'rgba(0,0,0,0.8)')
-                            .style('color', 'white')
-                            .style('padding', '6px 10px')
-                            .style('border-radius', '4px')
-                            .style('font-size', '11px')
-                            .style('pointer-events', 'none')
-
-                        tooltip.transition().duration(200).style('opacity', 1)
-
-                        tooltip
-                            .html(`${category.name}: ${category.value}`)
-                            .style('left', event.pageX + 10 + 'px')
-                            .style('top', event.pageY - 10 + 'px')
-                    })
-                    .on('mouseout', function () {
-                        d3.select(this)
-                            .transition()
-                            .duration(200)
-                            .attr('opacity', 0.85)
-                            .attr('stroke', 'none')
-
-                        d3.selectAll('.butterfly-tooltip').remove()
-                    })
-
-                // Add value labels with enhanced styling
-                const labelX =
-                    group.side === 'left' ? x - 12 : x + barWidth + 12
-                this.g
-                    .append('text')
-                    .attr('x', labelX)
-                    .attr('y', y + barHeight / 2)
-                    .attr('dy', '0.35em')
-                    .attr(
-                        'text-anchor',
-                        group.side === 'left' ? 'end' : 'start'
-                    )
-                    .attr('font-family', 'Arial, sans-serif')
-                    .attr('font-size', '12px')
-                    .attr('font-weight', 'bold')
-                    .attr('fill', '#2C3E50')
-                    .style('opacity', 0)
-                    .transition()
-                    .delay(400)
-                    .duration(600)
-                    .style('opacity', 1)
-                    .selection()
-                    .text(category.value)
-            })
-        })
-
-        // Add category labels in center with enhanced styling
-        data.groups[0].categories.forEach((category) => {
-            this.g
-                .append('text')
-                .attr('x', this.width / 2)
-                .attr('y', yScale(category.name) + yScale.bandwidth() / 2)
-                .attr('dy', '0.35em')
-                .attr('text-anchor', 'middle')
-                .attr('font-family', 'Arial, sans-serif')
-                .attr('font-size', '13px')
-                .attr('font-weight', 'bold')
-                .attr('fill', '#2C3E50')
-                .style('opacity', 0)
-                .transition()
-                .delay(200)
-                .duration(600)
-                .style('opacity', 1)
-                .selection()
-                .text(category.name)
-        })
-
-        // Add group labels with enhanced styling
-        this.g
-            .append('text')
-            .attr('x', this.width / 4)
-            .attr('y', 50)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'Arial, sans-serif')
-            .attr('font-size', '15px')
-            .attr('font-weight', 'bold')
-            .attr('fill', '#3498DB')
-            .style('opacity', 0)
-            .transition()
-            .duration(600)
-            .style('opacity', 1)
-            .selection()
-            .text(data.groups[0].name)
-
-        this.g
-            .append('text')
-            .attr('x', (3 * this.width) / 4)
-            .attr('y', 50)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'Arial, sans-serif')
-            .attr('font-size', '15px')
-            .attr('font-weight', 'bold')
-            .attr('fill', '#E74C3C')
-            .style('opacity', 0)
-            .transition()
-            .duration(600)
-            .style('opacity', 1)
-            .selection()
-            .text(data.groups[1].name)
-
-        // Add title with enhanced styling
-        this.g
-            .append('text')
-            .attr('x', this.width / 2)
-            .attr('y', 30)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', 'Arial, sans-serif')
-            .attr('font-size', '18px')
-            .attr('font-weight', 'bold')
-            .attr('fill', '#2C3E50')
-            .style('opacity', 0)
-            .transition()
-            .duration(600)
-            .style('opacity', 1)
-            .selection()
-            .text(data.title)
-    }
-}
-
 // Initialize function to be called from main script
-function createGeneralButterflyChart(
+function createButterflyChart(
     containerId,
+    parentGroups,
     dataUrl = 'butterfly_data.json'
 ) {
-    console.log(
-        'Creating GeneralButterflyChart with container:',
-        containerId,
-        'and dataUrl:',
-        dataUrl
-    )
-    try {
-        const chart = new GeneralButterflyChart(containerId, dataUrl)
-        console.log('GeneralButterflyChart created successfully')
-        return chart
-    } catch (error) {
-        console.error('Error creating GeneralButterflyChart:', error)
-        throw error
-    }
-}
+    d3.json(dataUrl).then((data) => {
+        // Make butterfly data globally accessible for domain character mapping
+        window.butterflyData = data
 
-// Test function to demonstrate inclusive gender color system
-function testGenderColorSystem() {
-    const chart = new GeneralButterflyChart('#test')
-    const testGenders = [
-        'male',
-        'female',
-        'non-binary',
-        'agender',
-        'genderfluid',
-        'transgender',
-        'demigender',
-        'bigender',
-        'pangender',
-        'genderqueer',
-        'unknown',
-        'other',
-        'custom-identity',
-    ]
+        // Set up dimensions
+        const margin = { top: 60, right: 160, bottom: 40, left: 180 }
+        const container = d3.select(containerId).node()
+        const fullWidth = container.offsetWidth || 700
+        const fullHeight = container.offsetHeight || 400
+        const width = fullWidth - margin.left - margin.right
+        const height = fullHeight - margin.top - margin.bottom
+        // Create SVG
+        const svg = d3
+            .select(containerId)
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`)
 
-    console.log('🏳️‍⚧️ Inclusive Gender Color System Test:')
-    testGenders.forEach((gender) => {
-        console.log(`  ${gender}: ${chart.getGenderColor(gender)}`)
+        const groups = parentGroups
+
+        console.log(groups)
+
+        // Animation state tracking
+        let isAnimating = false
+        let currentSelectedGroup = null // Track current selection to prevent hover interference
+
+        // Create scales
+        const xScaleRight = d3.scaleLinear().range([0, width / 2])
+        const xScaleLeft = d3.scaleLinear().range([width / 2, 0])
+
+        const yScale = d3.scaleBand().range([0, height]).padding(0.4)
+
+        // Create axes
+        const xAxisLeft = d3.axisBottom(xScaleLeft)
+        const xAxisRight = d3.axisBottom(xScaleRight)
+        const yAxis = d3.axisLeft(yScale)
+
+        // Add groups for axes
+        const xAxisLeftGroup = svg
+            .append('g')
+            .attr('class', 'x-axis-left')
+            .attr('transform', `translate(0, ${height})`)
+
+        const xAxisRightGroup = svg
+            .append('g')
+            .attr('class', 'x-axis-right')
+            .attr('transform', `translate(${width / 2}, ${height})`)
+
+        const yAxisGroup = svg.append('g').attr('class', 'y-axis')
+
+        // Create simple tooltip
+        const tooltip = d3
+            .select('body')
+            .append('div')
+            .style('position', 'absolute')
+            .style('background', 'rgba(0, 0, 0, 0.8)')
+            .style('color', 'white')
+            .style('padding', '8px')
+            .style('border-radius', '4px')
+            .style('font-size', '12px')
+            .style('pointer-events', 'none')
+            .style('z-index', '1000')
+            .style('visibility', 'hidden')
+
+        // Add title (similar to timeline chart)
+        svg.append('text')
+            .attr('x', width / 2)
+            .attr('y', -margin.top / 2)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '1vw')
+            .style('font-weight', 'bold')
+            .text('Gender Distribution Analysis')
+
+        // Function to update description based on selected data type
+        function updateDescription(dataType) {
+            const descriptions = {
+                gender_by_author:
+                    'Shows gender distribution across different authors in Greek literature',
+                gender_by_type:
+                    'Compares male vs female character representation by character type',
+                domains_grouped_by_gender:
+                    'Gender distribution within major domain categories (Water & Sea, War & Conflict, etc.)',
+            }
+
+            const descElement = d3.select('#view-description')
+            if (!descElement.empty()) {
+                descElement
+                    .transition()
+                    .duration(200)
+                    .style('opacity', 0)
+                    .transition()
+                    .duration(200)
+                    .style('opacity', 1)
+                    .text(
+                        descriptions[dataType] ||
+                            'Analyzing character data distribution'
+                    )
+            }
+        }
+
+        // Function to get appropriate axis labels based on data type
+        function getAxisLabels(dataType) {
+            if (
+                dataType.startsWith('gender_by_') ||
+                dataType.includes('_by_gender')
+            ) {
+                return {
+                    left: 'Male',
+                    right: 'Female',
+                    y: getYAxisLabel(dataType),
+                }
+            } else {
+                return { left: 'Primary', right: 'Secondary', y: 'Category' }
+            }
+        }
+
+        // Helper function to get Y-axis label
+        function getYAxisLabel(dataType) {
+            if (dataType === 'gender_by_author') return 'Author'
+            if (dataType === 'gender_by_type') return 'Character Type'
+            if (dataType.includes('domains_grouped')) return 'Domain Group'
+            return 'Category'
+        }
+
+        // Function to update the chart based on selected data
+        function updateChart(dataType) {
+            // Clear current selection tracking when updating chart
+            currentSelectedGroup = null
+            
+            // Set animation state to prevent hover interactions during transitions
+            isAnimating = true
+
+            // Hide tooltip and reset any interrupted hover effects
+            tooltip.style('visibility', 'hidden')
+            svg.selectAll('.male-bar, .female-bar')
+                .interrupt() // Stop any ongoing hover transitions
+                .attr('height', yScale.bandwidth())
+                .attr('fill', function () {
+                    return d3.select(this).classed('male-bar')
+                        ? '#f4a261'
+                        : '#2a9d8f'
+                })
+
+            const selectedData = data[dataType]
+
+            // Update the description based on data type
+            updateDescription(dataType)
+
+            let categories, maxValue
+
+            // Handle different data structures
+            if (
+                dataType.startsWith('gender_by_') ||
+                dataType.includes('_by_gender')
+            ) {
+                // Gender data has male/female structure
+                categories = Object.keys(selectedData)
+                maxValue = d3.max(categories, (d) =>
+                    Math.max(
+                        selectedData[d].male || 0,
+                        selectedData[d].female || 0
+                    )
+                )
+            } else {
+                // Other data types are simple counts - split them for visual balance
+                categories = Object.keys(selectedData)
+                maxValue = d3.max(categories, (d) => selectedData[d])
+
+                // Convert simple count data to split visualization
+                const convertedData = {}
+                categories.forEach((category) => {
+                    const totalCount = selectedData[category]
+                    // Split the count roughly in half for visual balance
+                    const leftSide = Math.ceil(totalCount * 0.6) // 60% on left
+                    const rightSide = Math.floor(totalCount * 0.4) // 40% on right
+
+                    convertedData[category] = {
+                        male: leftSide,
+                        female: rightSide,
+                    }
+                })
+                Object.assign(selectedData, convertedData)
+                // Recalculate max value after conversion
+                maxValue = d3.max(categories, (d) =>
+                    Math.max(selectedData[d].male, selectedData[d].female)
+                )
+            }
+
+            // Update scales
+            xScaleRight.domain([0, maxValue])
+            xScaleLeft.domain([0, maxValue])
+            yScale.domain(categories)
+
+            // Update axes with smooth transitions
+            xAxisLeftGroup
+                .transition()
+                .duration(500)
+                .ease(d3.easeCircleOut)
+                .call(xAxisLeft)
+
+            xAxisRightGroup
+                .transition()
+                .duration(500)
+                .ease(d3.easeCircleOut)
+                .call(xAxisRight)
+
+            yAxisGroup
+                .transition()
+                .duration(500)
+                .ease(d3.easeCircleOut)
+                .call(yAxis)
+
+            // Add axis labels with fade transition
+            svg.selectAll('.axis-label')
+                .transition()
+                .duration(200)
+                .style('opacity', 0)
+                .remove()
+
+            svg.selectAll('.y-axis-label')
+                .transition()
+                .duration(200)
+                .style('opacity', 0)
+                .remove()
+
+            // Add new labels with fade-in effect
+            setTimeout(() => {
+                const labels = getAxisLabels(dataType)
+
+                svg.append('text')
+                    .attr('class', 'axis-label')
+                    .attr('x', width / 4)
+                    .attr('y', -10)
+                    .attr('text-anchor', 'middle')
+                    .style('opacity', 0)
+                    .text(labels.left)
+                    .transition()
+                    .duration(300)
+                    .style('opacity', 1)
+
+                if (labels.right) {
+                    svg.append('text')
+                        .attr('class', 'axis-label')
+                        .attr('x', (width * 3) / 4)
+                        .attr('y', -10)
+                        .attr('text-anchor', 'middle')
+                        .style('opacity', 0)
+                        .text(labels.right)
+                        .transition()
+                        .duration(300)
+                        .style('opacity', 1)
+                }
+
+                svg.append('text')
+                    .attr('class', 'y-axis-label')
+                    .attr('transform', 'rotate(-90)')
+                    .attr('y', -margin.left + 30)
+                    .attr('x', -height / 2)
+                    .attr('text-anchor', 'middle')
+                    .style('opacity', 0)
+                    .text(labels.y)
+                    .transition()
+                    .duration(300)
+                    .style('opacity', 1)
+            }, 250)
+
+            // Create male bars (left side) - rectangles with rounded corners
+            const maleBars = svg
+                .selectAll('.male-bar')
+                .data(categories, (d) => d)
+
+            // Handle entering bars with smooth animation
+            const maleEnter = maleBars
+                .enter()
+                .append('rect')
+                .attr('class', 'male-bar')
+                .attr('x', width / 2) // Start from center
+                .attr('y', (d) => yScale(d))
+                .attr('width', 0) // Start with zero width
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#f4a261')
+                .attr('rx', 6)
+                .attr('ry', 6)
+                .attr('opacity', 0) // Start transparent
+                .on('mouseover', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
+                    // Show tooltip with contextual content
+                    const isGenderData =
+                        dataType.startsWith('gender_by_') ||
+                        dataType.includes('_by_gender')
+                    const tooltipContent = isGenderData
+                        ? `<strong>${d}</strong><br/>Male: ${
+                              selectedData[d].male
+                          }<br/>Female: ${selectedData[d].female || 0}`
+                        : `<strong>${d}</strong><br/>Total Count: ${
+                              selectedData[d].male + selectedData[d].female
+                          }<br/>Left: ${selectedData[d].male} | Right: ${
+                              selectedData[d].female
+                          }`
+
+                    tooltip.style('visibility', 'visible').html(tooltipContent)
+
+                    // Apply hover effect
+                    d3.select(this)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth() * 1.2)
+                        .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                        .attr('fill', '#e9940e') // Slightly darker shade of orange
+                })
+                .on('mousemove', function (event) {
+                    tooltip
+                        .style('top', event.pageY - 10 + 'px')
+                        .style('left', event.pageX + 10 + 'px')
+                })
+                .on('mouseout', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
+                    // Hide tooltip
+                    tooltip.style('visibility', 'hidden')
+
+                    // Reset hover effect (unless this bar is currently selected)
+                    if (
+                        !currentSelectedGroup ||
+                        currentSelectedGroup !== d ||
+                        (dataType !== 'gender_by_type' &&
+                            dataType !== 'domains_grouped_by_gender' &&
+                            dataType !== 'gender_by_author')
+                    ) {
+                        d3.select(this)
+                            .transition()
+                            .duration(150)
+                            .attr('height', yScale.bandwidth())
+                            .attr('y', yScale(d))
+                            .attr('fill', '#f4a261') // Reset to original male color
+                    }
+                })
+
+            // Handle exiting bars with smooth animation
+            maleBars
+                .exit()
+                .transition()
+                .duration(400)
+                .ease(d3.easeCircleIn)
+                .attr('width', 0)
+                .attr('x', width / 2) // Move to center
+                .attr('opacity', 0)
+                .remove()
+
+            // Update all bars (entering + existing)
+            maleEnter
+                .merge(maleBars)
+                .on('click', function (event, d) {
+                    event.stopPropagation() // Prevent background deselection
+                    if (dataType === 'gender_by_author') {
+                        console.log('Author selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
+                    } else if (dataType === 'gender_by_type') {
+                        console.log('Character type selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
+                    } else if (dataType === 'domains_grouped_by_gender') {
+                        console.log('Domain group selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
+                    }
+                })
+                .transition()
+                .duration(600)
+                .delay((d, i) => i * 50) // Stagger animation
+                .ease(d3.easeCircleOut)
+                .attr('x', (d) => xScaleLeft(selectedData[d].male))
+                .attr('y', (d) => yScale(d))
+                .attr(
+                    'width',
+                    (d) => width / 2 - xScaleLeft(selectedData[d].male)
+                )
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#f4a261')
+                .attr('rx', 6)
+                .attr('ry', 6)
+                .attr('opacity', 1)
+
+            // Create female bars (right side) - rectangles with rounded corners
+            const femaleBars = svg
+                .selectAll('.female-bar')
+                .data(categories, (d) => d)
+
+            // Handle entering bars with smooth animation
+            const femaleEnter = femaleBars
+                .enter()
+                .append('rect')
+                .attr('class', 'female-bar')
+                .attr('x', width / 2) // Start from center
+                .attr('y', (d) => yScale(d))
+                .attr('width', 0) // Start with zero width
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#2a9d8f')
+                .attr('rx', 6)
+                .attr('ry', 6)
+                .attr('opacity', 0) // Start transparent
+                .on('mouseover', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
+                    // Show tooltip with contextual content
+                    const isGenderData =
+                        dataType.startsWith('gender_by_') ||
+                        dataType.includes('_by_gender')
+                    const tooltipContent = isGenderData
+                        ? `<strong>${d}</strong><br/>Male: ${
+                              selectedData[d].male || 0
+                          }<br/>Female: ${selectedData[d].female}`
+                        : `<strong>${d}</strong><br/>Total Count: ${
+                              selectedData[d].male + selectedData[d].female
+                          }<br/>Left: ${selectedData[d].male} | Right: ${
+                              selectedData[d].female
+                          }`
+
+                    tooltip.style('visibility', 'visible').html(tooltipContent)
+
+                    // Apply hover effect
+                    d3.select(this)
+                        .transition()
+                        .duration(150)
+                        .attr('height', yScale.bandwidth() * 1.2)
+                        .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                        .attr('fill', '#207b6aeb') // Slightly darker shade of teal
+                })
+                .on('mousemove', function (event) {
+                    tooltip
+                        .style('top', event.pageY - 10 + 'px')
+                        .style('left', event.pageX + 10 + 'px')
+                })
+                .on('mouseout', function (event, d) {
+                    // Don't apply hover effects during animations
+                    if (isAnimating) return
+
+                    // Hide tooltip
+                    tooltip.style('visibility', 'hidden')
+
+                    // Reset hover effect (unless this bar is currently selected)
+                    if (
+                        !currentSelectedGroup ||
+                        currentSelectedGroup !== d ||
+                        (dataType !== 'gender_by_type' &&
+                            dataType !== 'domains_grouped_by_gender' &&
+                            dataType !== 'gender_by_author')
+                    ) {
+                        d3.select(this)
+                            .transition()
+                            .duration(150)
+                            .attr('height', yScale.bandwidth())
+                            .attr('y', yScale(d))
+                            .attr('fill', '#2a9d8f') // Reset to original color
+                    }
+                })
+
+            // Handle exiting bars with smooth animation
+            femaleBars
+                .exit()
+                .transition()
+                .duration(400)
+                .ease(d3.easeCircleIn)
+                .attr('width', 0)
+                .attr('opacity', 0)
+                .remove()
+
+            // Update all bars (entering + existing)
+            femaleEnter
+                .merge(femaleBars)
+                .on('click', function (event, d) {
+                    event.stopPropagation() // Prevent background deselection
+                    if (dataType === 'gender_by_author') {
+                        console.log('Author selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
+                    } else if (dataType === 'gender_by_type') {
+                        console.log('Character type selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
+                    } else if (dataType === 'domains_grouped_by_gender') {
+                        console.log('Domain group selected:', d)
+                        if (window.globalSelection) {
+                            window.globalSelection.setGroup(d)
+                        }
+                    }
+                })
+                .transition()
+                .duration(600)
+                .delay((d, i) => i * 50) // Stagger animation
+                .ease(d3.easeCircleOut)
+                .attr('x', width / 2)
+                .attr('y', (d) => yScale(d))
+                .attr('width', (d) => xScaleRight(selectedData[d].female))
+                .attr('height', yScale.bandwidth())
+                .attr('fill', '#2a9d8f')
+                .attr('rx', 6)
+                .attr('ry', 6)
+                .attr('opacity', 1)
+                .on('end', function (d, i) {
+                    // Reset animation state when the last bar finishes animating
+                    if (i === categories.length - 1) {
+                        isAnimating = false
+                    }
+                })
+
+            // Ensure background rect stays behind all bars
+            backgroundRect.lower()
+        }
+
+        // Create background click area for deselection (outside updateChart to avoid duplicates)
+        const backgroundRect = svg
+            .append('rect')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', 'transparent')
+            .style('cursor', 'pointer')
+            .lower() // make sure it's behind all bars
+            .on('click', function () {
+                console.log('Background clicked - clearing all selections')
+                if (window.globalSelection) {
+                    // Clear all possible selections to ensure consistency across charts
+                    window.globalSelection.setGroup(null) // Clear group/type/domain selections
+                    window.globalSelection.setAuthor(null) // Clear author selections
+                }
+            })
+
+        // Initial chart rendering
+        let dataType = 'gender_by_author'
+        updateChart(dataType)
+
+        // Set dropdown to match initial chart state
+        d3.select('#data-select').property('value', 'gender_by_author')
+
+        // Add event listener for dropdown
+        d3.select('#data-select').on('change', function () {
+            // Clear any existing selection when changing views
+            currentSelectedGroup = null
+            if (window.globalSelection) {
+                window.globalSelection.setGroup(null)
+            }
+            
+            dataType = this.value
+            updateChart(dataType)
+        })
+
+        // Add global selection handling
+        if (window.globalSelection) {
+            window.globalSelection.onGroupChange(function (selectedGroup) {
+                console.log(
+                    'Butterfly chart received selection:',
+                    selectedGroup
+                )
+                console.log(dataType)
+
+                // Update current selection tracking
+                currentSelectedGroup = selectedGroup
+
+                // Apply highlighting similar to timeline chart
+                if (
+                    dataType === 'gender_by_type' ||
+                    dataType === 'domains_grouped_by_gender' ||
+                    dataType === 'gender_by_author'
+                ) {
+                    svg.selectAll('.male-bar, .female-bar').each(function (d) {
+                        const bar = d3.select(this)
+                        if (selectedGroup === d) {
+                            // Highlight selected bars - make them darker and bigger like hover
+                            bar.transition()
+                                .duration(300)
+                                .attr('opacity', 1)
+                                .attr('height', yScale.bandwidth() * 1.2)
+                                .attr('y', yScale(d) - yScale.bandwidth() * 0.1)
+                                .attr(
+                                    'fill',
+                                    bar.classed('male-bar')
+                                        ? '#e9940e'
+                                        : '#207b6aeb'
+                                )
+                        } else if (selectedGroup) {
+                            // Dim non-selected bars
+                            bar.transition()
+                                .duration(300)
+                                .attr('opacity', 0.2)
+                                .attr('height', yScale.bandwidth())
+                                .attr('y', yScale(d))
+                                .attr(
+                                    'fill',
+                                    bar.classed('male-bar')
+                                        ? '#f4a261'
+                                        : '#2a9d8f'
+                                )
+                        } else {
+                            // Reset all bars when no selection
+                            bar.transition()
+                                .duration(300)
+                                .attr('opacity', 1)
+                                .attr('height', yScale.bandwidth())
+                                .attr('y', yScale(d))
+                                .attr(
+                                    'fill',
+                                    bar.classed('male-bar')
+                                        ? '#f4a261'
+                                        : '#2a9d8f'
+                                )
+                        }
+                    })
+
+                    // Update y-axis labels
+                    yAxisGroup.selectAll('text').each(function (d) {
+                        const label = d3.select(this)
+                        if (selectedGroup === d) {
+                            label
+                                .attr('font-weight', 'bold')
+                                .attr('fill', '#000')
+                        } else if (selectedGroup) {
+                            label
+                                .attr('font-weight', 'normal')
+                                .attr('fill', '#666')
+                        } else {
+                            label
+                                .attr('font-weight', 'normal')
+                                .attr('fill', '#000')
+                        }
+                    })
+                }
+            })
+        }
     })
 }

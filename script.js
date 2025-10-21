@@ -19,16 +19,42 @@ function filterTopNEdges(edges, n = 5) {
 }
 
 function init() {
-    // Global event dispatcher for selection (is it working?)
     window.globalSelection = {
         selectedGroup: null,
-        listeners: [],
-        set(group) {
-            this.selectedGroup = group
-            this.listeners.forEach((fn) => fn(group))
+        selectedAuthor: null,
+        groupListeners: [],
+        authorListeners: [],
+
+        // --- GROUP selection ---
+        setGroup(group) {
+            if (this.selectedGroup === group) {
+                this.selectedGroup = null
+            } else {
+                this.selectedGroup = group
+            }
+            this.groupListeners.forEach((fn) => fn(this.selectedGroup))
         },
-        onChange(fn) {
-            this.listeners.push(fn)
+        onGroupChange(fn) {
+            this.groupListeners.push(fn)
+        },
+        getSelectedGroup() {
+            return this.selectedGroup
+        },
+
+        // --- AUTHOR selection ---
+        setAuthor(author) {
+            if (this.selectedAuthor === author) {
+                this.selectedAuthor = null
+            } else {
+                this.selectedAuthor = author
+            }
+            this.authorListeners.forEach((fn) => fn(this.selectedAuthor))
+        },
+        onAuthorChange(fn) {
+            this.authorListeners.push(fn)
+        },
+        getSelectedAuthor() {
+            return this.selectedAuthor
         },
     }
     Promise.all([
@@ -170,7 +196,11 @@ function init() {
         )
 
         // Initialize general butterfly chart with pre-computed data
-        createGeneralButterflyChart('.ButterflyChart', 'butterfly_data.json')
+        createButterflyChart(
+            '.ButterflyChart',
+            parentGroups,
+            'butterfly_data.json'
+        )
 
         //createTimeLineChart(characters, edges, '.TimelineChart');
     })
