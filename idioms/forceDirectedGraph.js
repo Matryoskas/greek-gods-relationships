@@ -6,9 +6,7 @@ function filterTopNEdges(edges, n = 5) {
 
     grouped.forEach((edgeList, source) => {
         // Sort descending by weight
-        edgeList.sort((a, b) =>
-            d3.descending(a.normalized_weight, b.normalized_weight)
-        )
+        edgeList.sort((a, b) => d3.descending(a.normalized_weight, b.normalized_weight))
 
         // Take top-N
         topEdges.push(...edgeList.slice(0, n))
@@ -74,22 +72,16 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     // Initialize simulation
     const simulation = d3
         .forceSimulation(nodes)
-        .force(
-            'link',
-            d3
-                .forceLink(edges)
-                .id((d) => d.name)
-                .distance(100)
-                .strength(1)
-        )
+        .force('link', d3
+            .forceLink(edges)
+            .id((d) => d.name)
+            .distance(100)
+            .strength(1))
         .force('charge', d3.forceManyBody().strength(-500))
         .force('center', d3.forceCenter(width / 2, height / 2))
         .force('x', d3.forceX(width / 2).strength(0.1))
         .force('y', d3.forceY(height / 2).strength(0.1))
-        .force(
-            'collide',
-            d3.forceCollide((d) => sizeScale(d.weight) + 3)
-        )
+        .force('collide', d3.forceCollide((d) => sizeScale(d.weight) + 3))
 
     const linkWidth = d3
         .scaleLinear()
@@ -121,17 +113,11 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                 tooltip.style('opacity', 1).style('pointer-events', 'auto')
                     .html(`
                     <h3>Relationship Details</h3>
-                    <p><strong>Between:</strong> ${
-                        d.source.name || d.source
-                    } ↔ ${d.target.name || d.target}</p>
-                    <p><strong>Connection Strength:</strong> ${
-                        d.normalized_weight
-                    }</p>
+                    <p><strong>Between:</strong> ${d.source.name || d.source} ↔ ${d.target.name || d.target}</p>
+                    <p><strong>Connection Strength:</strong> ${d.normalized_weight}</p>
                     <p><strong>Source Work:</strong> ${d.title || 'Other'}</p>
                     <p><strong>Author:</strong> ${d.author || 'Other'}</p>
-                    <p><strong>Literary Period:</strong> ${
-                        d.period || 'Other'
-                    }</p>
+                    <p><strong>Literary Period:</strong> ${d.period || 'Other'}</p>
                     <div style="margin-top: 10px; font-size: 0.85em; color: #666;">
                         <em>Click to pin this information</em>
                     </div>
@@ -154,17 +140,11 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             // Show detailed edge tooltip
             tooltip.style('opacity', 1).style('pointer-events', 'auto').html(`
                 <h3>Relationship Details</h3>
-                <p><strong>Between:</strong> ${d.source.name || d.source} ↔ ${
-                d.target.name || d.target
-            }</p>
-                <p><strong>Connection Strength:</strong> ${
-                    d.normalized_weight
-                }</p>
+                <p><strong>Between:</strong> ${d.source.name || d.source} ↔ ${d.target.name || d.target}</p>
+                <p><strong>Connection Strength:</strong> ${d.normalized_weight}</p>
                 <p><strong>Source Work:</strong> ${d.title || 'Other'}</p>
                 <p><strong>Author:</strong> ${d.author || 'Other'}</p>
-                <p><strong>Literary Period:</strong> ${
-                    d.period || 'Other'
-                }</p>
+                <p><strong>Literary Period:</strong> ${d.period || 'Other'}</p>
                 <div style="margin-top: 10px; font-size: 0.85em; color: #666;">
                     <em>Click background to deselect</em>
                 </div>
@@ -174,51 +154,30 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             const sourceName = d.source.name || d.source
             const targetName = d.target.name || d.target
 
-            node.attr('stroke', (n) =>
-                n.name === sourceName || n.name === targetName ? HIGHLIGHT_COLOR : '#000'
-            )
-                .attr('stroke-width', (n) =>
-                    n.name === sourceName || n.name === targetName ? 4 : 1.5
-                )
-                .attr('opacity', (n) =>
-                    n.name === sourceName || n.name === targetName ? 1 : 0.3
-                )
+            node.attr('stroke', (n) => n.name === sourceName || n.name === targetName ? HIGHLIGHT_COLOR : '#000')
+                .attr('stroke-width', (n) => n.name === sourceName || n.name === targetName ? 4 : 1.5)
+                .attr('opacity', (n) => n.name === sourceName || n.name === targetName ? 1 : 0.3)
 
             // Highlight labels for connected nodes
             label
-                .attr('font-weight', (n) =>
-                    n.name === sourceName || n.name === targetName
-                        ? 'bold'
-                        : 'normal'
-                )
-                .attr('opacity', (n) =>
-                    n.name === sourceName || n.name === targetName ? 1 : 0.3
-                )
+                .attr('font-weight', (n) => n.name === sourceName || n.name === targetName ? 'bold' : 'normal')
+                .attr('opacity', (n) => n.name === sourceName || n.name === targetName ? 1 : 0.3)
 
             // Highlight the selected edge and dim others
             link.attr('stroke', (l) => {
                 const lSrc = l.source.name || l.source
                 const lTgt = l.target.name || l.target
-                return (lSrc === sourceName && lTgt === targetName) ||
-                    (lSrc === targetName && lTgt === sourceName)
-                    ? HIGHLIGHT_COLOR
-                    : '#999'
+                return (lSrc === sourceName && lTgt === targetName) || (lSrc === targetName && lTgt === sourceName) ? HIGHLIGHT_COLOR : '#999'
             })
                 .attr('stroke-width', (l) => {
                     const lSrc = l.source.name || l.source
                     const lTgt = l.target.name || l.target
-                    return (lSrc === sourceName && lTgt === targetName) ||
-                        (lSrc === targetName && lTgt === sourceName)
-                        ? 6
-                        : linkWidth(l.normalized_weight)
+                    return (lSrc === sourceName && lTgt === targetName) || (lSrc === targetName && lTgt === sourceName) ? 6 : linkWidth(l.normalized_weight)
                 })
                 .attr('opacity', (l) => {
                     const lSrc = l.source.name || l.source
                     const lTgt = l.target.name || l.target
-                    return (lSrc === sourceName && lTgt === targetName) ||
-                        (lSrc === targetName && lTgt === sourceName)
-                        ? 1
-                        : 0.2
+                    return (lSrc === sourceName && lTgt === targetName) || (lSrc === targetName && lTgt === sourceName) ? 1 : 0.2
                 })
 
             // Reset global selection when clicking on an edge
@@ -258,14 +217,12 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         .attr('text-anchor', 'middle')
 
     // Zoom behavior
-    svg.call(
-        d3
-            .zoom()
-            .scaleExtent([0.2, 4])
-            .on('zoom', (event) => {
-                g.attr('transform', event.transform)
-            })
-    )
+    svg.call(d3
+        .zoom()
+        .scaleExtent([0.2, 4])
+        .on('zoom', (event) => {
+            g.attr('transform', event.transform)
+        }))
 
     // Simulation tick update
     simulation.on('tick', () => {
@@ -294,13 +251,9 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         .style('opacity', 0)
 
     // Prevent scroll events from bubbling to the graph when tooltip is visible
-    tooltip.node().addEventListener(
-        'wheel',
-        function (event) {
-            event.stopPropagation()
-        },
-        { passive: false }
-    )
+    tooltip.node().addEventListener('wheel', function (event) {
+        event.stopPropagation()
+    }, {passive: false})
 
     tooltip.node().addEventListener('scroll', function (event) {
         event.stopPropagation()
@@ -309,6 +262,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     // Variables to track fixed nodes and edges
     let fixedNode = null
     let fixedEdge = null
+
     function showTooltip(d) {
         tooltip.style('opacity', 1).style('pointer-events', 'auto') // Enable interactions when visible
             .html(`
@@ -317,45 +271,33 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             <p><strong>Gender:</strong> ${d.gender || 'Other'}</p>
             <p><strong>Father:</strong> ${d.father || 'Other'}</p>
             <p><strong>Mother:</strong> ${d.mother || 'Other'}</p>
-            <p><strong>Aliases:</strong> ${
-                Array.isArray(d.aliases)
-                    ? d.aliases.map((a) => a.trim()).join(', ')
-                    : typeof d.aliases === 'string'
-                    ? (() => {
-                          let str = d.aliases.trim()
-                          if (str.startsWith('[') && str.endsWith(']')) {
-                              str = str.slice(1, -1)
-                          }
-                          str = str
-                              .replace(/['"]/g, '')
-                              .split(',')
-                              .map((s) => s.trim())
-                              .filter(Boolean)
-                              .join(', ')
-                          return str || 'None'
-                      })()
-                    : 'None'
-            }
+            <p><strong>Aliases:</strong> ${Array.isArray(d.aliases) ? d.aliases.map((a) => a.trim()).join(', ') : typeof d.aliases === 'string' ? (() => {
+                let str = d.aliases.trim()
+                if (str.startsWith('[') && str.endsWith(']')) {
+                    str = str.slice(1, -1)
+                }
+                str = str
+                    .replace(/['"]/g, '')
+                    .split(',')
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                    .join(', ')
+                return str || 'None'
+            })() : 'None'}
             </p>
-            <p><strong>Domains:</strong> ${
-                Array.isArray(d.domain)
-                    ? d.domain.map((a) => a.trim()).join(', ')
-                    : typeof d.domain === 'string'
-                    ? (() => {
-                          let str = d.domain.trim()
-                          if (str.startsWith('[') && str.endsWith(']')) {
-                              str = str.slice(1, -1)
-                          }
-                          str = str
-                              .replace(/['"]/g, '')
-                              .split(',')
-                              .map((s) => s.trim())
-                              .filter(Boolean)
-                              .join(', ')
-                          return str || 'None'
-                      })()
-                    : 'None'
-            }
+            <p><strong>Domains:</strong> ${Array.isArray(d.domain) ? d.domain.map((a) => a.trim()).join(', ') : typeof d.domain === 'string' ? (() => {
+                let str = d.domain.trim()
+                if (str.startsWith('[') && str.endsWith(']')) {
+                    str = str.slice(1, -1)
+                }
+                str = str
+                    .replace(/['"]/g, '')
+                    .split(',')
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                    .join(', ')
+                return str || 'None'
+            })() : 'None'}
             </p>
             <p><strong>Level 1:</strong> ${d.level1 || '-'}</p>
             <p><strong>Level 2:</strong> ${d.level2 || '-'}</p>
@@ -363,6 +305,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             <p><strong>Level 4:</strong> ${d.level4 || '-'}</p>
         `)
     }
+
     // Create a permanent tooltip inside the ForceDirectedGraph container
     const permanentTooltip = d3
         .select(containerId)
@@ -397,12 +340,10 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     })
     // Ensure the "Other" category is always grey for clarity (case-insensitive)
     if (parents.includes('Other')) {
-         parentColor.set('Other', '#888')
+        parentColor.set('Other', '#888')
     }
     // Ensure the "Titan(s)" category is always brown (Tableau10 brown), case-insensitive and singular/plural
-    if (
-        parents.includes('Titan')
-    ) {
+    if (parents.includes('Titan')) {
         if (parents.includes('Titan')) parentColor.set('Titan', '#8c564b')
     }
 
@@ -417,10 +358,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     groupMap.forEach((childSet, p) => {
         const children = Array.from(childSet).sort()
         children.forEach((c, i) => {
-            childColor.set(
-                compositeKey(p, c),
-                tintFromParent(parentColor.get(p), i, children.length)
-            )
+            childColor.set(compositeKey(p, c), tintFromParent(parentColor.get(p), i, children.length))
         })
     })
 
@@ -442,23 +380,23 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     }
 
 // --- Build a collapsible legend using <details>/<summary> ---
-function buildLegendHTML() {
-    let html = `<h3>Mythological Categories</h3>`
+    function buildLegendHTML() {
+        let html = `<h3>Mythological Categories</h3>`
 
-    // Render each parent; use <details> only if it actually has children, otherwise a simple row
-    parents.forEach((p) => {
-        const pColor = parentColor.get(p)
-        const children = Array.from(groupMap.get(p)).sort()
-        if (children.length === 0) {
-            // Flat parent (no subgroups) - now clickable
-            html += `
+        // Render each parent; use <details> only if it actually has children, otherwise a simple row
+        parents.forEach((p) => {
+            const pColor = parentColor.get(p)
+            const children = Array.from(groupMap.get(p)).sort()
+            if (children.length === 0) {
+                // Flat parent (no subgroups) - now clickable
+                html += `
           <div class="legend-item" data-category="${p}" data-type="parent" style="cursor: pointer;">
             <span class="legend-dot" style="background:${pColor};"></span>
             ${p}
           </div>`
-        } else {
-            // Parent with children (collapsible)
-            html += `
+            } else {
+                // Parent with children (collapsible)
+                html += `
           <details class="legend-group">
             <summary data-category="${p}" data-type="parent">
               <span class="legend-dot" style="background:${pColor};"></span>
@@ -466,69 +404,66 @@ function buildLegendHTML() {
             </summary>
             <ul class="legend-list">
               ${children
-                  .map(
-                      (c) => `
+                    .map((c) => `
                 <li class="legend-item" data-category="${c}" data-parent="${p}" data-type="child" style="cursor: pointer;">
-                  <span class="legend-dot" style="background:${childColor.get(
-                      compositeKey(p, c)
-                  )};"></span>
+                  <span class="legend-dot" style="background:${childColor.get(compositeKey(p, c))};"></span>
                   ${c}
-                </li>`
-                  )
-                  .join('')}
+                </li>`)
+                    .join('')}
             </ul>
           </details>`
-        }
-    })
+            }
+        })
 
-    // Add a placeholder div for selection info below the legend
-    html += `<div id="legend-selection-info" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"></div>`
+        // Add a placeholder div for selection info below the legend
+        html += `<div id="legend-selection-info" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"></div>`
 
-    return html
-}
+        return html
+    }
 
-function attachLegendHandlers() {
-    // Add click handlers to legend items (children and flat parents)
-    permanentTooltip.selectAll('.legend-item').on('click', function(event) {
-        event.stopPropagation()
+    function attachLegendHandlers() {
+        // Add click handlers to legend items (children and flat parents)
+        permanentTooltip.selectAll('.legend-item').on('click', function (event) {
+            event.stopPropagation()
 
-        const clickedCategory = this.getAttribute('data-category')
-        const categoryType = this.getAttribute('data-type')
-        const parentCategory = this.getAttribute('data-parent')
+            const clickedCategory = this.getAttribute('data-category')
+            const categoryType = this.getAttribute('data-type')
+            const parentCategory = this.getAttribute('data-parent')
 
-        if (window.globalSelection) {
-            if (categoryType === 'child') {
-                // For child categories, highlight the entire parent family
-                window.globalSelection.setGroup(parentCategory)
-            } else {
-                // For parent categories, highlight the entire family
+            if (window.globalSelection) {
+                if (categoryType === 'child') {
+                    // For child categories, highlight the entire parent family
+                    window.globalSelection.setGroup(parentCategory)
+                } else {
+                    // For parent categories, highlight the entire family
+                    window.globalSelection.setGroup(clickedCategory)
+                }
+            }
+        })
+
+        // Add click handlers to legend labels inside summary (only to the text, not the arrow)
+        permanentTooltip.selectAll('.legend-label').on('click', function (event) {
+            event.stopPropagation()
+
+            // Find the parent summary element to get the category
+            const summaryElement = this.closest('summary')
+            const clickedCategory = summaryElement.getAttribute('data-category')
+
+            if (window.globalSelection) {
                 window.globalSelection.setGroup(clickedCategory)
             }
-        }
-    })
+        })
+    }
 
-    // Add click handlers to legend labels inside summary (only to the text, not the arrow)
-    permanentTooltip.selectAll('.legend-label').on('click', function(event) {
-        event.stopPropagation()
-
-        // Find the parent summary element to get the category
-        const summaryElement = this.closest('summary')
-        const clickedCategory = summaryElement.getAttribute('data-category')
-
-        if (window.globalSelection) {
-            window.globalSelection.setGroup(clickedCategory)
-        }
-    })
-}
-
-const legendHtml = buildLegendHTML()
-permanentTooltip.html(legendHtml)
-attachLegendHandlers()
+    const legendHtml = buildLegendHTML()
+    permanentTooltip.html(legendHtml)
+    attachLegendHandlers()
 
     // Helper to update label font weight
     function updateLabelBold(selected) {
         label.attr('font-weight', (n) => (n === selected ? 'bold' : 'normal'))
     }
+
     // (Removed duplicate/broken code after showTooltip)
 
     // Helper: get direct neighbors of a node
@@ -549,10 +484,7 @@ attachLegendHandlers()
         if (!fixedNode) {
             showTooltip(d)
             // Only clear bold labels if no global category is selected
-            if (
-                !window.globalSelection ||
-                !window.globalSelection.selectedGroup
-            ) {
+            if (!window.globalSelection || !window.globalSelection.selectedGroup) {
                 updateLabelBold(null)
             }
         }
@@ -561,10 +493,7 @@ attachLegendHandlers()
             if (!fixedNode) {
                 tooltip.style('opacity', 0).style('pointer-events', 'none')
                 // Only clear bold labels if no global category is selected
-                if (
-                    !window.globalSelection ||
-                    !window.globalSelection.selectedGroup
-                ) {
+                if (!window.globalSelection || !window.globalSelection.selectedGroup) {
                     updateLabelBold(null)
                 }
             }
@@ -575,22 +504,12 @@ attachLegendHandlers()
             showTooltip(d)
             // Highlight selected node and direct connections
             const neighbors = getDirectConnections(d)
-            node.attr('stroke', (n) =>
-                n === d || neighbors.has(n.name) ? HIGHLIGHT_COLOR : '#fff'
-            )
-                .attr('stroke-width', (n) =>
-                    n === d || neighbors.has(n.name) ? 4 : 1.5
-                )
-                .attr('opacity', (n) =>
-                    n === d || neighbors.has(n.name) ? 1 : 0.2
-                )
+            node.attr('stroke', (n) => n === d || neighbors.has(n.name) ? HIGHLIGHT_COLOR : '#fff')
+                .attr('stroke-width', (n) => n === d || neighbors.has(n.name) ? 4 : 1.5)
+                .attr('opacity', (n) => n === d || neighbors.has(n.name) ? 1 : 0.2)
             label
-                .attr('font-weight', (n) =>
-                    n === d || neighbors.has(n.name) ? 'bold' : 'normal'
-                )
-                .attr('opacity', (n) =>
-                    n === d || neighbors.has(n.name) ? 1 : 0.2
-                )
+                .attr('font-weight', (n) => n === d || neighbors.has(n.name) ? 'bold' : 'normal')
+                .attr('opacity', (n) => n === d || neighbors.has(n.name) ? 1 : 0.2)
             link.attr('stroke', (l) => {
                 const src = l.source.name || l.source
                 const tgt = l.target.name || l.target
@@ -668,22 +587,14 @@ attachLegendHandlers()
     // Listen for global selection changes from timeline chart
     if (window.globalSelection) {
         window.globalSelection.onGroupChange(function (selectedGroup) {
-            console.log(
-                'Force-directed graph received selection:',
-                selectedGroup
-            )
+            console.log('Force-directed graph received selection:', selectedGroup)
             if (selectedGroup) {
                 // Check if this is an author selection by looking at butterfly data
-                const isAuthorSelection =
-                    window.butterflyData &&
-                    window.butterflyData.gender_by_author &&
-                    window.butterflyData.gender_by_author[selectedGroup]
+                const isAuthorSelection = window.butterflyData && window.butterflyData.gender_by_author && window.butterflyData.gender_by_author[selectedGroup]
 
                 if (isAuthorSelection) {
                     // Handle author selection - filter by edges written by this author
-                    const relevantLinks = edges.filter(
-                        (l) => l.author === selectedGroup
-                    )
+                    const relevantLinks = edges.filter((l) => l.author === selectedGroup)
 
                     // Get all node names connected by those links
                     const relevantNodeNames = new Set()
@@ -695,9 +606,7 @@ attachLegendHandlers()
                     // Check if author has no connections in the filtered graph
                     if (relevantLinks.length === 0) {
                         // Show message when no edges are found
-                        let noConnectionsMessage = g.select(
-                            '.no-connections-message'
-                        )
+                        let noConnectionsMessage = g.select('.no-connections-message')
                         if (noConnectionsMessage.empty()) {
                             noConnectionsMessage = g
                                 .append('text')
@@ -713,17 +622,13 @@ attachLegendHandlers()
                         }
 
                         noConnectionsMessage
-                            .text(
-                                `No connections found for ${selectedGroup} in the filtered graph`
-                            )
+                            .text(`No connections found for ${selectedGroup} in the filtered graph`)
                             .transition()
                             .duration(300)
                             .attr('opacity', 1)
 
                         // Add subtitle explaining the filtering
-                        let subtitleMessage = g.select(
-                            '.no-connections-subtitle'
-                        )
+                        let subtitleMessage = g.select('.no-connections-subtitle')
                         if (subtitleMessage.empty()) {
                             subtitleMessage = g
                                 .append('text')
@@ -738,9 +643,7 @@ attachLegendHandlers()
                         }
 
                         subtitleMessage
-                            .text(
-                                '(Graph shows only the strongest character relationships)'
-                            )
+                            .text('(Graph shows only the strongest character relationships)')
                             .transition()
                             .duration(300)
                             .attr('opacity', 1)
@@ -765,33 +668,17 @@ attachLegendHandlers()
                             .remove()
 
                         // Highlight nodes connected to selected author's edges
-                        node.attr('opacity', (n) =>
-                            relevantNodeNames.has(n.name) ? 1 : 0.1
-                        )
-                            .attr('stroke-width', (n) =>
-                                relevantNodeNames.has(n.name) ? 3 : 1.5
-                            )
-                            .attr('stroke', (n) =>
-                                relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff'
-                            )
+                        node.attr('opacity', (n) => relevantNodeNames.has(n.name) ? 1 : 0.1)
+                            .attr('stroke-width', (n) => relevantNodeNames.has(n.name) ? 3 : 1.5)
+                            .attr('stroke', (n) => relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff')
 
                         // Highlight labels of those nodes
                         label
-                            .attr('opacity', (n) =>
-                                relevantNodeNames.has(n.name) ? 1 : 0.1
-                            )
-                            .attr('font-weight', (n) =>
-                                relevantNodeNames.has(n.name)
-                                    ? 'bold'
-                                    : 'normal'
-                            )
+                            .attr('opacity', (n) => relevantNodeNames.has(n.name) ? 1 : 0.1)
+                            .attr('font-weight', (n) => relevantNodeNames.has(n.name) ? 'bold' : 'normal')
 
                         // Highlight only edges by the selected author
-                        link.attr('opacity', (l) =>
-                            l.author === selectedGroup ? 0.8 : 0.05
-                        ).attr('stroke', (l) =>
-                            l.author === selectedGroup ? HIGHLIGHT_COLOR : '#999'
-                        )
+                        link.attr('opacity', (l) => l.author === selectedGroup ? 0.8 : 0.05).attr('stroke', (l) => l.author === selectedGroup ? HIGHLIGHT_COLOR : '#999')
                     }
 
                     // Update tooltip for author selection
@@ -814,22 +701,13 @@ attachLegendHandlers()
                         const characterType = n.description
 
                         // Match by parent group (level2/level1) or by character type description
-                        if (
-                            parentGroup === selectedGroup ||
-                            characterType === selectedGroup
-                        ) {
+                        if (parentGroup === selectedGroup || characterType === selectedGroup) {
                             return true
                         }
 
                         // Check precomputed domain character lists from butterfly_data.json
-                        if (
-                            window.butterflyData &&
-                            window.butterflyData.domains_grouped_by_gender
-                        ) {
-                            const domainGroup =
-                                window.butterflyData.domains_grouped_by_gender[
-                                    selectedGroup
-                                ]
+                        if (window.butterflyData && window.butterflyData.domains_grouped_by_gender) {
+                            const domainGroup = window.butterflyData.domains_grouped_by_gender[selectedGroup]
                             if (domainGroup && domainGroup.characters) {
                                 return domainGroup.characters.includes(n.name)
                             }
@@ -838,16 +716,12 @@ attachLegendHandlers()
                         return false
                     })
 
-                    const relevantNodeNames = new Set(
-                        relevantNodes.map((n) => n.name)
-                    )
+                    const relevantNodeNames = new Set(relevantNodes.map((n) => n.name))
 
                     // Check if no characters are found for this type/domain
                     if (relevantNodes.length === 0) {
                         // Show message when no characters are found
-                        let noConnectionsMessage = g.select(
-                            '.no-connections-message'
-                        )
+                        let noConnectionsMessage = g.select('.no-connections-message')
                         if (noConnectionsMessage.empty()) {
                             noConnectionsMessage = g
                                 .append('text')
@@ -863,17 +737,13 @@ attachLegendHandlers()
                         }
 
                         noConnectionsMessage
-                            .text(
-                                `No characters found for "${selectedGroup}" in the filtered graph`
-                            )
+                            .text(`No characters found for "${selectedGroup}" in the filtered graph`)
                             .transition()
                             .duration(300)
                             .attr('opacity', 1)
 
                         // Add subtitle explaining the filtering
-                        let subtitleMessage = g.select(
-                            '.no-connections-subtitle'
-                        )
+                        let subtitleMessage = g.select('.no-connections-subtitle')
                         if (subtitleMessage.empty()) {
                             subtitleMessage = g
                                 .append('text')
@@ -888,9 +758,7 @@ attachLegendHandlers()
                         }
 
                         subtitleMessage
-                            .text(
-                                '(Graph shows only characters with the strongest relationships)'
-                            )
+                            .text('(Graph shows only characters with the strongest relationships)')
                             .transition()
                             .duration(300)
                             .attr('opacity', 1)
@@ -927,58 +795,41 @@ attachLegendHandlers()
                             .remove()
 
                         // Update node visibility and styling
-                        node.attr('opacity', (n) =>
-                            relevantNodeNames.has(n.name) ? 1 : 0.1
-                        )
-                            .attr('stroke-width', (n) =>
-                                relevantNodeNames.has(n.name) ? 3 : 1.5
-                            )
-                            .attr('stroke', (n) =>
-                                relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff'
-                            )
+                        node.attr('opacity', (n) => relevantNodeNames.has(n.name) ? 1 : 0.1)
+                            .attr('stroke-width', (n) => relevantNodeNames.has(n.name) ? 3 : 1.5)
+                            .attr('stroke', (n) => relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff')
 
                         // Update label visibility
                         label
-                            .attr('opacity', (n) =>
-                                relevantNodeNames.has(n.name) ? 1 : 0.1
-                            )
-                            .attr('font-weight', (n) =>
-                                relevantNodeNames.has(n.name)
-                                    ? 'bold'
-                                    : 'normal'
-                            )
+                            .attr('opacity', (n) => relevantNodeNames.has(n.name) ? 1 : 0.1)
+                            .attr('font-weight', (n) => relevantNodeNames.has(n.name) ? 'bold' : 'normal')
 
                         // Update edge visibility (show only edges between relevant nodes)
                         link.attr('opacity', (l) => {
                             const srcName = l.source.name || l.source
                             const tgtName = l.target.name || l.target
-                            return relevantNodeNames.has(srcName) &&
-                                relevantNodeNames.has(tgtName)
-                                ? 0.8
-                                : 0.05
+                            return relevantNodeNames.has(srcName) && relevantNodeNames.has(tgtName) ? 0.8 : 0.05
                         }).attr('stroke', (l) => {
                             const srcName = l.source.name || l.source
                             const tgtName = l.target.name || l.target
-                            return relevantNodeNames.has(srcName) &&
-                                relevantNodeNames.has(tgtName)
-                                ? HIGHLIGHT_COLOR
-                                : '#999'
+                            return relevantNodeNames.has(srcName) && relevantNodeNames.has(tgtName) ? HIGHLIGHT_COLOR : '#999'
                         })
 
 // Update the selection info div instead of replacing the entire tooltip
-const selectionInfo = permanentTooltip.select('#legend-selection-info')
-if (!selectionInfo.empty()) {
-    selectionInfo.html(`
+                        const selectionInfo = permanentTooltip.select('#legend-selection-info')
+                        if (!selectionInfo.empty()) {
+                            selectionInfo.html(`
         <h4 style="margin: 0 0 8px 0; color: #333;">Selected: ${selectedGroup}</h4>
         <p style="margin: 0 0 4px 0;"><strong>Characters shown:</strong> ${relevantNodes.length}</p>
         <div style="margin-top: 8px; font-size: 0.85em; color: #666;">
             <small>Click background to reset</small>
         </div>
     `)
-}
-}}
+                        }
+                    }
+                }
             } else {
-    // Remove no connections message if it exists
+                // Remove no connections message if it exists
                 g.select('.no-connections-message')
                     .transition()
                     .duration(300)
@@ -992,20 +843,20 @@ if (!selectionInfo.empty()) {
 
                 // Reset to normal view only if no individual node is selected
                 console.log('afsd')
-    if (!fixedNode) {
-        node.attr('opacity', 1)
-            .attr('stroke-width', 1.5)
-            .attr('stroke', '#fff')
+                if (!fixedNode) {
+                    node.attr('opacity', 1)
+                        .attr('stroke-width', 1.5)
+                        .attr('stroke', '#fff')
 
-        label.attr('opacity', 1).attr('font-weight', 'normal')
+                    label.attr('opacity', 1).attr('font-weight', 'normal')
 
-        link.attr('opacity', 0.6).attr('stroke', '#999')
-    }
+                    link.attr('opacity', 0.6).attr('stroke', '#999')
+                }
 
-    // Always restore original legend regardless of node selection
-    permanentTooltip.html(legendHtml)
-    attachLegendHandlers()
-}
+                // Always restore original legend regardless of node selection
+                permanentTooltip.html(legendHtml)
+                attachLegendHandlers()
+            }
         })
     }
 }
