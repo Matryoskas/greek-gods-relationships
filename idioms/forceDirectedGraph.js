@@ -28,7 +28,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     const color = (d) => colorMap[d] || '#888'
 
     // Unified highlight color used for all selection modes (legend, timeline, butterfly, and node/edge clicks)
-    const HIGHLIGHT_COLOR = '#cc7a00'
+    const HIGHLIGHT_COLOR = '#ff0'
 
     // First, initialize all nodes with weight 0
     nodes.forEach((n) => (n.weight = 0))
