@@ -1,20 +1,3 @@
-function filterTopNEdges(edges, n = 5) {
-    // Group edges by source node
-    const grouped = d3.group(edges, (d) => d.source.name || d.source)
-
-    const topEdges = []
-
-    grouped.forEach((edgeList, source) => {
-        // Sort descending by weight
-        edgeList.sort((a, b) => d3.descending(a.normalized_weight, b.normalized_weight))
-
-        // Take top-N
-        topEdges.push(...edgeList.slice(0, n))
-    })
-
-    return topEdges
-}
-
 async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     const div = document.querySelector(containerId)
 
@@ -422,35 +405,42 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     }
 
     function attachLegendHandlers() {
-        // Add click handlers to legend items (children and flat parents)
-        permanentTooltip.selectAll('.legend-item').on('click', function (event) {
+        // Use event delegation on the permanentTooltip container so handlers persist after HTML updates
+        permanentTooltip.on('click', function (event) {
+            const labelEl = event.target.closest('.legend-label')
+            const itemEl = event.target.closest('.legend-item')
+
+            // If click happened outside any legend control, ignore
+            if (!labelEl && !itemEl) return
+
             event.stopPropagation()
 
-            const clickedCategory = this.getAttribute('data-category')
-            const categoryType = this.getAttribute('data-type')
-            const parentCategory = this.getAttribute('data-parent')
+            // Handle clicks on child or flat parent items
+            if (itemEl) {
+                const clickedCategory = itemEl.getAttribute('data-category')
+                const categoryType = itemEl.getAttribute('data-type')
+                const parentCategory = itemEl.getAttribute('data-parent')
 
-            if (window.globalSelection) {
-                if (categoryType === 'child') {
-                    // For child categories, highlight the entire parent family
-                    window.globalSelection.setGroup(parentCategory)
-                } else {
-                    // For parent categories, highlight the entire family
+                if (window.globalSelection) {
+                    if (categoryType === 'child') {
+                        // For child categories, highlight the entire parent family
+                        window.globalSelection.setGroup(parentCategory)
+                    } else {
+                        // For parent categories, highlight the entire family
+                        window.globalSelection.setGroup(clickedCategory)
+                    }
+                }
+                return
+            }
+
+            // Handle clicks on parent labels inside <summary>
+            if (labelEl) {
+                const summaryElement = labelEl.closest('summary')
+                if (!summaryElement) return
+                const clickedCategory = summaryElement.getAttribute('data-category')
+                if (window.globalSelection) {
                     window.globalSelection.setGroup(clickedCategory)
                 }
-            }
-        })
-
-        // Add click handlers to legend labels inside summary (only to the text, not the arrow)
-        permanentTooltip.selectAll('.legend-label').on('click', function (event) {
-            event.stopPropagation()
-
-            // Find the parent summary element to get the category
-            const summaryElement = this.closest('summary')
-            const clickedCategory = summaryElement.getAttribute('data-category')
-
-            if (window.globalSelection) {
-                window.globalSelection.setGroup(clickedCategory)
             }
         })
     }
@@ -815,17 +805,27 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                             return relevantNodeNames.has(srcName) && relevantNodeNames.has(tgtName) ? HIGHLIGHT_COLOR : '#999'
                         })
 
-// Update the selection info div instead of replacing the entire tooltip
-                        const selectionInfo = permanentTooltip.select('#legend-selection-info')
-                        if (!selectionInfo.empty()) {
-                            selectionInfo.html(`
-        <h4 style="margin: 0 0 8px 0; color: #333;">Selected: ${selectedGroup}</h4>
-        <p style="margin: 0 0 4px 0;"><strong>Characters shown:</strong> ${relevantNodes.length}</p>
-        <div style="margin-top: 8px; font-size: 0.85em; color: #666;">
-            <small>Click background to reset</small>
-        </div>
-    `)
-                        }
+                        // Compute number of highlighted edges (both endpoints within the selected set)
+                        const relevantEdgeCount = edges.filter(e => {
+  const s = typeof e.source === 'object' ? e.source?.name : e.source;
+  const t = typeof e.target === 'object' ? e.target?.name : e.target;
+  return relevantNodeNames.has(s) && relevantNodeNames.has(t);
+}).length;
+
+
+
+                        // Update the selection info div instead of replacing the entire tooltip
+                        permanentTooltip.html(`
+                            <h3>Selected Category: ${selectedGroup}</h3>
+                            <p><strong>Edges shown:</strong> ${relevantEdgeCount}</p>
+                            <p><strong>Characters shown:</strong> ${relevantNodes.length}</p>
+                            <div style="margin-top: 10px;">
+                                <small>Click background to reset view</small>
+                            </div>
+                            <hr style="margin: 10px 0;">
+                            ${legendHtml}
+                        `)
+
                     }
                 }
             } else {

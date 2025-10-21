@@ -1,21 +1,36 @@
 // Global edge filtering function (same as in force-directed graph)
 function filterTopNEdges(edges, n = 5) {
-    // Group edges by source node
-    const grouped = d3.group(edges, (d) => d.source.name || d.source)
+  const bestByPair = new Map();
 
-    const topEdges = []
+  for (const e of edges) {
+    const s = typeof e.source === 'object' ? e.source?.name : e.source;
+    const t = typeof e.target === 'object' ? e.target?.name : e.target;
+    if (s == null || t == null) continue;
 
-    grouped.forEach((edgeList, source) => {
-        // Sort descending by weight
-        edgeList.sort((a, b) =>
-            d3.descending(a.normalized_weight, b.normalized_weight)
-        )
+    const [a, b] = s < t ? [s, t] : [t, s];
+    const key = `${a}||${b}`;
 
-        // Take top-N
-        topEdges.push(...edgeList.slice(0, n))
-    })
+    const prev = bestByPair.get(key);
+    const wNew  = e.normalized_weight ?? 0;
+    const wPrev = prev?.normalized_weight ?? 0;
 
-    return topEdges
+    if (!prev || wNew > wPrev) bestByPair.set(key, e);
+  }
+
+  const deduped = Array.from(bestByPair.values());
+
+  const grouped = d3.group(
+    deduped,
+    d => (typeof d.source === 'object' ? d.source?.name : d.source)
+  );
+
+  const topEdges = [];
+  grouped.forEach(edgeList => {
+    edgeList.sort((a, b) => d3.descending(a.normalized_weight ?? 0, b.normalized_weight ?? 0));
+    topEdges.push(...edgeList.slice(0, n));
+  });
+
+  return topEdges;
 }
 
 function init() {
