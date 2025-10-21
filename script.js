@@ -166,16 +166,16 @@ function init() {
         usedCategories.forEach((cat, i) => {
             categoryColorMap[cat] = getColor(i)
         })
-        // Ensure the "Other" category is always grey (case-insensitive)
-        ;['Other', 'OTHER'].forEach((k) => {
+        // Ensure the "Other(s)" category is always grey (case-insensitive, singular/plural)
+        ;['Other', 'OTHER', 'Others', 'OTHERS'].forEach((k) => {
             if (usedCategories.includes(k)) {
                 categoryColorMap[k] = '#888'
             }
         })
-        // Ensure "Titan" uses a vivid, distinct color (case-insensitive)
-        ;['Titan', 'TITAN'].forEach((k) => {
+        // Ensure "Titan(s)" is always brown (Tableau10 brown), case-insensitive and singular/plural
+        ;['Titan', 'TITAN', 'Titans', 'TITANS'].forEach((k) => {
             if (usedCategories.includes(k)) {
-                categoryColorMap[k] = '#b100e8'
+                categoryColorMap[k] = '#8c564b'
             }
         })
 
@@ -184,16 +184,16 @@ function init() {
         parentGroups.forEach((parentGroup, i) => {
             parentColorMap[parentGroup] = getColor(i)
         })
-        // Ensure the "Other" parent group is always grey (case-insensitive)
-        ;['Other', 'OTHER'].forEach((k) => {
+        // Ensure the "Other(s)" parent group is always grey (case-insensitive, singular/plural)
+        ;['Other', 'OTHER', 'Others', 'OTHERS'].forEach((k) => {
             if (parentGroups.includes(k)) {
                 parentColorMap[k] = '#888'
             }
         })
-        // Ensure "Titan" parent group uses a vivid, distinct color (case-insensitive)
-        ;['Titan', 'TITAN'].forEach((k) => {
+        // Ensure "Titan(s)" parent group is always brown (Tableau10 brown), case-insensitive and singular/plural
+        ;['Titan', 'TITAN', 'Titans', 'TITANS'].forEach((k) => {
             if (parentGroups.includes(k)) {
-                parentColorMap[k] = '#b100e8'
+                parentColorMap[k] = '#8c564b'
             }
         })
 

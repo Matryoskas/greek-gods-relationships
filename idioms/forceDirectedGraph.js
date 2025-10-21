@@ -396,14 +396,14 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         parentColor.set(p, basePalette[i % basePalette.length] || '#888')
     })
     // Ensure the "Other" category is always grey for clarity (case-insensitive)
-    if (parents.includes('Other') || parents.includes('OTHER')) {
-        if (parents.includes('Other')) parentColor.set('Other', '#888')
-        if (parents.includes('OTHER')) parentColor.set('OTHER', '#888')
+    if (parents.includes('Other')) {
+         parentColor.set('Other', '#888')
     }
-    // Ensure the "Titan" category uses a vivid, distinct color (case-insensitive)
-    if (parents.includes('Titan') || parents.includes('TITAN')) {
-        if (parents.includes('Titan')) parentColor.set('Titan', '#b100e8')
-        if (parents.includes('TITAN')) parentColor.set('TITAN', '#b100e8')
+    // Ensure the "Titan(s)" category is always brown (Tableau10 brown), case-insensitive and singular/plural
+    if (
+        parents.includes('Titan')
+    ) {
+        if (parents.includes('Titan')) parentColor.set('Titan', '#8c564b')
     }
 
     // Derive child tints from the parent hue
