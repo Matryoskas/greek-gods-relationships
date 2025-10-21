@@ -683,138 +683,95 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                 ${legendHtml}
             `)
                 } else {
-                    // Handle character type or domain selection - filter by node properties
-                    // Filter nodes to show only characters from selected category
-                    // Check hierarchy-based grouping, character type description, and precomputed domain mapping
-                    const relevantNodes = nodes.filter((n) => {
-                        const parentGroup = parentKey(n)
-                        const characterType = n.description
+                    // =======================
+                    // Character Type / Domain
+                    // =======================
 
-                        // Match by parent group (level2/level1) or by character type description
-                        if (parentGroup === selectedGroup || characterType === selectedGroup) {
-                            return true
-                        }
+                    // Normalizer (Title-Case, trim, collapse spaces)
+                    function norm(s) {
+                        if (!s) return s;
+                        return String(s).trim()
+                            .split(/\s+/)
+                            .map(t => t.charAt(0).toUpperCase() + t.slice(1).toLowerCase())
+                            .join(' ');
+                    }
 
-                        // Check precomputed domain character lists from butterfly_data.json
-                        if (window.butterflyData && window.butterflyData.domains_grouped_by_gender) {
-                            const domainGroup = window.butterflyData.domains_grouped_by_gender[selectedGroup]
-                            if (domainGroup && domainGroup.characters) {
-                                return domainGroup.characters.includes(n.name)
-                            }
-                        }
+                    const sel = norm(selectedGroup);
 
-                        return false
-                    })
+                    // 1) Versuche: exakte Character-Liste aus butterfly_data.json (Character Type)
+                    let charList = null;
+                    if (window.butterflyData?.gender_by_type?.[sel]?.characters) {
+                        charList = new Set(
+                            window.butterflyData.gender_by_type[sel].characters.map(norm)
+                        );
+                    }
 
-                    const relevantNodeNames = new Set(relevantNodes.map((n) => n.name))
+                    // 2) Falls nicht vorhanden: Domains-Mapping aus butterfly_data.json
+                    if (!charList && window.butterflyData?.domains_grouped_by_gender?.[sel]?.characters) {
+                        charList = new Set(
+                            window.butterflyData.domains_grouped_by_gender[sel].characters.map(norm)
+                        );
+                    }
 
-                    // Check if no characters are found for this type/domain
+                    // 3) Fallback: Hierarchie/Description (normalisiert)
+                    let relevantNodes;
+                    if (charList) {
+                        relevantNodes = nodes.filter(n => charList.has(norm(n.name)));
+                    } else {
+                        relevantNodes = nodes.filter(n => {
+                            const parentGroup = norm(parentKey(n));
+                            const characterType = norm(n.description);
+                            return parentGroup === sel || characterType === sel;
+                        });
+                    }
+
+                    const relevantNodeNames = new Set(relevantNodes.map(n => n.name));
+
                     if (relevantNodes.length === 0) {
-                        // Show message when no characters are found
-                        let noConnectionsMessage = g.select('.no-connections-message')
-                        if (noConnectionsMessage.empty()) {
-                            noConnectionsMessage = g
-                                .append('text')
-                                .attr('class', 'no-connections-message')
-                                .attr('x', width / 2)
-                                .attr('y', height / 2)
-                                .attr('text-anchor', 'middle')
-                                .attr('dominant-baseline', 'middle')
-                                .attr('font-size', '18px')
-                                .attr('font-weight', 'bold')
-                                .attr('fill', '#666')
-                                .attr('opacity', 0)
-                        }
+                        // Kein Ergebnis → alles abdunkeln
+                        node.attr('opacity', 0.1).attr('stroke-width', 1.5).attr('stroke', '#fff');
+                        label.attr('opacity', 0.1).attr('font-weight', 'normal');
+                        link.attr('opacity', 0.05).attr('stroke', '#999');
 
-                        noConnectionsMessage
-                            .text(`No characters found for "${selectedGroup}" in the filtered graph`)
-                            .transition()
-                            .duration(300)
-                            .attr('opacity', 1)
-
-                        // Add subtitle explaining the filtering
-                        let subtitleMessage = g.select('.no-connections-subtitle')
-                        if (subtitleMessage.empty()) {
-                            subtitleMessage = g
-                                .append('text')
-                                .attr('class', 'no-connections-subtitle')
-                                .attr('x', width / 2)
-                                .attr('y', height / 2 + 25)
-                                .attr('text-anchor', 'middle')
-                                .attr('dominant-baseline', 'middle')
-                                .attr('font-size', '14px')
-                                .attr('fill', '#999')
-                                .attr('opacity', 0)
-                        }
-
-                        subtitleMessage
-                            .text('(Graph shows only characters with the strongest relationships)')
-                            .transition()
-                            .duration(300)
-                            .attr('opacity', 1)
-
-                        // Dim all nodes and edges
-                        node.attr('opacity', 0.1)
-                            .attr('stroke-width', 1.5)
-                            .attr('stroke', '#fff')
-                        label.attr('opacity', 0.1).attr('font-weight', 'normal')
-                        link.attr('opacity', 0.05).attr('stroke', '#999')
-
-                        // Update permanent tooltip to show no results info
+                        // Konsistenter Tooltip (kein „Category:“ Quatsch mehr)
                         permanentTooltip.html(`
                             <h3>Selected Category: ${selectedGroup}</h3>
+                            <p><strong>Edges shown:</strong> 0</p>
                             <p><strong>Characters shown:</strong> 0</p>
-                            <p><strong>Category:</strong> ${selectedGroup}</p>
                             <div style="margin-top: 10px;">
                                 <small>Click background to reset view</small>
                             </div>
                             <hr style="margin: 10px 0;">
                             ${legendHtml}
-                        `)
+                        `);
                     } else {
-                        // Hide no connections message if it exists (for non-empty selections)
-                        g.select('.no-connections-message')
-                            .transition()
-                            .duration(300)
-                            .attr('opacity', 0)
-                            .remove()
-                        g.select('.no-connections-subtitle')
-                            .transition()
-                            .duration(300)
-                            .attr('opacity', 0)
-                            .remove()
+                        // Sichtbarkeit/Styles
+                        node.attr('opacity', n => relevantNodeNames.has(n.name) ? 1 : 0.1)
+                            .attr('stroke-width', n => relevantNodeNames.has(n.name) ? 3 : 1.5)
+                            .attr('stroke', n => relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff');
 
-                        // Update node visibility and styling
-                        node.attr('opacity', (n) => relevantNodeNames.has(n.name) ? 1 : 0.1)
-                            .attr('stroke-width', (n) => relevantNodeNames.has(n.name) ? 3 : 1.5)
-                            .attr('stroke', (n) => relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff')
+                        label.attr('opacity', n => relevantNodeNames.has(n.name) ? 1 : 0.1)
+                             .attr('font-weight', n => relevantNodeNames.has(n.name) ? 'bold' : 'normal');
 
-                        // Update label visibility
-                        label
-                            .attr('opacity', (n) => relevantNodeNames.has(n.name) ? 1 : 0.1)
-                            .attr('font-weight', (n) => relevantNodeNames.has(n.name) ? 'bold' : 'normal')
+                        link.attr('opacity', l => {
+                                const s = l.source.name || l.source;
+                                const t = l.target.name || l.target;
+                                return (relevantNodeNames.has(s) && relevantNodeNames.has(t)) ? 0.8 : 0.05;
+                            })
+                            .attr('stroke', l => {
+                                const s = l.source.name || l.source;
+                                const t = l.target.name || l.target;
+                                return (relevantNodeNames.has(s) && relevantNodeNames.has(t)) ? HIGHLIGHT_COLOR : '#999';
+                            });
 
-                        // Update edge visibility (show only edges between relevant nodes)
-                        link.attr('opacity', (l) => {
-                            const srcName = l.source.name || l.source
-                            const tgtName = l.target.name || l.target
-                            return relevantNodeNames.has(srcName) && relevantNodeNames.has(tgtName) ? 0.8 : 0.05
-                        }).attr('stroke', (l) => {
-                            const srcName = l.source.name || l.source
-                            const tgtName = l.target.name || l.target
-                            return relevantNodeNames.has(srcName) && relevantNodeNames.has(tgtName) ? HIGHLIGHT_COLOR : '#999'
-                        })
-
-                        // Compute number of highlighted edges (both endpoints within the selected set)
+                        // Edges innerhalb der Auswahl zählen
                         const relevantEdgeCount = edges.filter(e => {
-  const s = typeof e.source === 'object' ? e.source?.name : e.source;
-  const t = typeof e.target === 'object' ? e.target?.name : e.target;
-  return relevantNodeNames.has(s) && relevantNodeNames.has(t);
-}).length;
+                            const s = typeof e.source === 'object' ? e.source?.name : e.source;
+                            const t = typeof e.target === 'object' ? e.target?.name : e.target;
+                            return relevantNodeNames.has(s) && relevantNodeNames.has(t);
+                        }).length;
 
-
-
-                        // Update the selection info div instead of replacing the entire tooltip
+                        // Konsistenter Tooltip (wie bei Titan/Author)
                         permanentTooltip.html(`
                             <h3>Selected Category: ${selectedGroup}</h3>
                             <p><strong>Edges shown:</strong> ${relevantEdgeCount}</p>
@@ -824,8 +781,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                             </div>
                             <hr style="margin: 10px 0;">
                             ${legendHtml}
-                        `)
-
+                        `);
                     }
                 }
             } else {
