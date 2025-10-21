@@ -99,6 +99,24 @@ details summary::-webkit-details-marker {
 }
 
 .permanent-tooltip h3 { margin: 0 0 8px 0; }
+/* Prominent banner for selected filters (group/author/domain) */
+/* Subtle banner */
+.permanent-tooltip .selection-banner {
+  display: block;
+  margin: 0 0 8px 0;
+  padding: 6px 8px;
+  font-weight: 600;               /* vorher 700 */
+  font-size: 0.96rem;             /* minimal kleiner */
+  line-height: 1.25;
+  color: #2f3b46;                 /* etwas softer als #2c3e50 */
+  background: rgba(243, 156, 18, 0.08); /* zarte Tönung statt Verlauf */
+  border-left: 3px solid #e0b65a; /* wärmer/heller Akzent */
+  border-radius: 3px;
+  box-shadow: none;               /* kein Extra-Noise */
+}
+
+/* Weniger Luft direkt unter dem Banner */
+.permanent-tooltip .selection-banner + p { margin-top: 2px; }
 .legend-item { display:flex; align-items:center; gap:6px; margin-bottom:6px; }
 .legend-group { margin-bottom: 6px; }
 .permanent-tooltip summary { cursor: pointer; display:flex; align-items:center; gap:6px; }

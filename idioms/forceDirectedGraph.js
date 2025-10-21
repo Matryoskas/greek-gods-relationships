@@ -673,7 +673,10 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
                     // Update tooltip for author selection
                     permanentTooltip.html(`
-                <h3>Selected Author: ${selectedGroup}</h3>
+                <div class="selection-banner">
+                     <span>Selected Author:</span>
+                     <span>${selectedGroup}</span>
+                </div>
                 <p><strong>Edges shown:</strong> ${relevantLinks.length}</p>
                 <p><strong>Characters connected:</strong> ${relevantNodeNames.size}</p>
                 <div style="margin-top: 10px;">
@@ -735,7 +738,10 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
                         // Konsistenter Tooltip (kein „Category:“ Quatsch mehr)
                         permanentTooltip.html(`
-                            <h3>Selected Category: ${selectedGroup}</h3>
+                            <div class="selection-banner">
+                                 <span>Selected Category:</span>
+                                 <span>${selectedGroup}</span>
+                            </div>
                             <p><strong>Edges shown:</strong> 0</p>
                             <p><strong>Characters shown:</strong> 0</p>
                             <div style="margin-top: 10px;">
@@ -773,13 +779,16 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
                         // Konsistenter Tooltip (wie bei Titan/Author)
                         permanentTooltip.html(`
-                            <h3>Selected Category: ${selectedGroup}</h3>
+                            <div class=\"selection-banner\">
+                                 <span class="label">Selected Category:</span><br>
+                                 <span class="value">${selectedGroup}</span>                      
+                            </div>
                             <p><strong>Edges shown:</strong> ${relevantEdgeCount}</p>
                             <p><strong>Characters shown:</strong> ${relevantNodes.length}</p>
-                            <div style="margin-top: 10px;">
+                            <div style=\"margin-top: 10px;\">
                                 <small>Click background to reset view</small>
                             </div>
-                            <hr style="margin: 10px 0;">
+                            <hr style=\"margin: 10px 0;\">
                             ${legendHtml}
                         `);
                     }
