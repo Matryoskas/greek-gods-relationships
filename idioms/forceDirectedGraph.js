@@ -27,6 +27,9 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     // Accept shared color mapping as parameter
     const color = (d) => colorMap[d] || '#888'
 
+    // Unified highlight color used for all selection modes (legend, timeline, butterfly, and node/edge clicks)
+    const HIGHLIGHT_COLOR = '#cc7a00'
+
     // First, initialize all nodes with weight 0
     nodes.forEach((n) => (n.weight = 0))
 
@@ -172,7 +175,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             const targetName = d.target.name || d.target
 
             node.attr('stroke', (n) =>
-                n.name === sourceName || n.name === targetName ? '# ' : '#000'
+                n.name === sourceName || n.name === targetName ? HIGHLIGHT_COLOR : '#000'
             )
                 .attr('stroke-width', (n) =>
                     n.name === sourceName || n.name === targetName ? 4 : 1.5
@@ -198,7 +201,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                 const lTgt = l.target.name || l.target
                 return (lSrc === sourceName && lTgt === targetName) ||
                     (lSrc === targetName && lTgt === sourceName)
-                    ? '#ff0'
+                    ? HIGHLIGHT_COLOR
                     : '#999'
             })
                 .attr('stroke-width', (l) => {
@@ -392,6 +395,16 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
     parents.forEach((p, i) => {
         parentColor.set(p, basePalette[i % basePalette.length] || '#888')
     })
+    // Ensure the "Other" category is always grey for clarity (case-insensitive)
+    if (parents.includes('Other') || parents.includes('OTHER')) {
+        if (parents.includes('Other')) parentColor.set('Other', '#888')
+        if (parents.includes('OTHER')) parentColor.set('OTHER', '#888')
+    }
+    // Ensure the "Titan" category uses a vivid, distinct color (case-insensitive)
+    if (parents.includes('Titan') || parents.includes('TITAN')) {
+        if (parents.includes('Titan')) parentColor.set('Titan', '#b100e8')
+        if (parents.includes('TITAN')) parentColor.set('TITAN', '#b100e8')
+    }
 
     // Derive child tints from the parent hue
     function tintFromParent(parentHex, i, n) {
@@ -486,10 +499,10 @@ function attachLegendHandlers() {
         if (window.globalSelection) {
             if (categoryType === 'child') {
                 // For child categories, highlight the entire parent family
-                window.globalSelection.set(parentCategory)
+                window.globalSelection.setGroup(parentCategory)
             } else {
                 // For parent categories, highlight the entire family
-                window.globalSelection.set(clickedCategory)
+                window.globalSelection.setGroup(clickedCategory)
             }
         }
     })
@@ -503,7 +516,7 @@ function attachLegendHandlers() {
         const clickedCategory = summaryElement.getAttribute('data-category')
 
         if (window.globalSelection) {
-            window.globalSelection.set(clickedCategory)
+            window.globalSelection.setGroup(clickedCategory)
         }
     })
 }
@@ -563,7 +576,7 @@ attachLegendHandlers()
             // Highlight selected node and direct connections
             const neighbors = getDirectConnections(d)
             node.attr('stroke', (n) =>
-                n === d ? '#000' : neighbors.has(n.name) ? '#ffa500' : '#fff'
+                n === d || neighbors.has(n.name) ? HIGHLIGHT_COLOR : '#fff'
             )
                 .attr('stroke-width', (n) =>
                     n === d || neighbors.has(n.name) ? 4 : 1.5
@@ -573,7 +586,7 @@ attachLegendHandlers()
                 )
             label
                 .attr('font-weight', (n) =>
-                    n === d ? 'bold' : neighbors.has(n.name) ? 'bold' : 'normal'
+                    n === d || neighbors.has(n.name) ? 'bold' : 'normal'
                 )
                 .attr('opacity', (n) =>
                     n === d || neighbors.has(n.name) ? 1 : 0.2
@@ -581,7 +594,7 @@ attachLegendHandlers()
             link.attr('stroke', (l) => {
                 const src = l.source.name || l.source
                 const tgt = l.target.name || l.target
-                return src === d.name || tgt === d.name ? '#000' : '#999'
+                return src === d.name || tgt === d.name ? HIGHLIGHT_COLOR : '#999'
             })
                 .attr('stroke-width', (l) => {
                     const src = l.source.name || l.source
@@ -759,7 +772,7 @@ attachLegendHandlers()
                                 relevantNodeNames.has(n.name) ? 3 : 1.5
                             )
                             .attr('stroke', (n) =>
-                                relevantNodeNames.has(n.name) ? '#ff0' : '#fff'
+                                relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff'
                             )
 
                         // Highlight labels of those nodes
@@ -777,7 +790,7 @@ attachLegendHandlers()
                         link.attr('opacity', (l) =>
                             l.author === selectedGroup ? 0.8 : 0.05
                         ).attr('stroke', (l) =>
-                            l.author === selectedGroup ? '#ff0' : '#999'
+                            l.author === selectedGroup ? HIGHLIGHT_COLOR : '#999'
                         )
                     }
 
@@ -921,7 +934,7 @@ attachLegendHandlers()
                                 relevantNodeNames.has(n.name) ? 3 : 1.5
                             )
                             .attr('stroke', (n) =>
-                                relevantNodeNames.has(n.name) ? '#ff0' : '#fff'
+                                relevantNodeNames.has(n.name) ? HIGHLIGHT_COLOR : '#fff'
                             )
 
                         // Update label visibility
@@ -948,7 +961,7 @@ attachLegendHandlers()
                             const tgtName = l.target.name || l.target
                             return relevantNodeNames.has(srcName) &&
                                 relevantNodeNames.has(tgtName)
-                                ? '#ff0'
+                                ? HIGHLIGHT_COLOR
                                 : '#999'
                         })
 

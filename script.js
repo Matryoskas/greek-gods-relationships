@@ -101,10 +101,14 @@ function init() {
             connected.has(n.name)
         )
 
-        // Normalize level names globally (capitalize first letter, rest lowercase)
+        // Normalize category strings to Title Case for every word (collapse spaces)
         function normalize(str) {
             if (!str) return str
-            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+            return String(str)
+                .trim()
+                .split(/\s+/)
+                .map((s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase())
+                .join(' ')
         }
 
         // Apply normalization to all characters
@@ -162,11 +166,35 @@ function init() {
         usedCategories.forEach((cat, i) => {
             categoryColorMap[cat] = getColor(i)
         })
+        // Ensure the "Other" category is always grey (case-insensitive)
+        ;['Other', 'OTHER'].forEach((k) => {
+            if (usedCategories.includes(k)) {
+                categoryColorMap[k] = '#888'
+            }
+        })
+        // Ensure "Titan" uses a vivid, distinct color (case-insensitive)
+        ;['Titan', 'TITAN'].forEach((k) => {
+            if (usedCategories.includes(k)) {
+                categoryColorMap[k] = '#b100e8'
+            }
+        })
 
         // Create a parent group color map for timeline chart
         const parentColorMap = {}
         parentGroups.forEach((parentGroup, i) => {
             parentColorMap[parentGroup] = getColor(i)
+        })
+        // Ensure the "Other" parent group is always grey (case-insensitive)
+        ;['Other', 'OTHER'].forEach((k) => {
+            if (parentGroups.includes(k)) {
+                parentColorMap[k] = '#888'
+            }
+        })
+        // Ensure "Titan" parent group uses a vivid, distinct color (case-insensitive)
+        ;['Titan', 'TITAN'].forEach((k) => {
+            if (parentGroups.includes(k)) {
+                parentColorMap[k] = '#b100e8'
+            }
         })
 
         console.log('Parent groups:', parentGroups)
@@ -175,7 +203,7 @@ function init() {
         // Global handler for tooltip clicks
         window.handleTooltipClick = function (group) {
             if (window.globalSelection) {
-                window.globalSelection.set(group)
+                window.globalSelection.setGroup(group)
             }
             //  can add more custom actions here
         }
