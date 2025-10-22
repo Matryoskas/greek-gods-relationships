@@ -399,7 +399,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
         })
 
         // Add a placeholder div for selection info below the legend
-        html += `<div id="legend-selection-info" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"></div>`
+        // html += `<div id="legend-selection-info" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"></div>`
 
         return html
     }
