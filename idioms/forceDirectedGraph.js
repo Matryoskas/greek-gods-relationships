@@ -433,6 +433,14 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
     // --- Build a collapsible legend using <details>/<summary> ---
     function buildLegendHTML(selectedGroup = null) {
+        // Check which details are currently open before regenerating
+        const openDetails = new Set()
+        permanentTooltip.selectAll('details[open]').each(function () {
+            const category =
+                this.querySelector('summary').getAttribute('data-category')
+            if (category) openDetails.add(category)
+        })
+
         let html = `<h3>Mythological Categories</h3>`
 
         // Render each parent; use <details> only if it actually has children, otherwise a simple row
@@ -440,6 +448,7 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             const pColor = parentColor.get(p)
             const children = Array.from(groupMap.get(p)).sort()
             const isSelected = selectedGroup === p
+            const isOpen = openDetails.has(p)
 
             if (children.length === 0) {
                 // Flat parent (no subgroups) - now clickable
@@ -453,13 +462,13 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
             ${p}
           </div>`
             } else {
-                // Parent with children (collapsible)
+                // Parent with children (collapsible) - preserve open state
                 html += `
-          <details class="legend-group" ${
-              isSelected
-                  ? 'style="background-color: #e3f2fd; border: 2px solid #1976d2; border-radius: 4px; padding: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"'
-                  : ''
-          }>
+          <details class="legend-group" ${isOpen ? 'open' : ''} ${
+                    isSelected
+                        ? 'style="background-color: #e3f2fd; border: 2px solid #1976d2; border-radius: 4px; padding: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"'
+                        : ''
+                }>
             <summary data-category="${p}" data-type="parent" ${
                     isSelected ? 'style="font-weight: bold;"' : ''
                 }>
@@ -513,8 +522,8 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
 
                 if (window.globalSelection) {
                     if (categoryType === 'child') {
-                        // For child categories, highlight the entire parent family
-                        window.globalSelection.setGroup(parentCategory)
+                        // For child categories, highlight the specific child category
+                        window.globalSelection.setGroup(clickedCategory)
                     } else {
                         // For parent categories, highlight the entire family
                         window.globalSelection.setGroup(clickedCategory)
@@ -891,8 +900,13 @@ async function createForceDirectedGraph(nodes, edges, containerId, colorMap) {
                     } else {
                         relevantNodes = nodes.filter((n) => {
                             const parentGroup = norm(parentKey(n))
+                            const childGroup = norm(childKey(n))
                             const characterType = norm(n.description)
-                            return parentGroup === sel || characterType === sel
+                            return (
+                                parentGroup === sel ||
+                                childGroup === sel ||
+                                characterType === sel
+                            )
                         })
                     }
 
